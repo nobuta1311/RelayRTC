@@ -1,14 +1,20 @@
-#システムの概要
+# システムの概要
 WebRTCにおけるビデオ会議システム。リレー式に映像データを渡す。
-#data_connection_method.js
+---------------
+# data_connection_method.js
 データコネクションチャンネルを操作するためのメソッドを含む
-#connection_methods.js
+---------------
+# connection_methods.js
 映像・音声ストリームの操作を行うためのメソッドを含む
-#inquisition.js
+---------------
+# inquisition.js
 サーバに照会して各種情報を更新するためのメソッドを含む
-#main.js
+---------------
+# main.js
 WebRTCの根本的メソッドやグローバル変数を含む
-#ConnectionState.php
+---------------
+# ConnectionState.php
 接続状態を管理するAPI
-#ID.php
+---------------
+# ID.php
 参加情強を管理するAPI
