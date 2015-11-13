@@ -1,14 +1,18 @@
-var peerTable = array();
+var peerTable = Array();
 //参加したときはそれぞれが更新
 //消えるときもそれぞれが更新
 //inquiryで照会
-var connectionTable = array();
-//配信者が更新
+var connectionTable = Array();
+//配信者がサーバに設定
 //inquiryで照会
+var streams = Array();
+//自分の保持するstreamをここに記録する。
+
 var IDURL="./ID.php";
 var partURL="./Participants.php";
 var connURL = "./ConnectionState.php";
 var commanderURL ="./Commander.php";
+
 
 //接続されたらどうする？
 //とりあえず全員表示する

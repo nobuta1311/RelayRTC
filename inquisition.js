@@ -36,7 +36,7 @@ function inquiry(){
                 console.log(response);
                 connectionTable = JSON.parse(response);
                 Object.keys(connectionTable).forEach(function(key){
-                    ar2 = connectionTable[key];
+                    var ar2 = connectionTable[key];
                     Object.keys(ar2).forEach(function(key2){
                     $("div.box").append(key+" "+key2+"  "+connectionTable[key][key2]+"<br>");
                     });
