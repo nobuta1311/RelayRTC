@@ -8,11 +8,12 @@
 //
 //
 //用意する変数
+var Branch = Array(1,1,1,1,1,1,1,1,1,1,1);
 var peerNum;
 function routing(partnerID){
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
-    const Branch = array(1,1,1,1,1,1,1,1,1,1,1);
+
     //まず自分から直接つなげるかどうか
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
@@ -42,8 +43,8 @@ function connect_func(fromID,toID,count){
     //fromIDがすでに接続している相手をみつける
     //複数いる場合はその相手が接続している数が少ないほう
     var min = 100; var new_from;
-    Object.keys(connectionTable[fromID])(function(key){
-        if(connectionTable[fromID][key]==true){//接続できている場合
+    Object.keys(connectionTable[fromID]).forEach(function(key){
+        if(connectionTable[fromID][key]==true){//接続できているところをたどる
             if(min>connectionTable[key]["count"]){
                 min =connectionTable[key]["count"];
                 new_from = key;
@@ -51,7 +52,7 @@ function connect_func(fromID,toID,count){
             }
         }
     });
-    letConnect(fromID,new_from);
+    //fromIDとnew_fromは既につながっているからその先を確かめる
     return connect_func(new_from,toID,count);
 }
 
