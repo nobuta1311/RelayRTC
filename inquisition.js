@@ -18,7 +18,9 @@ function inquiry(){
         peerTable = JSON.parse(response);
         Object.keys(peerTable).forEach(function(key){
             var div = $("<button type=\"button\" id=\"connect-\""+key+">2</button>");
-            $("#connect-buttons").after(div);
+            alert(div);
+            $("#connect-buttons").append(div);//after?
+            
         });
         //接続状況を一覧表示
         $.ajax({
