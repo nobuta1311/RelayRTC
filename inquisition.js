@@ -18,9 +18,9 @@ function inquiry(){
         peerTable = JSON.parse(response);
         $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
-            
+            console.log(peerTable[key]);
             //if(peerTable[key]["live"]===true){
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+peerTable[key][live]+"</button>");
+            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
             $("#connect-buttons").append(div);
             //}
         });
