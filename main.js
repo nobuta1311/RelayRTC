@@ -21,8 +21,7 @@ var commanderURL ="./Commander.php";
 //接続
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){
-    alert(peer.id);
-    $("my-id").text(peer.id);
+    $("#my-id").text(peer.id);
     $.ajax({
         url: "./ID.php?peerid="+peer.id,
             type: "GET",
