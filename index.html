@@ -9,6 +9,15 @@
 <!--<script type="text/javascript" src="fileupload.js"></script> -->
 
 </head>
+<style type="text/css">
+
+.scr {
+  overflow: scroll;   /* スクロール表示 */
+  width: 500px;
+  height: 100px;
+  background-color: lightcoral;
+}
+</style>
 <body>
 <h1><img src="./logo_simple.png" width="510" height="340" /></h1>
 <h1>One Provider Relay-WebRTC</h1>
@@ -17,7 +26,7 @@
         <button id="join-provider">Join as a Provider</button>
         <button id="join-receiver">Join as a Receiver</button>
 </div>
-<div id="log-space">
+<div id="log-space" class="scr">
         <textarea id="info" >-logs-</textarea>
 </div>
         
