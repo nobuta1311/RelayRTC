@@ -1,5 +1,5 @@
 //テスト用にここに記述
-var ConnectionStateURL="ConnectionState.php";
+var ConnectionStateURL="./ConnectionState.php";
 var peerTable = new Array();
 var connectionTable = new Array();
 
@@ -10,6 +10,7 @@ function inquiry(){
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
     setInterval(function loop(){
+        writeLog("参加者一覧と接続状況を取得");
         //ID一覧を取得   
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示
@@ -18,36 +19,26 @@ function inquiry(){
         $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
             console.log(peerTable[key]);
-            //if(peerTable[key]["live"]===true){
             var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
             $("#connect-buttons").append(div);
-            //}
         });
         //接続状況を一覧表示
-        $.ajax({
-            async:false,
-            url:ConnectionStateURL,
-            type:"get",
-            datatype:"json",
-            success: function(response){
-            //全ての接続状態を表示
-                console.log(response);
-                connectionTable = JSON.parse(response);
-                $("#connection-table").text("");
-                Object.keys(connectionTable).forEach(function(key){
-                    var ar2 = connectionTable[key];
-                    Object.keys(ar2).forEach(function(key2){
-                    $("#connection-table").append(key+" "+key2+"  "+connectionTable[key][key2]);
-                    });
-                    $("#connection-table").append("<br>");
+        var response = noticeConnect("",0); 
+        console.log(response);
+        connectionTable = JSON.parse(response);
+        $("#connection-table").text("");
+        Object.keys(connectionTable).forEach(function(key){
+            var ar2 = connectionTable[key];
+            Object.keys(ar2).forEach(function(key2){
+                if(key2!="counter")
+                $("#connection-table").append(key+" "+key2+"  "+connectionTable[key][key2]+"   ");
                 });
-            }
+            $("#connection-table").append("<br>");
         });
-
-    },1000);
+    },2000);
 }
 function id_exchange(command_str,mode){
-    var mode_str=-1;
+    var mode_str="";
     var result;
     switch(mode){
         case 0: //genuine-num登録
@@ -77,3 +68,32 @@ function id_exchange(command_str,mode){
     });
     return result;
 }
+
+function noticeConnect(from_parameter,parameter){
+    var url = "";
+    var result ="false";
+        switch(parameter){
+            case 0: //全部参照
+                break;
+            case 1: //fromだけ指定してつながっている相手
+                url = "?from="+from_parameter;
+                break;
+            default: //fromとtoを指定して、つなげるもしくはつながっているか知る
+                url = "?from="+from_parameter+"&to="+parameter;
+                break;
+        }
+        $.ajax({
+            async:false,
+            url:ConnectionStateURL,
+            type:"get",
+            datatype:"json",
+        }).done(function(res){
+            result = res;
+        })  ;  
+        return result;
+}
+
+//aとbをつなげる　?from=a&to=b boolean
+//aとbがつながっているか知る boolean
+//aの接続相手を知る ?from=a json 1
+//すべての接続状態をまとめて json 0
