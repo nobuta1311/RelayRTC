@@ -12,7 +12,7 @@ function inquiry(){
     //peerTableとConnectionTableで
     setInterval(function loop(){
         //ID一覧を取得   
-        var response =id_exchange(all,4);
+        var response =id_exchange("all",4);
         //参加しているIDを一覧表示
         console.log(response);
         peerTable = JSON.parse(response);
