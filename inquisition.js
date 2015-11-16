@@ -17,8 +17,9 @@ function inquiry(){
         //参加しているIDを一覧表示
         console.log(response);
         peerTable = JSON.parse(response);
-        $("#connect-buttons").empty();
+        //$("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
+            $("#connect-"+key).remove();
             var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
             
             $("#connect-buttons").after(div);
