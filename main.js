@@ -50,8 +50,7 @@ navigator.getUserMedia({audio: false, video: true}, function(stream){
     localStream = stream;
     var url = URL.createObjectURL(stream);
         //$('#my-video').prop('src', url);
-    }, 
-    function() { alert("Error!"); 
+    },function() { alert("Error!"); 
 });
 
 
@@ -87,3 +86,4 @@ function writeLog(logstr){
     console.log(logstr);
     $("#log-space").append(logstr+"<br>");
 }
+});
