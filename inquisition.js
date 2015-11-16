@@ -18,10 +18,11 @@ function inquiry(){
         peerTable = JSON.parse(response);
         $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
-            if(peerTable[key]["live"]===true){
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
+            
+            //if(peerTable[key]["live"]===true){
+            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+peerTable[key]["live"]+"</button>");
             $("#connect-buttons").append(div);
-            }
+            //}
         });
         //接続状況を一覧表示
         $.ajax({
