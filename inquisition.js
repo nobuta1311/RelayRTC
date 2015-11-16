@@ -65,8 +65,10 @@ function id_exchange(command_str,mode){
             mode_str = "refer";
             break;                
     }
+    var accessurl =IDURL+mode_str+"="+command_str; 
+    alert(accessurl);
     $.ajax({
-        url: IDURL+mode_str+"="+command_str,
+        url: accessurl,
             type: "GET",
             dataType: "html"
     }).done(function(res) {
