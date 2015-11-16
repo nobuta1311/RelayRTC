@@ -89,5 +89,5 @@ function calledDo(call){ //コネクションした後のやりとり
 }
 function writeLog(logstr){
     console.log(logstr);
-    $("#log-space").text(logstr);
+    $("#log-space").appendText(logstr);
 }
