@@ -13,14 +13,15 @@ function inquiry(){
     setInterval(function loop(){
         //ID一覧を取得   
         var response =id_exchange("all",4);
-        alert(response);
+        
         //参加しているIDを一覧表示
         console.log(response);
         peerTable = JSON.parse(response);
+        $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">2</button>");
+            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
             
-            $("#connect-buttons").append(div);//after?
+            $("#connect-buttons").after(div);
             
         });
         //接続状況を一覧表示
