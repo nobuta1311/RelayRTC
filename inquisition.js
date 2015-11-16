@@ -20,7 +20,7 @@ function inquiry(){
         Object.keys(peerTable).forEach(function(key){
             
             //if(peerTable[key]["live"]===true){
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+peerTable[key]["live"]+"</button>");
+            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+peerTable[key][live]+"</button>");
             $("#connect-buttons").append(div);
             //}
         });
