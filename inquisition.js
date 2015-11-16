@@ -1,5 +1,4 @@
 //テスト用にここに記述
-var ID_URL="./ID.php";
 var ConnectionStateURL="ConnectionState.php";
 var peerTable = new Array();
 var connectionTable = new Array();
@@ -34,9 +33,9 @@ function inquiry(){
             //全ての接続状態を表示
                 console.log(response);
                 connectionTable = JSON.parse(response);
+                $("#connection-table").text("");
                 Object.keys(connectionTable).forEach(function(key){
                     var ar2 = connectionTable[key];
-                    $("#connection-table").text("");
                     Object.keys(ar2).forEach(function(key2){
                     $("#connection-table").append(key+" "+key2+"  "+connectionTable[key][key2]);
                     });
