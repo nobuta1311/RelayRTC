@@ -13,33 +13,42 @@
 
 .scr {
   overflow: scroll;   /* スクロール表示 */
-  width: 500px;
-  height: 100px;
-  background-color: lightcoral;
+  width: 800px;
+  height: 200px;
+  background-color: floralwhite;
 }
 </style>
 <body>
-<h1><img src="./logo_simple.png" width="510" height="340" /></h1>
+<h1><img src="./logo_simple.png" width="500" height="150" /></h1>
 <h1>One Provider Relay-WebRTC</h1>
 <div id="joining-button">
         <!--参加・退出をするボタン。状態によって書き換える。-->
-        <button id="join-provider">Join as a Provider</button>
-        <button id="join-receiver">Join as a Receiver</button>
+        <button type="button" id="join-provider">Join as a Provider</button>
+        <button type="button" id="join-receiver">Join as a Receiver</button>
+</div>
+<div id="my-id">
+        <p>MyPeerID: <span id="my-id">-</span></p>
+        <p>MyNumberID: <span id="my-number">-</span></p>
 </div>
 <div id="log-space" class="scr">
-        <textarea id="info" >-logs-</textarea>
+        -logs-<br>
 </div>
-        
-<div>
+
+<div id="connect-buttons">
+        <!--<button type="button" id="connect-2">2</button> -->
+</div>
+  
+<div id="videos">
         <!--video id="my-video" style="width: 300px;" autoplay="1"></video-->
-        <video id="peer-video" style="width: 300px;" autoplay="1"></video>
-</div>
-<div>
-        <p>MyID: <span id="my-id">-</span></p>
-        <p>PeerID: <span id="peer-id">-</span></p>
-
+        <!--<video id="peer-video" style="width: 300px;" autoplay="1"></video>-->
 </div>
 
+<div id="connection-table" class="scr">
+        -connections-<br>
+</div>
+
+
+<!--
 <div>
         <button id="sender">文字列送信</button>
         <input type="text" placeholder="" id="send-data">
@@ -52,6 +61,6 @@
 <input id="loadFile" type="file" multiple><br>
 <textarea id="info" ></textarea>
 <button id="send-file">ファイル送信！送信</button>
-
+-->
 </body>
 </html>
