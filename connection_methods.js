@@ -24,7 +24,7 @@ function routing(partnerID){
              //   break;
            // }
        // });
-       connect(partnerID);
+       connect(id_exchange(partnerID,1));
     }else{  //リレー式につなげる場合。
         connect_func(myID,partnerID,0);
            //繋げ元から余裕があればそこから繋げる
@@ -54,5 +54,17 @@ function connect_func(fromID,toID,count){
     });
     //fromIDとnew_fromは既につながっているからその先を確かめる
     return connect_func(new_from,toID,count);
+}
+function connect(to_id,send_stream){  //コネクションボタン押した
+    var call = peer.call(id_exchange(to_id,1),send_stream);
+    connectedNum++; //どこでつかうかわからんけど接続数
+    calledDo(call);
+  //connectedDo(); //接続したあとにデータのやりとり
+};
+function disconnect(to_id){
+        connectedNum--;
+        //connectedCall[selected].close();
+        //connectedConn[selected].close();
+        to_id.destroy();
 }
 

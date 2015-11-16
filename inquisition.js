@@ -4,8 +4,8 @@ var peerTable = new Array();
 var connectionTable = new Array();
 
 
-inquiry();
-function inquiry(){
+inquiry_tables();
+function inquiry_tables(){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
@@ -19,11 +19,11 @@ function inquiry(){
         $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
             //console.log(peerTable[key]);
-            var div = $("<button type=\"button\" disabled id=\"connect-\""+key+">"+key+"</button>");
+            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
             $("#connect-buttons").append(div);
         });
         //接続状況を一覧表示
-        var response = noticeConnect("",0); 
+        response = noticeConnect("",0); 
         //console.log(response);
         connectionTable = JSON.parse(response);
         $("#connection-table").text("");
