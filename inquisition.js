@@ -48,6 +48,7 @@ function inquiry(){
 }
 function id_exchange(command_str,mode){
     var mode_str="";
+    var result;
     switch(mode){
         case 0: //genuine-num登録
             mode_str = "peerid";
@@ -72,6 +73,6 @@ function id_exchange(command_str,mode){
             type: "GET",
             dataType: "html"
     }).done(function(res) {
-        return res;
+        result=res;
     });
 }
