@@ -14,17 +14,17 @@ function inquiry(){
         //ID一覧を取得   
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示
-        console.log(response);
+        //console.log(response);
         peerTable = JSON.parse(response);
         $("#connect-buttons").empty();
         Object.keys(peerTable).forEach(function(key){
-            console.log(peerTable[key]);
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");
+            //console.log(peerTable[key]);
+            var div = $("<button type=\"button\" disabled id=\"connect-\""+key+">"+key+"</button>");
             $("#connect-buttons").append(div);
         });
         //接続状況を一覧表示
         var response = noticeConnect("",0); 
-        console.log(response);
+        //console.log(response);
         connectionTable = JSON.parse(response);
         $("#connection-table").text("");
         Object.keys(connectionTable).forEach(function(key){
