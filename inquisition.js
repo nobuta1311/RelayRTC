@@ -66,13 +66,12 @@ function id_exchange(command_str,mode){
             break;                
     }
     var accessurl =IDURL+mode_str+"="+command_str; 
-    alert(accessurl);
     $.ajax({
+        async:false,
         url: accessurl,
             type: "GET",
             dataType: "html"
     }).done(function(res) {
         return res;
     });
-    return "false";
 }
