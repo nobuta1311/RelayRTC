@@ -10,7 +10,7 @@ var streams = Array();
 
 var IDURL="./ID.php";
 var partURL="./Participants.php";
-var connURL = "./ConnectionState.php";
+//var connURL = "./ConnectionState.php";
 var commanderURL ="./Commander.php";
 
 
