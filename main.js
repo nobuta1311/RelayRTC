@@ -32,7 +32,7 @@ peer.on('open', function(){
     $("#my-id").text(peer.id);
     var res = id_exchange(peer.id,0);
     $('#my-number').text(res);
-    writeLog("Your id is ".res);
+    writeLog("Your id is "+res);
 });
 peer.on('call', function(call){ //かかってきたとき
     call.answer(localStream);//返すものはなんでもいい
