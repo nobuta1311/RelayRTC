@@ -25,7 +25,7 @@ var commanderURL ="./Commander.php?";
 //接続
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 
-$(function() {  //能動的に動く部分
+//$(function() {  //能動的に動く部分
 
 peer.on('open', function(){
     writeLog("Your peer is opened by peerID:"+peer.id);
@@ -86,4 +86,3 @@ function writeLog(logstr){
     console.log(logstr);
     $("#log-space").append(logstr+"<br>");
 }
-});
