@@ -45,7 +45,7 @@ if(isset($_GET["peerid"])){
         }
         if($cot==$counter-1){echo false;}
     }
-}else if(isset($_GET["exit"])){ //通し番号をもらう
+}else if(isset($_GET["exit"])){ //終了して通し番号をもらう
     if($database[$_GET["exit"]]["live"]==true){
     $database["num"]=$num-1;
     $database[$_GET["exit"]]["live"]=false;

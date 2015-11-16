@@ -5,13 +5,17 @@ var peerTable = Array();
 var connectionTable = Array();
 //配信者がサーバに設定
 //inquiryで照会
+var localStream;
 var streams = Array();
-//自分の保持するstreamをここに記録する。
+var connectedNum;
+var connectedCall = Array();
+var connectedConn = Array();
+//自分の保持するstreamのURLをここに記録する。
 
-var IDURL="./ID.php";
-var partURL="./Participants.php";
-//var connURL = "./ConnectionState.php";
-var commanderURL ="./Commander.php";
+var IDURL="./ID.php?";
+var partURL="./Participants.php?";
+var connURL = "./ConnectionState.php";
+var commanderURL ="./Commander.php?";
 
 
 //接続されたらどうする？
@@ -21,16 +25,14 @@ var commanderURL ="./Commander.php";
 //接続
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){
+    writeLog("Your peer is opened by peerID:".peer.id);
     $("#my-id").text(peer.id);
-    $.ajax({
-        url: "./ID.php?peerid="+peer.id,
-            type: "GET",
-            dataType: "html"
-    }).done(function(res) {
-        $('#my-number').text(res);
-    });
+    var res = id_exchange(peer.id,0);
+    $('#my-number').text(res);
+    writeLog("Your id is ".res);
 });
 peer.on('call', function(call){ //かかってきたとき
+    call.answer(localStream);
     calledDo(call);
 });
 peer.on('connection',function(conn){    //接続されたとき
@@ -38,13 +40,14 @@ peer.on('connection',function(conn){    //接続されたとき
 });
 $(function() {  //能動的に動く部分
     navigator.getUserMedia({audio: false, video: true}, function(stream){
-       // localStream = stream;
-        var url = URL.createObjectURL(stream);
+    localStream = stream;
+    
+    var url = URL.createObjectURL(stream);
         //$('#my-video').prop('src', url);
 
     }, function() { alert("Error!"); });
     $('#call-start').click(function(){  //コネクションボタン押した
-        //connectedNum++;
+        connectedNum++; //どこでつかうかわからんけど接続数
         //var peer_id = $('#peer-id-input').val(); //相手のID
         //connectedCall[connectedNum] = peer.call(peer_id, localStream);//これで接続
         //connectedConn[connectedNum] = peer.connect(peer_id);//これでデータコネクション接続
@@ -69,11 +72,22 @@ function connectedDo(conn){ //データのやりとり
                 $("#data-received").text(data+"\n"+$("#data-received").val()); //テキストとして受信データを表示
         });
 }
-function calledDo(){ //コネクションした後のやりとり
-        $("#peer-num").text(connectedNum);
+function calledDo(call){ //コネクションした後のやりとり
+    //genuineIDはcall.peerなので
+        var pid = id_exchange(call.peer,2);
+        if(pid=="false")return false;   //失敗したらfalse返す
+        connectedCall[pid]=call;
+        $("#peer-num").text(connectedNum);//相手のID表示
         $("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
-        connectedCall[connectedNum].on('stream', function(stream){//callのリスナ
+        
+        call.on('stream', function(stream){//callのリスナ
             var url = URL.createObjectURL(stream);
-            $('#peer-video'+connectedNum).prop('src', url);
+            streams[url]=url;
+            //url変換したものを格納し、したの行のように表示させる。
+           // $('#peer-video'+connectedNum).prop('src', url);
         });
+}
+function writeLog(logstr){
+    console.log(logstr);
+    $("#log-space").text(logstr);
 }
