@@ -47,7 +47,7 @@ function inquiry(){
     },1000);
 }
 function id_exchange(command_str,mode){
-    var mode_str="";
+    var mode_str=-1;
     var result;
     switch(mode){
         case 0: //genuine-num登録
@@ -75,4 +75,5 @@ function id_exchange(command_str,mode){
     }).done(function(res) {
         result=res;
     });
+    return result;
 }
