@@ -11,7 +11,8 @@ var connectedNum;
 var connectedCall = Array();
 var connectedConn = Array();
 //自分の保持するstreamのURLをここに記録する。
-
+var myID;
+var myDataID;
 var IDURL="./ID.php?";
 var partURL="./Participants.php?";
 var connURL = "./ConnectionState.php";
@@ -28,46 +29,42 @@ var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 //$(function() {  //能動的に動く部分
 
 peer.on('open', function(){
-    writeLog("Your peer is opened by peerID:"+peer.id);
+    writeLog("Your peer is opened by peerID:"+myid);
     $("#my-id").text(peer.id);
-    var res = id_exchange(peer.id,0);
-    $('#my-number').text(res);
-    writeLog("Your id is "+res);
+    myID = id_exchange(peer.id,0);
+    $('#my-number').text(myID);
+    writeLog("Your id is "+myID);
 });
 peer.on('call', function(call){ //かかってきたとき
-    call.answer(localStream);//返すものはなんでもいい
+    //call.answer(localStream);//返すものはなんでもいい
+    call.answer();  //何も返さないようにしておく。
     calledDo(call);
 });
 
 
-/*
 peer.on('connection',function(conn){    //接続されたとき
     connectedDo(conn);
 });
-*/
+
 
 navigator.getUserMedia({audio: false, video: true}, function(stream){
-    localStream = stream;
-    var url = URL.createObjectURL(stream);
+    var localStream = URL.createObjectURL(stream);
         //$('#my-video').prop('src', url);
     },function() { alert("Error!"); 
 });
 
 
-/*
-$("#sender").click(function(){ //送信
-    var selected = $("input[name=submitNum]:checked").val();
-    //connectedConn[selected].send($("#send-data").val());
-});
-*/
 
-/*
+
 function connectedDo(conn){ //データのやりとり
         conn.on("data",function(data){//data受信リスナ
-                $("#data-received").text(data+"\n"+$("#data-received").val()); //テキストとして受信データを表示
+                writeLog("受信データ : "+data); //テキストとして受信データを表示
         });
 }
-*/
+function sendText(peerid,data){
+    connectedConn[peerid].send(data);
+}
+
 function calledDo(call){ //コネクションした後のやりとり
     //genuineIDはcall.peerなので
         var pid = id_exchange(call.peer,2);

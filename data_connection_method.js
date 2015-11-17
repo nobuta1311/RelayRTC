@@ -7,47 +7,24 @@ connectionTableのデータコネクション部分は、この関数群で更�
 function dataConnectAll(){
     for(var pid in peerTable){
         if(pid==myID){break;}
-        result_connections = dataConnect(pid);
-        if(result_connections===false){
-            return false;
-        }
+        dataConnect(pid);
     }
     return true;
 }
 function dataDisconnectAll(){
     for(var pid in peerTable){
         if(pid==myID){break;}
-        result_disconnections =dataDisconnect(pid);
-        if(result_disconnections===false){
-            peer.destroy();
-            return false;
-        }
+        dataDisconnect(pid);
     }
-    peer.destroy();
-    return True;
+    return true;
 }
 function dataConnect(partnerID){
-        genuineID = inquiryID(partnerID);
-        if(genuineID=="ERROR NO GENUINE ID"){return false;}
-        if(myID<partnerID){
-        connectionTable[myID][partnerID][0]=peer.connect(genuineID);
-        connectionTable[myID][partnerID][1]=false;
-        }else{
-        connectionTable[partnerID][myID][0]=peer.connect(genuineID);
-        connectionTable[partnerID][myID][1]=false;
-        }
-        commandByPeers();
+        var genuineID = id_exchange(partnerID,0);
+        connectedConn[partnerID] = peer.connect(genuineID);
         return true;
 }
 function dataDisconnect(partnerID){
-        if(myID<partnerID){
-        connectionTable[myID][partnerID][0].close();
-        connectionTable[myID][partnerID][0]=false;
-        connectionTable[myID][partnerID][1]=false;
-        }else{
-        connectionTable[partnerID][myID][0].close();
-        connectionTable[partnerID][myID][0]=false;
-        connectionTable[partnerID][myID][1]=false;
-        }
+        var genuineID = id_exchange(partnerID,0);
+        connectedConn[partnerID].close();
         return true;
 }

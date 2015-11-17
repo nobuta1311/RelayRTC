@@ -13,17 +13,8 @@ var peerNum;
 function routing(partnerID){
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
-
-    //まず自分から直接つなげるかどうか
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
-       // peerTable.forEach(function(key){
-         //   if(connectionTable[myID][key]=false /*かつ相手の余裕（今回は考慮しない）*/){
-            //まだつなげてない相手なのでつなげる
-           //     connect(key);
-             //   break;
-           // }
-       // });
        connect(id_exchange(partnerID,1));
     }else{  //リレー式につなげる場合。
         connect_func(myID,partnerID,0);
@@ -62,9 +53,11 @@ function connect(to_id,send_stream){  //コネクションボタン押した
   //connectedDo(); //接続したあとにデータのやりとり
 };
 function disconnect(to_id){
-        connectedNum--;
-        //connectedCall[selected].close();
-        //connectedConn[selected].close();
-        to_id.destroy();
+    connectedNum--;
+        //connectedCall[selected].close();        //connectedConn[selected].close();
+    to_id.destroy();
 }
 
+function letConnect(fromID,toID){
+//  send()
+}
