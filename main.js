@@ -6,30 +6,19 @@ var connectionTable = Array();
 //配信者がサーバに設定
 //inquiryで照会
 var localStream;
-var streams = Array();
-var connectedNum;
+var streams = Array();  //自分の保持するstreamのURLをここに記録する。
+var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
-//自分の保持するstreamのURLをここに記録する。
 var myID;
-var myDataID;
 var IDURL="./ID.php?";
 var partURL="./Participants.php?";
 var connURL = "./ConnectionState.php";
 var commanderURL ="./Commander.php?";
-
-
-//接続されたらどうする？
-//とりあえず全員表示する
-//相手のIDとかはログに適当に表示
-
-//接続
+//$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
-
-//$(function() {  //能動的に動く部分
-
-peer.on('open', function(){
-    writeLog("Your peer is opened by peerID:"+myid);
+peer.on('open', function(){ //回線を開く
+    writeLog("Your peer is opened by peerID:"+myID);
     $("#my-id").text(peer.id);
     myID = id_exchange(peer.id,0);
     $('#my-number').text(myID);
@@ -41,25 +30,34 @@ peer.on('call', function(call){ //かかってきたとき
     calledDo(call);
 });
 
-
 peer.on('connection',function(conn){    //接続されたとき
     connectedDo(conn);
 });
 
-
 navigator.getUserMedia({audio: false, video: true}, function(stream){
-    var localStream = URL.createObjectURL(stream);
+     localStream = URL.createObjectURL(stream);
         //$('#my-video').prop('src', url);
     },function() { alert("Error!"); 
 });
 
-
-
-
 function connectedDo(conn){ //データのやりとり
         conn.on("data",function(data){//data受信リスナ
                 writeLog("受信データ : "+data); //テキストとして受信データを表示
+                commandByPeers(data);
         });
+}
+function commandByPeers(data){
+    var commands = data.split(",");
+    var mode =commands[0];
+    switch (mode){
+        case 0 :    //接続命令  0,送る相手,送るストリーム  
+        connect(commands[1],streams[commands[2]]);
+        break;
+        case 1 :
+        disconnect(commands[1]);
+        default:
+        break;
+    }
 }
 function sendText(peerid,data){
     connectedConn[peerid].send(data);

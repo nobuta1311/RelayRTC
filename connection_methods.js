@@ -59,5 +59,5 @@ function disconnect(to_id){
 }
 
 function letConnect(fromID,toID){
-//  send()
+    sendText(fromID,"0,"+toID+","+myID);
 }
