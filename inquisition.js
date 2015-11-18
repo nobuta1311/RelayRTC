@@ -3,8 +3,6 @@ var ConnectionStateURL="./ConnectionState.php";
 var peerTable = new Array();
 var connectionTable = new Array();
 
-
-
 function inquiry_tables(){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
