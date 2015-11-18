@@ -3,14 +3,12 @@ var ConnectionStateURL="./ConnectionState.php";
 var peerTable = new Array();
 var connectionTable = new Array();
 
-
-inquiry_tables();
 function inquiry_tables(){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
     setInterval(function loop(){
-        writeLog("参加者一覧と接続状況を取得");
+        writeLog("Get Tables.");
         //ID一覧を取得   
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示

@@ -24,7 +24,22 @@ function dataConnect(partnerID){
         return true;
 }
 function dataDisconnect(partnerID){
-        var genuineID = id_exchange(partnerID,0);
         connectedConn[partnerID].close();
         return true;
+}
+function commandByPeers(data){
+    var commands = data.split(",");
+    var mode =commands[0];
+    switch (mode){
+        case 0 :    //接続命令  0,送る相手,送るストリーム  
+        connect(commands[1],streams[commands[2]]);
+        break;
+        case 1 :
+        disconnect(commands[1]);
+        default:
+        break;
+    }
+}
+function sendText(peerid,data){
+    connectedConn[peerid].send(data);
 }

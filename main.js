@@ -17,12 +17,17 @@ var connURL = "./ConnectionState.php";
 var commanderURL ="./Commander.php?";
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
+
+$('#join-provider').on("click", function(){
+    writeLog("You've joined as a provider");
+    initialize();
+});
+$('#join-receiver').on("click", function(){
+    writeLog("You've joined as a receiver");
+    initialize();
+});
+
 peer.on('open', function(){ //回線を開く
-    writeLog("Your peer is opened by peerID:"+myID);
-    $("#my-id").text(peer.id);
-    myID = id_exchange(peer.id,0);
-    $('#my-number').text(myID);
-    writeLog("Your id is "+myID);
 });
 peer.on('call', function(call){ //かかってきたとき
     //call.answer(localStream);//返すものはなんでもいい
@@ -39,28 +44,20 @@ navigator.getUserMedia({audio: false, video: true}, function(stream){
         //$('#my-video').prop('src', url);
     },function() { alert("Error!"); 
 });
+function initialize(){
+    inquiry_tables();
+    writeLog("Your peer is opened by peerID:"+peer.id);
+    $("#my-id").text(peer.id);
+    myID = id_exchange(peer.id,0);
+    $('#my-number').text(myID);
+    writeLog("Your id is "+myID);    
+}
 
 function connectedDo(conn){ //データのやりとり
         conn.on("data",function(data){//data受信リスナ
                 writeLog("受信データ : "+data); //テキストとして受信データを表示
                 commandByPeers(data);
         });
-}
-function commandByPeers(data){
-    var commands = data.split(",");
-    var mode =commands[0];
-    switch (mode){
-        case 0 :    //接続命令  0,送る相手,送るストリーム  
-        connect(commands[1],streams[commands[2]]);
-        break;
-        case 1 :
-        disconnect(commands[1]);
-        default:
-        break;
-    }
-}
-function sendText(peerid,data){
-    connectedConn[peerid].send(data);
 }
 
 function calledDo(call){ //コネクションした後のやりとり
