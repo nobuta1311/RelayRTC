@@ -18,11 +18,11 @@ var commanderURL ="./Commander.php?";
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 
-$('#join-provider').on("click", function(){
+$('#join-provider').click(function(){
     writeLog("You've joined as a provider");
     initialize();
 });
-$('#join-receiver').on("click", function(){
+$('#join-receiver').click(function(){
     writeLog("You've joined as a receiver");
     initialize();
 });
