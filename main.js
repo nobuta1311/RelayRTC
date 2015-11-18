@@ -77,5 +77,5 @@ function calledDo(call){ //コネクションした後のやりとり
 }
 function writeLog(logstr){
     console.log(logstr);
-    $("#log-space").append(logstr+"<br>");
+    $("#log-space").prepend(logstr+"<br>");
 }
