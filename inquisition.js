@@ -5,7 +5,6 @@ function inquiry_tables(){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
-    setInterval(function loop(){
         //writeLog("Get Tables.");
         //ID一覧を取得   
         var response =id_exchange("all",4);
@@ -36,8 +35,14 @@ function inquiry_tables(){
                 });
             $("#connection-table").append("<br>");
         });
+}
+function inquiry_roop(){
+    inquiry_tables();
+    setInterval(function loop(){
+        inquiry_tables();
     },2000);
 }
+
 function id_exchange(command_str,mode){
     var mode_str="";
     var result;
