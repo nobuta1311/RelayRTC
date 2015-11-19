@@ -26,12 +26,19 @@ $('#joinReceiver').click(function(){
     writeLog("You've joined as a receiver");
     initialize();
 });
-for(var i=0;i<100;i++){
-    $("#connect-"+i).click(function(){
-            alert("pushed button-"+i);
-       sendText(i,myID+",2"); 
-    });
-}
+var buttons = Array();
+for(var i=0;i<100;i++)
+    buttons[i]="connect-"+i;
+$('#connect-buttons').on(
+    'click',   // イベント名
+    '.btn',    // 子要素セレクター
+    buttons,
+    function() {
+      $('<button class="btn">プラス</button>')
+        alert($(this).attr("id"));
+        sendText(i,myID+",2");
+    }
+  );
 });
 peer.on('open', function(){ //回線を開く
 });
@@ -48,7 +55,7 @@ peer.on('connection',function(conn){    //接続されたとき
 
 navigator.getUserMedia({audio: false, video: true}, function(stream){
      localStream = URL.createObjectURL(stream);
-        //$('#my-video').prop('src', url);
+     $('#my-video').prop('src', url);
     },function() { alert("Error!"); 
 });
 function initialize(){
