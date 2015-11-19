@@ -7,6 +7,7 @@ connectionTableのデータコネクション部分は、この関数群で更�
 function dataConnectAll(){
     writeLog("dataconnectall");
    Object.keys(peerTable).forEach(function(pid){
+       writeLog(pid);
         //if(pid==myID){continue;}
         dataConnect(pid);
     });
