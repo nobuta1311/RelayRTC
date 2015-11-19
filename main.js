@@ -28,7 +28,7 @@ $('#joinReceiver').click(function(){
 });
 var buttons = Array();
 for(var i=0;i<100;i++)
-    buttons[i]="connect-"+i;
+    buttons[i]="#connect-"+i;
 $('#connect-buttons').on(
     'click',   // イベント名
     '.btn',    // 子要素セレクター
