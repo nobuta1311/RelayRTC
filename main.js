@@ -46,6 +46,7 @@ peer.on('connection',function(conn){    //接続されたとき
 });
 
 function makeListener(){
+    console.log(peerTable);
     Object.keys(peerTable).forEach(function(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
