@@ -8,7 +8,7 @@ function inquiry_tables(){
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
     setInterval(function loop(){
-        writeLog("Get Tables.");
+        //writeLog("Get Tables.");
         //ID一覧を取得   
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示

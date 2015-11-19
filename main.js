@@ -27,8 +27,11 @@ $('#joinReceiver').click(function(){
     initialize();
 });
 var buttons = Array();
-for(var i=0;i<100;i++)
+for(var i=0;i<100;i++){
     buttons[i]="#connect-"+i;
+    $(buttons[i]).on(click,function(){alert($(this).attr("id"));});
+}
+/*
 $("#connect-buttons").on(
     'click',   // イベント名
     buttons,
@@ -37,6 +40,7 @@ $("#connect-buttons").on(
         sendText(i,myID+",2");
     }
 );
+*/
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: true}, function(stream){
      localStream = window.URL.createObjectURL(stream);
