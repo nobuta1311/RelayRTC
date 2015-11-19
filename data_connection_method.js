@@ -5,8 +5,8 @@ peerTableが最新のものになっていることを前提としており、
 connectionTableのデータコネクション部分は、この関数群で更新する。
 */
 function dataConnectAll(){
+    writeLog("dataconnectall");
     for(var pid in peerTable){
-        writeLog(pid);
         if(pid==myID){break;}
         dataConnect(pid);
     }
