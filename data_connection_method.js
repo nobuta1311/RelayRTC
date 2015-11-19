@@ -6,6 +6,7 @@ connectionTableのデータコネクション部分は、この関数群で更�
 */
 function dataConnectAll(){
     for(var pid in peerTable){
+        writeLog(pid);
         if(pid==myID){break;}
         dataConnect(pid);
     }
