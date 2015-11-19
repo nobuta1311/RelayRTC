@@ -36,8 +36,8 @@ peer.on('open', function(){ //回線を開く
 });
 
 peer.on('call', function(call){ //かかってきたとき
-    //call.answer(localStream);//返すものはなんでもいい
-    call.answer();  //何も返さないようにしておく。
+   writeLog("Connected by "+id_exchange(call.peer,2);
+    call.answer(localStream);  //何も返さないようにしておく。
     calledDo(call);
 });
 
@@ -79,8 +79,11 @@ function calledDo(call){ //コネクションした後のやりとり
 
     //genuineIDはcall.peerなので
         var pid = id_exchange(call.peer,2);
-        writeLog("Connected by "+pid);
-        if(pid=="false")return false;   //失敗したらfalse返す
+
+        if(pid=="false"){
+            writeLog("Connection Failed");
+            return false;   //失敗したらfalse返す
+        }
         connectedCall[pid]=call;
         //$("#peer-num").text(connectedNum);//相手のID表示
         //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
