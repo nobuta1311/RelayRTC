@@ -35,8 +35,7 @@ $("#connect-buttons").on(
     'click',   // イベント名
     buttons,
     function() {
-        var cur = $(this); 
-        alert(cur.attr('id'));
+        alert(this.id);
         sendText(i,myID+",2");
     }
 );
