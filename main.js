@@ -70,7 +70,8 @@ function makeListener(){
     $("#connect-buttons").on(
         'click',"connect-"+key,
         function(){
-            alert("pushed "+key);   
+            writeLog("Connect to "+key);
+            sendText(key,myID+",2");   
         }
     );
     });
