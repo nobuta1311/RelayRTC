@@ -39,11 +39,11 @@ function commandByPeers(data){
         writeLog("Command: connect to "+commands[2]);
         connect(commands[1],streams[commands[2]]);
         break;
-        case 1 :    //切断
+        case 1 :    //切断 1,相手
         writeLog("Command: disconnect to "+commands[1]);
         disconnect(commands[1]);
-        break;
-        case 2 : //配信要求
+        break; 
+        case 2 : //配信要求 2,相手
         writeLog("Request: provide your video to "+commands[1]);
         routing(commands[1]);
         break;

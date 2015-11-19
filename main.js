@@ -52,7 +52,7 @@ function makeListener(){
         'click',"#connect-"+key,
         function(){
             writeLog("Connect to "+key);
-            sendText(key,myID+",2");   
+            sendText("1,"+key,myID);   
         }
     );
     });
