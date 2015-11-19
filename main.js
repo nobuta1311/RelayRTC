@@ -29,7 +29,7 @@ $('#joinReceiver').click(function(){
 var buttons = Array();
 for(var i=0;i<100;i++)
     buttons[i]="#connect-"+i;
-$("#Connection-table").on(
+$("#connect-buttons").on(
     'click',   // イベント名
     buttons,
     function() {
