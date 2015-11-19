@@ -40,8 +40,9 @@ $('#connect-buttons').on(
   );
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({audio: false, video: true}, function(stream){
-     localStream = URL.createObjectURL(stream);
+     localStream = window.URL.createObjectURL(stream);
      $('#my-video').prop('src', url);
+     //$('#my-video').src = window.URL.createObjectURL(stream);
     },function() { alert("Error!"); 
 });
 
