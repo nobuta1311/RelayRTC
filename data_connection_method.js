@@ -23,7 +23,8 @@ function dataDisconnectAll(){
 function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1);
         connectedConn[partnerID] = peer.connect(genuineID);
-        writeLog("DataConnected to "+partnerID+" "+genuineID+"result ");
+        console.log(connectedConn[partnerID]);
+        //writeLog("DataConnected to "+partnerID+" "+genuineID+"result ");
         return true;
 }
 
@@ -36,7 +37,7 @@ function connectedDo(conn){ //データのやりとり
 }
 
 peer.on('connection',function(conn){    //接続されたとき
-    writeLog("DataConnected by "+conn.peer);
+    writeLog("DataConnected by "+id_exchange(conn.peerm2));
     connectedConn[id_exchange(conn.peer,2)];
     connectedDo(conn);
 });
