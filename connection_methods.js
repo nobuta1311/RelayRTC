@@ -15,8 +15,10 @@ function routing(partnerID){
     //1ならば直線状につながる
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
+       writeLog("Routing: direct to "+partnerID);
        connect(id_exchange(partnerID,1));
     }else{  //リレー式につなげる場合。
+        writeLog("Routing: relay-connect to "+partnerID);
         connect_func(myID,partnerID,0);
            //繋げ元から余裕があればそこから繋げる
            //そうでなければすでに繋がっているところを見つける
@@ -25,9 +27,11 @@ function routing(partnerID){
    
 }
 function connect_func(fromID,toID,count){
+    writeLog("Connect-Func "+fromID+" to "+toID+" "+count);
     //相手が見つかるならば接続させる
     //なお初回は絶対に引っかからない
     if(connectionTable[fromID]["counter"]<Branch[count++]){
+        writeLog("letConnect "+fromID+" "+toID);
         letConnect(fromID,toID);
         return 0;
     }
