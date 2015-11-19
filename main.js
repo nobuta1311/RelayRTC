@@ -86,7 +86,8 @@ function calledDo(call){ //コネクションした後のやりとり
             var url = URL.createObjectURL(stream);
             streams[pid]=url;   //urlを保管
             //url変換したものを格納し、したの行のように表示させる。
-            var div = $("<video id=\"peer-video\""+pid+" style=\"width: 300px; autoplay=\"1\></video>");//disabledにできる
+            var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 300px;\" autoplay=\"1\"></video>");//disabledにできる
+                   // <!--<video id="peer-video" style="width: 300px;" autoplay="1"></video>-->
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
         });
