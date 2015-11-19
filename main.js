@@ -65,7 +65,7 @@ peer.on('connection',function(conn){    //接続されたとき
 });
 
 function makeListener(){
-    $(function (){
+    alert(peerTable[1]);
     $("#connect-buttons").off("click");
     Object.keys(peerTable).forEach(function(key){
     $("#connect-buttons").on(
@@ -74,7 +74,6 @@ function makeListener(){
             alert("pushed "+key);   
         }
     );
-    });
     });
 }
 function initialize(){
