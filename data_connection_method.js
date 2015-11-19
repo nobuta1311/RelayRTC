@@ -6,8 +6,9 @@ connectionTableのデータコネクション部分は、この関数群で更�
 */
 function dataConnectAll(){
     writeLog("dataconnectall");
-    writeLog(Object.keys(peerTable)[52]);
-   Object.keys(peerTable).forEach(function(key){
+    //writeLog(Object.keys(peerTable)[52]);
+    console.log(peerTable);
+    Object.keys(peerTable).forEach(function(key){
            alert("test");
        writeLog(key);
         dataConnect(key);

@@ -11,10 +11,6 @@ var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
 var myID;
-var IDURL="./ID.php?";
-var partURL="./Participants.php?";
-var connURL = "./ConnectionState.php";
-var commanderURL ="./Commander.php?";
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 $(function (){
