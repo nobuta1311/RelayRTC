@@ -34,11 +34,17 @@ $('#connect-buttons').on(
     '.btn',    // 子要素セレクター
     buttons,
     function() {
-      $('<button class="btn">プラス</button>')
         alert($(this).attr("id"));
         sendText(i,myID+",2");
     }
   );
+  
+navigator.getUserMedia({audio: false, video: true}, function(stream){
+     localStream = URL.createObjectURL(stream);
+     $('#my-video').prop('src', url);
+    },function() { alert("Error!"); 
+});
+
 });
 peer.on('open', function(){ //回線を開く
 });
@@ -53,11 +59,7 @@ peer.on('connection',function(conn){    //接続されたとき
     connectedDo(conn);
 });
 
-navigator.getUserMedia({audio: false, video: true}, function(stream){
-     localStream = URL.createObjectURL(stream);
-     $('#my-video').prop('src', url);
-    },function() { alert("Error!"); 
-});
+
 function initialize(){
     inquiry_tables();
     writeLog("Your peer is opened by peerID:"+peer.id);
