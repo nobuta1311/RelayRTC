@@ -7,8 +7,8 @@ connectionTableのデータコネクション部分は、この関数群で更�
 function dataConnectAll(){
     writeLog("dataconnectall");
    Object.keys(peerTable).forEach(function(key){
+           alert("test");
        writeLog(key);
-
         dataConnect(key);
     });
     return true;
@@ -39,6 +39,7 @@ function commandByPeers(data){
         break;
         case 1 :    //切断
         disconnect(commands[1]);
+        break;
         default:
         break;
         case 2 : //配信要求
