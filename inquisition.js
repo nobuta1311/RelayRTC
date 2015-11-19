@@ -20,7 +20,7 @@ function inquiry_tables(){
             if(peerTable[key]===undefined){  //新しいやつならば
                 peerTable[key] = new_peerTable[key];
                 //alert(peerTable[key]);
-                var div = $("<button type=\"button\" id=\"connect-"+key+">"+key+"</button>");//disabledにできる
+                var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }
         });
