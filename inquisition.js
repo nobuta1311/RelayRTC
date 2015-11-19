@@ -22,6 +22,10 @@ function inquiry_tables(){
                 //alert(peerTable[key]);
                 var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
+                    $("#connect-"+key).click(function(){
+                    alert("pushed button-"+key);
+                    sendText(i,myID+",2"); 
+                    });
             }
         });
         //接続状況を一覧表示
