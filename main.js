@@ -29,12 +29,11 @@ $('#joinReceiver').click(function(){
 var buttons = Array();
 for(var i=0;i<100;i++)
     buttons[i]="#connect-"+i;
-$(document).on(
+$("#Connection-table").on(
     'click',   // イベント名
-    //'#connect-1',
     buttons,
     function() {
-        alert("pushed");
+        alert($(this).attr('id'));
         sendText(i,myID+",2");
     }
 );
