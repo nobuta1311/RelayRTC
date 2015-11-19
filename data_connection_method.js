@@ -9,8 +9,6 @@ function dataConnectAll(){
     //writeLog(Object.keys(peerTable)[52]);
     console.log(peerTable);
     Object.keys(peerTable).forEach(function(key){
-           alert("test");
-       writeLog(key);
         dataConnect(key);
     });
     return true;
