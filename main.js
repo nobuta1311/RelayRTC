@@ -26,6 +26,7 @@ $('#joinReceiver').click(function(){
     writeLog("You've joined as a receiver");
     initialize();
 });
+/*
 var buttons = Array();
 for(var i=0;i<100;i++){
     buttons[i]="#connect-"+i;
@@ -39,6 +40,16 @@ $("#connect-buttons").on(
         sendText(i,myID+",2");
     }
 );
+*/
+Object.keys(peerTable).forEach(function(key){
+    $(document).on(
+        'click',"connect-"+key,
+        function(){
+         alert("pushed "+key);   
+        }
+    );
+});
+
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: true}, function(stream){
      localStream = window.URL.createObjectURL(stream);
