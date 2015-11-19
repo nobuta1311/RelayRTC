@@ -27,8 +27,8 @@ $('#joinReceiver').click(function(){
     initialize();
 });
 for(var i=0;i<100;i++){
-    alert("pushed button-"+i);
     $("#connect-"+i).click(function(){
+            alert("pushed button-"+i);
        sendText(i,myID+",2"); 
     });
 }
