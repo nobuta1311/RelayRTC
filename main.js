@@ -42,6 +42,7 @@ peer.on('call', function(call){ //かかってきたとき
 });
 
 peer.on('connection',function(conn){    //接続されたとき
+    writeLog("DataConnected by "+conn.peer);
     connectedDo(conn);
 });
 
