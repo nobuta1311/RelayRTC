@@ -13,12 +13,14 @@ function inquiry_tables(){
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示
         //console.log(response);
-        peerTable = JSON.parse(response);
-        $("#connect-buttons").empty();
-        Object.keys(peerTable).forEach(function(key){
+        var new_peerTable = JSON.parse(response);
+        //$("#connect-buttons").empty();
+        Object.keys(new_peerTable).forEach(function(key){
             //console.log(peerTable[key]);
-            var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
-            $("#connect-buttons").append(div);
+            if(peerTable[key]==undefined){  //新しいやつならば
+                var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
+                $("#connect-buttons").append(div);
+            }
         });
         //接続状況を一覧表示
         response = noticeConnect("",0); 

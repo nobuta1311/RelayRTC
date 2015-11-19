@@ -26,6 +26,11 @@ $('#joinReceiver').click(function(){
     writeLog("You've joined as a receiver");
     initialize();
 });
+for(var i=0;i<100;i++){
+    $("#connect-"+i).click(function(){
+       sendText(i,myID+",2"); 
+    });
+}
 });
 peer.on('open', function(){ //回線を開く
 });
