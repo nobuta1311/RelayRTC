@@ -23,7 +23,8 @@ function dataDisconnectAll(){
 function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1);
         connectedConn[partnerID] = peer.connect(genuineID);
-        writeLog("DataConnected to "+partnerID+" "+genuineID);
+     
+        writeLog("DataConnected to "+partnerID+" "+genuineID+"result "+connectedConn[partnerID]);
         return true;
 }
 function dataDisconnect(partnerID){
