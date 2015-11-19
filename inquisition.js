@@ -17,7 +17,8 @@ function inquiry_tables(){
         //$("#connect-buttons").empty();
         Object.keys(new_peerTable).forEach(function(key){
             //console.log(peerTable[key]);
-            if(peerTable[key]==undefined){  //新しいやつならば
+            if(peerTable[key]===undefined){  //新しいやつならば
+                alert(peerTable[key]);
                 var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }
