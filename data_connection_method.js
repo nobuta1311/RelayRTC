@@ -48,7 +48,7 @@ function commandByPeers(data){
         routing(commands[1]);
         break;
         default:
-        wirteLog("Bad Request");
+        writeLog("Bad Request");
         break;
     }
 }
