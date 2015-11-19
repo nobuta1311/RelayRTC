@@ -23,10 +23,25 @@ function dataDisconnectAll(){
 function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1);
         connectedConn[partnerID] = peer.connect(genuineID);
-     
-        writeLog("DataConnected to "+partnerID+" "+genuineID+"result "+connectedConn[partnerID]);
+        writeLog("DataConnected to "+partnerID+" "+genuineID+"result ");
         return true;
 }
+
+function connectedDo(conn){ //データのやりとり
+        writeLog("Waiting datas");
+        conn.on("data",function(data){//data受信リスナ
+                writeLog("受信データ : "+data); //テキストとして受信データを表示
+                commandByPeers(data);
+        });
+}
+
+peer.on('connection',function(conn){    //接続されたとき
+    writeLog("DataConnected by "+conn.peer);
+    connectedConn[id_exchange(conn.peer,2)];
+    connectedDo(conn);
+});
+
+
 function dataDisconnect(partnerID){
         connectedConn[partnerID].close();
         return true;

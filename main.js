@@ -41,10 +41,6 @@ peer.on('call', function(call){ //かかってきたとき
     calledDo(call);
 });
 
-peer.on('connection',function(conn){    //接続されたとき
-    writeLog("DataConnected by "+conn.peer);
-    connectedDo(conn);
-});
 
 function makeListener(){
 
@@ -69,12 +65,6 @@ function initialize(){
     writeLog("Your id is "+myID);    
 }
 
-function connectedDo(conn){ //データのやりとり
-        conn.on("data",function(data){//data受信リスナ
-                writeLog("受信データ : "+data); //テキストとして受信データを表示
-                commandByPeers(data);
-        });
-}
 
 function calledDo(call){ //コネクションした後のやりとり
 
