@@ -36,6 +36,8 @@ $('#connect-buttons').on(
     function() {
         alert($(this).attr("id"));
         sendText(i,myID+",2");
+              $('<button class="btn">プラス</button>')
+                .appendTo('#connect-buttons');
     }
   );
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
