@@ -38,7 +38,7 @@ $('#connect-buttons').on(
         sendText(i,myID+",2");
     }
   );
-  
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({audio: false, video: true}, function(stream){
      localStream = URL.createObjectURL(stream);
      $('#my-video').prop('src', url);
