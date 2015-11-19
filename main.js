@@ -76,14 +76,17 @@ function connectedDo(conn){ //データのやりとり
 }
 
 function calledDo(call){ //コネクションした後のやりとり
+
     //genuineIDはcall.peerなので
         var pid = id_exchange(call.peer,2);
+        writeLog("Connected by "+pid);
         if(pid=="false")return false;   //失敗したらfalse返す
         connectedCall[pid]=call;
-        $("#peer-num").text(connectedNum);//相手のID表示
-        $("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
+        //$("#peer-num").text(connectedNum);//相手のID表示
+        //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
         call.on('stream', function(stream){//callのリスナ
             var url = URL.createObjectURL(stream);
+            writeLog("Get Stream by "+pid+" : "+url);
             streams[pid]=url;   //urlを保管
             //url変換したものを格納し、したの行のように表示させる。
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 300px;\" autoplay=\"1\"></video>");//disabledにできる
