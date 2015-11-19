@@ -21,7 +21,7 @@ function dataDisconnectAll(){
     return true;
 }
 function dataConnect(partnerID){
-        var genuineID = id_exchange(partnerID,0);
+        var genuineID = id_exchange(partnerID,1);
         connectedConn[partnerID] = peer.connect(genuineID);
         writeLog("DataConnected to "+partnerID+" "+genuineID);
         return true;
