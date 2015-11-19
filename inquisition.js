@@ -21,7 +21,7 @@ function inquiry_tables(){
                 peerTable[key] = new_peerTable[key];
                 //alert(peerTable[key]);
                 var div = $("<button type=\"button\" id=\"connect-\""+key+">"+key+"</button>");//disabledにできる
-                $("#connect-buttons").appendChild(div);
+                $("#connect-buttons").append(div);
             }
         });
         //接続状況を一覧表示

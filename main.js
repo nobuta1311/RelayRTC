@@ -29,16 +29,16 @@ $('#joinReceiver').click(function(){
 var buttons = Array();
 for(var i=0;i<100;i++)
     buttons[i]="#connect-"+i;
-$('#connect-buttons').on(
+$('document').on(
     'click',   // イベント名
     '.btn',    // 子要素セレクター
     '#connect-1',
-    buttons,
+   // buttons,
     function() {
         alert("pushed");
         //sendText(i,myID+",2");                一時的に～～
     }
-  );
+);
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: true}, function(stream){
      localStream = window.URL.createObjectURL(stream);
