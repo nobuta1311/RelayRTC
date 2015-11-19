@@ -17,21 +17,21 @@ $(function (){
 $('#joinProvider').click(function(){
     if($(this).text=="exit"){
         id_exchange(myID,3);
-        $(this).text="Join as a Provider";
+        $(this).text("Join as a Provider");
     }else{
         writeLog("You've joined as a provider");
         initialize();
-        $(this).text="exit";
+        $(this).text("exit");
     }
 });
 $('#joinReceiver').click(function(){
     if($(this).text=="exit"){
         id_exchange(myID,3);
-        $(this).text="Join as a Receiver";
+        $(this).text("Join as a Receiver");
     }else{
         writeLog("You've joined as a receiver");
         initialize();        
-        $(this).text="exit";
+        $(this).text("exit");
     }
 });
 
