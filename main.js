@@ -36,7 +36,7 @@ peer.on('open', function(){ //回線を開く
 });
 
 peer.on('call', function(call){ //かかってきたとき
-   writeLog("Connected by "+id_exchange(call.peer,2);
+   writeLog("Connected by "+id_exchange(call.peer,2));
     call.answer(localStream);  //何も返さないようにしておく。
     calledDo(call);
 });
