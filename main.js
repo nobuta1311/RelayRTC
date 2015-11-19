@@ -15,12 +15,24 @@ var myID;
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 $(function (){
 $('#joinProvider').click(function(){
-    writeLog("You've joined as a provider");
-    initialize();
+    if($(this).text=="exit"){
+        id_exchange(myID,3);
+        $(this).text="Join as a Provider";
+    }else{
+        writeLog("You've joined as a provider");
+        initialize();
+        $(this).text="exit";
+    }
 });
 $('#joinReceiver').click(function(){
-    writeLog("You've joined as a receiver");
-    initialize();
+    if($(this).text=="exit"){
+        id_exchange(myID,3);
+        $(this).text="Join as a Receiver";
+    }else{
+        writeLog("You've joined as a receiver");
+        initialize();        
+        $(this).text="exit";
+    }
 });
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -43,13 +55,12 @@ peer.on('call', function(call){ //かかってきたとき
 
 
 function makeListener(){
-
     Object.keys(peerTable).forEach(function(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
             writeLog("Connect to "+key);
-            sendText("1,"+key,myID);   
+            sendText("1,"+key,myID);
         }
     );
     });
