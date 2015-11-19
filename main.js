@@ -34,9 +34,8 @@ $('#connect-buttons').on(
     '.btn',    // 子要素セレクター
     '#connect-1',
     function() {
-        alert($(this).attr("id"));
-        sendText(i,myID+",2");
-              $('<button class="btn">プラス</button>')
+        //sendText(i,myID+",2");                一時的に～～
+        $('<button class="btn">プラス</button>')
                 .appendTo('#connect-buttons');
     }
   );
