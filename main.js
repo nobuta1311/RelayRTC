@@ -33,10 +33,10 @@ $('#connect-buttons').on(
     'click',   // イベント名
     '.btn',    // 子要素セレクター
     '#connect-1',
+    buttons,
     function() {
+        alert("pushed");
         //sendText(i,myID+",2");                一時的に～～
-        $('<button class="btn">プラス</button>')
-                .appendTo('#connect-buttons');
     }
   );
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
