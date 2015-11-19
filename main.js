@@ -46,7 +46,7 @@ peer.on('connection',function(conn){    //接続されたとき
 });
 
 function makeListener(){
-    console.log(peerTable);
+
     Object.keys(peerTable).forEach(function(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
@@ -60,6 +60,7 @@ function makeListener(){
 function initialize(){
     inquiry_tables();
     dataConnectAll();
+    console.log(peerTable);
     writeLog("Your peer is opened by peerID:"+peer.id);
     $("#my-id").text(peer.id);
     myID = id_exchange(peer.id,0);
