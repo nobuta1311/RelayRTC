@@ -31,11 +31,11 @@ for(var i=0;i<100;i++)
     buttons[i]="#connect-"+i;
 $(document).on(
     'click',   // イベント名
-    '#connect-1',
-   // buttons,
+    //'#connect-1',
+    buttons,
     function() {
         alert("pushed");
-        //sendText(i,myID+",2");                一時的に～～
+        sendText(i,myID+",2");
     }
 );
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -63,6 +63,7 @@ peer.on('connection',function(conn){    //接続されたとき
 
 function initialize(){
     inquiry_tables();
+   dataConnectAll();
     writeLog("Your peer is opened by peerID:"+peer.id);
     $("#my-id").text(peer.id);
     myID = id_exchange(peer.id,0);
