@@ -32,7 +32,7 @@ for(var i=0;i<100;i++)
 $('#connect-buttons').on(
     'click',   // イベント名
     '.btn',    // 子要素セレクター
-    buttons,
+    '#connect-1',
     function() {
         alert($(this).attr("id"));
         sendText(i,myID+",2");
