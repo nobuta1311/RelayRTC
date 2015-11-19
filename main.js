@@ -39,9 +39,9 @@ $('#connect-buttons').on(
     }
   );
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-navigator.getUserMedia({audio: false, video: true}, function(stream){
+navigator.getUserMedia({ video: true,audio: true}, function(stream){
      localStream = window.URL.createObjectURL(stream);
-     $('#my-video').prop('src', url);
+     $('#my-video').prop('src', localStream);
      //$('#my-video').src = window.URL.createObjectURL(stream);
     },function() { alert("Error!"); 
 });
