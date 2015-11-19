@@ -42,7 +42,8 @@ $("#connect-buttons").on(
 );
 */
 Object.keys(peerTable).forEach(function(key){
-    $(document).on(
+    alert(key);
+    $("#connect-buttons").on(
         'click',"connect-"+key,
         function(){
          alert("pushed "+key);   
