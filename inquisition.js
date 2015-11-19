@@ -24,6 +24,7 @@ function inquiry_tables(){
                 $("#connect-buttons").append(div);
             }
         });
+        makeListener();
         //接続状況を一覧表示
         response = noticeConnect("",0); 
         //console.log(response);

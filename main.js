@@ -41,15 +41,6 @@ $("#connect-buttons").on(
     }
 );
 */
-Object.keys(peerTable).forEach(function(key){
-    alert(key);
-    $("#connect-buttons").on(
-        'click',"connect-"+key,
-        function(){
-         alert("pushed "+key);   
-        }
-    );
-});
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: true}, function(stream){
@@ -73,10 +64,20 @@ peer.on('connection',function(conn){    //接続されたとき
     connectedDo(conn);
 });
 
-
+function makeListener(){
+    $("#connect-buttons").off("click");
+Object.keys(peerTable).forEach(function(key){
+    $("#connect-buttons").on(
+        'click',"connect-"+key,
+        function(){
+         alert("pushed "+key);   
+        }
+    );
+});
+}
 function initialize(){
     inquiry_tables();
-   dataConnectAll();
+    dataConnectAll();
     writeLog("Your peer is opened by peerID:"+peer.id);
     $("#my-id").text(peer.id);
     myID = id_exchange(peer.id,0);
