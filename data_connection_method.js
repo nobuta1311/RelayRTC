@@ -6,10 +6,10 @@ connectionTableのデータコネクション部分は、この関数群で更�
 */
 function dataConnectAll(){
     writeLog("dataconnectall");
-    for(var pid in peerTable){
-        if(pid==myID){break;}
+   Object.keys(peerTable).forEach(function(pid){
+        //if(pid==myID){continue;}
         dataConnect(pid);
-    }
+    });
     return true;
 }
 function dataDisconnectAll(){
