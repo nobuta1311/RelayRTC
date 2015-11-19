@@ -26,21 +26,6 @@ $('#joinReceiver').click(function(){
     writeLog("You've joined as a receiver");
     initialize();
 });
-/*
-var buttons = Array();
-for(var i=0;i<100;i++){
-    buttons[i]="#connect-"+i;
-}
-
-$("#connect-buttons").on(
-    'click',   // イベント名
-    buttons,
-    function() {
-        alert(this.id);
-        sendText(i,myID+",2");
-    }
-);
-*/
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: true}, function(stream){

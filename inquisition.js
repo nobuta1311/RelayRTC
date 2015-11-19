@@ -1,8 +1,6 @@
 //テスト用にここに記述
-var ConnectionStateURL="./ConnectionState.php";
-var peerTable = new Array();
-var connectionTable = new Array();
-
+var ConnectionStateURL="./ConnectionState.php?";
+var IDURL = "./ID.php?";
 function inquiry_tables(){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
@@ -79,10 +77,10 @@ function noticeConnect(from_parameter,parameter){
             case 0: //全部参照
                 break;
             case 1: //fromだけ指定してつながっている相手
-                url = "?from="+from_parameter;
+                url = "from="+from_parameter;
                 break;
             default: //fromとtoを指定して、つなげるもしくはつながっているか知る
-                url = "?from="+from_parameter+"&to="+parameter;
+                url = "from="+from_parameter+"&to="+parameter;
                 break;
         }
         $.ajax({
