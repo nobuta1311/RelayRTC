@@ -33,6 +33,7 @@ function inquiry_tables(){
         connectionTable = JSON.parse(response);
         $("#connection-table").text("");
         Object.keys(connectionTable).forEach(function(key1){
+                //alert(key1);
             var ar2 = connectionTable[key1];
             Object.keys(ar2).forEach(function(key2){
                 if(key2!="counter")

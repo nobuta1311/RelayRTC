@@ -38,7 +38,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$_GET["from"]]["counter"]=0;
         echo true;
     }
-}else if(isset($_GET["mode"])){
+}else if(isset($_GET["clear"])){
     $database="";
     echo true;
 }else{
