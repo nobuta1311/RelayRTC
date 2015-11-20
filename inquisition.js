@@ -9,29 +9,30 @@ function inquiry_tables(){
         //ID一覧を取得   
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示
-        //console.log(response);
         var new_peerTable = JSON.parse(response);
-        //$("#connect-buttons").empty();
         Object.keys(new_peerTable).forEach(function(key){
-            //console.log(peerTable[key]);
             if(peerTable[key]===undefined){  //新しいやつならば
                 peerTable[key] = new_peerTable[key];
-                //alert(peerTable[key]);
                 var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }
         });
-        makeListener();
-        //接続状況を一覧表示
-        response = noticeConnect("",0); 
-        //console.log(response);
+        makeListener();//接続状況更新
+        //connectionTableを埋める
+        Object.keys(peerTable).forEach(function(key1){
+                Object.keys(peerTable).forEach(function(key2){
+                    if(key1!=key2)
+                        noticeConnect(key1,key2,0);
+                    });
+        });
+        response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
         $("#connection-table").text("");
-        Object.keys(connectionTable).forEach(function(key){
-            var ar2 = connectionTable[key];
+        Object.keys(connectionTable).forEach(function(key1){
+            var ar2 = connectionTable[key1];
             Object.keys(ar2).forEach(function(key2){
                 if(key2!="counter")
-                $("#connection-table").append(key+" "+key2+"  "+connectionTable[key][key2]+"   ");
+                $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
                 });
             $("#connection-table").append("<br>");
         });
@@ -61,7 +62,10 @@ function id_exchange(command_str,mode){
             break;
         case 4: //partで参加人数 allで参加者全員
             mode_str = "refer";
-            break;                
+            break;
+        case 5:
+            mode_str = "clear";
+            break;
     }
     var accessurl =IDURL+mode_str+"="+command_str; 
     $.ajax({
@@ -75,17 +79,26 @@ function id_exchange(command_str,mode){
     return result;
 }
 
-function noticeConnect(from_parameter,parameter){
+function noticeConnect(from_parameter,to_parameter,mode){
     var url = "";
     var result ="false";
-        switch(parameter){
-            case 0: //全部参照
+        switch(mode){
+            case 0: //特定の関係を参照
+                url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
                 break;
-            case 1: //fromだけ指定してつながっている相手
+            case 1: //fromとtoを参照してtrueにする
+                 url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
+                break;
+            case 2: //fromとtoを指定してfalseにする
+                url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
+                break;
+            case 3: //fromを指定して接続相手をすべて表示
                 url = "from="+from_parameter;
                 break;
-            default: //fromとtoを指定して、つなげるもしくはつながっているか知る
-                url = "from="+from_parameter+"&to="+parameter;
+            case 4:
+                url = "clear=all";
+                break;
+            default://全て参照
                 break;
         }
         $.ajax({
@@ -98,8 +111,3 @@ function noticeConnect(from_parameter,parameter){
         })  ;  
         return result;
 }
-
-//aとbをつなげる　?from=a&to=b boolean
-//aとbがつながっているか知る boolean
-//aの接続相手を知る ?from=a json 1
-//すべての接続状態をまとめて json 0

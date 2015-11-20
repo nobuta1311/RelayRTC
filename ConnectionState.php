@@ -6,21 +6,30 @@ if($database=="")$database=array();
 //aとbがつながっているか知る boolean
 //aの接続相手を知る ?from=a json
 //すべての接続状態をまとめて json
-if(isset($_GET["from"])&& isset($_GET["to"])){
+if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
     $a = $_GET["from"]; $b=$_GET["to"];
-    if($database[$a][$b]==true)//既につながっているならば
-        echo true;
-    else if(isset($_GET["mode"]) && $_GET["mode"]==1){//1ならば接続する
-        if(!isset($database[$a])){$database[$a]=array();}
-        if(!isset($database[$b])){$database[$b]=array();}
+    if(!isset($database[$a]))$database[$a]["counter"]=0;
+    if(!isset($database[$b]))$database[$b]["counter"]=0;
+    if($_GET["mode"]==0){//参照
+        if(isset($database[$a][$b]))echo $database[$a][$b];
+        else{   //セットされてない
+            $database[$a][$b]=false;
+            $database[$b][$a]=false;
+            echo false;
+        }
+    }else if($_GET["mode"]==1){//1ならばtrueにする
         $database[$a][$b]=true;
         $database[$b][$a]=true;
         $database[$a]["counter"]++;
         $database[$b]["counter"]++;
         //接続通知
         echo true;
-    }else{ //0ならば参照（つながってないのでfalse）
-        echo false;
+    }else{//2ならばfalseにする
+        $database[$a][$b]=false;
+        $database[$b[$a]]=false;
+        $database[$a]["counter"]--;
+        $database[$b]["counter"]--;
+        echo true;
     }
 }else if(isset($_GET["from"])){
     //接続先相手を知る
@@ -28,6 +37,9 @@ if(isset($_GET["from"])&& isset($_GET["to"])){
      //   if($t===true)
     // }
     echo json_encode($database[$_GET["from"]]);
+}else if(isset($_GET["mode"])){
+    $database="";
+    echo true;
 }else{
     //すべての接続状態をまとめて
     echo json_encode($database);

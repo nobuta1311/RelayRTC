@@ -37,7 +37,7 @@ function connectedDo(conn){ //データのやりとり
 }
 
 peer.on('connection',function(conn){    //接続されたとき
-    writeLog("DataConnected by "+id_exchange(conn.peerm2));
+    writeLog("DataConnected by "+id_exchange(conn.peer,2));
     connectedConn[id_exchange(conn.peer,2)];
     connectedDo(conn);
 });
@@ -49,8 +49,7 @@ function dataDisconnect(partnerID){
 }
 function commandByPeers(data){
     var commands = data.split(",");
-    var mode =commands[0];
-    
+    var mode =parseInt(commands[0]);
     switch (mode){
         case 0 :    //接続命令  0,送る相手,送るストリーム  
         writeLog("Command: connect to "+commands[2]);

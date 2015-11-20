@@ -15,17 +15,18 @@ var myID;
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 $(function (){
 $('#joinProvider').click(function(){
-    if($(this).text=="exit"){
+    if($(this).text()=="exit"){
         id_exchange(myID,3);
         $(this).text("Join as a Provider");
     }else{
         writeLog("You've joined as a provider");
+        id_exchange("all",5);
         initialize();
         $(this).text("exit");
     }
 });
 $('#joinReceiver').click(function(){
-    if($(this).text=="exit"){
+    if($(this).text()=="exit"){
         id_exchange(myID,3);
         $(this).text("Join as a Receiver");
     }else{
@@ -36,13 +37,12 @@ $('#joinReceiver').click(function(){
 });
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-navigator.getUserMedia({ video: true,audio: true}, function(stream){
+navigator.getUserMedia({ video: true,audio: false}, function(stream){
      localStream = window.URL.createObjectURL(stream);
      $('#my-video').prop('src', localStream);
      //$('#my-video').src = window.URL.createObjectURL(stream);
     },function() { alert("Error!"); 
 });
-
 });
 peer.on('open', function(){ //回線を開く
 });
@@ -53,17 +53,16 @@ peer.on('call', function(call){ //かかってきたとき
     calledDo(call);
 });
 
-
 function makeListener(){
     Object.keys(peerTable).forEach(function(key){
+    if($("#connect-buttons").find("#connect-"+key).length)
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
             writeLog("Connect to "+key);
-            sendText("1,"+key,myID);
+            sendText(key,"2,"+myID);//接続要求
         }
-    );
-    });
+    );});
 }
 function initialize(){
     inquiry_tables();
@@ -78,10 +77,8 @@ function initialize(){
 
 
 function calledDo(call){ //コネクションした後のやりとり
-
     //genuineIDはcall.peerなので
         var pid = id_exchange(call.peer,2);
-
         if(pid=="false"){
             writeLog("Connection Failed");
             return false;   //失敗したらfalse返す

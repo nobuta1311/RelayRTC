@@ -24,7 +24,14 @@ else {
 }
 
 //新規追加
-if(isset($_GET["peerid"])){
+if(isset($_GET["clear"])){
+    $target = $_GET["clear"];
+    if($target=="all"){
+        $database="";
+    }else{
+        $database[$target]=null;
+    }
+}else if(isset($_GET["peerid"])){
         $peerid = $_GET["peerid"];
         $database[$counter]["id"]=$peerid;
         $database[$counter]["live"]=true;
