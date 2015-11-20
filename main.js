@@ -68,7 +68,7 @@ function initialize(){
     myID = id_exchange(peer.id,0);
     noticeConnect("","",4);
     noticeConnect(myID,"",3);
-    inquiry_tables();
+    inquiry_roop();
     dataConnectAll();
     console.log(peerTable);
     writeLog("Your peer is opened by peerID:"+peer.id);
