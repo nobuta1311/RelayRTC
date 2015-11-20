@@ -13,6 +13,7 @@ var peerNum;
 function routing(partnerID){
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
+    console.log(connectionTable[myID]);
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
        writeLog("Routing: direct to "+partnerID);

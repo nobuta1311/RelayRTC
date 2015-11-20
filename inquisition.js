@@ -20,7 +20,8 @@ function inquiry_tables(){
                 $("#connect-buttons").append(div);
             }
         });
-        makeListener();//接続状況更新
+        makeListener();
+        //接続状況更新
         //connectionTableを埋める
         Object.keys(peerTable).forEach(function(key1){
                 Object.keys(peerTable).forEach(function(key2){
