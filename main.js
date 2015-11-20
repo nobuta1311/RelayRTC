@@ -59,7 +59,7 @@ function makeListener(){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
-            writeLog("Connect to "+key);
+            writeLog("Request the video to "+key);
             sendText(key,"2,"+myID);//接続要求
         }
     );});
@@ -67,6 +67,7 @@ function makeListener(){
 function initialize(){
     myID = id_exchange(peer.id,0);
     noticeConnect("","",4);
+    noticeConnect(myID,"",3);
     inquiry_tables();
     dataConnectAll();
     console.log(peerTable);
