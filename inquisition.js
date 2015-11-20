@@ -13,6 +13,9 @@ function inquiry_tables(){
         Object.keys(new_peerTable).forEach(function(key){
             if(peerTable[key]===undefined){  //新しいやつならば
                 peerTable[key] = new_peerTable[key];
+                Object.keys(peerTable).forEach(function(key2){
+                    noticeConnect(key,key2,0);
+                });
                 var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }

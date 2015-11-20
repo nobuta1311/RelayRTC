@@ -65,12 +65,13 @@ function makeListener(){
     );});
 }
 function initialize(){
+    myID = id_exchange(peer.id,0);
+    noticeConnect("","",4);
     inquiry_tables();
     dataConnectAll();
     console.log(peerTable);
     writeLog("Your peer is opened by peerID:"+peer.id);
     $("#my-id").text(peer.id);
-    myID = id_exchange(peer.id,0);
     $('#my-number').text(myID);
     writeLog("Your id is "+myID);    
 }
