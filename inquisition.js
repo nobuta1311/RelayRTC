@@ -10,14 +10,14 @@ function inquiry_tables(){
         var response =id_exchange("all",4);
         //参加しているIDを一覧表示
         var new_peerTable = JSON.parse(response);
-        Object.keys(new_peerTable).forEach(function(key){
-            if(peerTable[key]===undefined){  //新しいやつならば
-                peerTable[key] = new_peerTable[key];
+        Object.keys(new_peerTable).forEach(function(key1){
+            if(peerTable[key1]===undefined){  //新しいやつならば
+                peerTable[key1] = new_peerTable[key1];
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2)
-                        noticeConnect(key,key2,0);
+                        noticeConnect(key1,key2,0);
                 });
-                var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
+                var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }
         });
