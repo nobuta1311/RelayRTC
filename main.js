@@ -29,6 +29,9 @@ $('#joinProvider').click(function(){
     if($(this).text()=="exit"){
         id_exchange(myID,3);
         $(this).text("Join as a Provider");
+        connectedConn.forEach(value,index,ar){
+            value.close();
+        }
     }else{
         writeLog("You've joined as a provider");
         id_exchange("all",5);
@@ -81,17 +84,15 @@ function initialize(){
 
 function calledDo(call){ //コネクションした後のやりとり
     //genuineIDはcall.peerなので
-        var pid = id_exchange(call.peer,2);
         //$("#peer-num").text(connectedNum);//相手のID表示
         //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
-        writeLog("CalledDo by"+pid);
         call.on('stream', function(stream){//callのリスナ
+           var pid = id_exchange(call.peer,2);
+          //      alert("callきた！！やった！");
             var url = URL.createObjectURL(stream);
-            writeLog("Get Stream by "+pid+" : "+url);
             streams[pid]=url;   //urlを保管
             //url変換したものを格納し、したの行のように表示させる。
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 300px;\" autoplay=\"1\"></video>");//disabledにできる
-                   // <!--<video id="peer-video" style="width: 300px;" autoplay="1"></video>-->
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
         });

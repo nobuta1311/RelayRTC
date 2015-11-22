@@ -2,11 +2,6 @@
  * 実際の接続を行うファイル
  *
 */
-//ルーティングを行い他のピアに指示を出しサーバに通知する
-//想定する木構造を満たすかどうかと相手の回線混雑具合を考慮
-//partnerIDに向けてstreamを配信する
-//
-//
 //用意する変数
 var Branch = Array(1,1,1,1,1,1,1,1,1,1,1);
 var peerNum;
@@ -17,6 +12,7 @@ function routing(partnerID){
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
        writeLog("Routing: direct to "+partnerID);
+       connectionTable[myID]["counter"]++;
        connect(partnerID,localStream);
     }else{  //リレー式につなげる場合。
         writeLog("Routing: relay-connect to "+partnerID);
@@ -41,8 +37,8 @@ function connect_func(fromID,toID,count){
     var min = 100; var new_from;
     Object.keys(connectionTable[fromID]).forEach(function(key){
         if(connectionTable[fromID][key]==true){//接続できているところをたどる
-            if(min>connectionTable[key]["count"]){
-                min =connectionTable[key]["count"];
+            if(min>connectionTable[key]["counter"]){
+                min =connectionTable[key]["counter"];
                 new_from = key;
                 //接続数最小のものを決める
             }
@@ -55,7 +51,7 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     var call = peer.call(id_exchange(to_id,1),send_stream);
     connectedNum++; //どこでつかうかわからんけど接続数
     //writeLog(call);
-    noticeConnect(myID,to_id,0);
+    noticeConnect(myID,to_id,1);
     calledDo(call);
   //connectedDo(); //接続したあとにデータのやりとり
 };
