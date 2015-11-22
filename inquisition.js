@@ -36,7 +36,7 @@ function inquiry_tables(){
         });
         response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
-        writeLog(connectionTable);
+       //writeLog(connectionTable);
         $("#connection-table").text("");
         Object.keys(connectionTable).forEach(function(key1){
                 //alert(key1);
@@ -112,6 +112,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
             default://全て参照
                 break;
         }
+        writeLog("noticeConnect URLは"+ConnectionStateURL+url);
         $.ajax({
             async:false,
             url:ConnectionStateURL,
