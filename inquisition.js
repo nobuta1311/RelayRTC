@@ -15,6 +15,7 @@ function inquiry_tables(){
                 peerTable[key] = new_peerTable[key];
                 Object.keys(peerTable).forEach(function(key2){
                     noticeConnect(key,key2,0);
+                    writeLog("参照して登録 "+key+" "+key2);
                 });
                 var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
