@@ -38,12 +38,13 @@ function connect_func(fromID,toID,count,checked){
 
     Object.keys(connectionTable[fromID]).forEach(function(key){
          writeLog("connect_func内ループ、from: "+fromID+" key:"+key+" "+connectionTable[fromID][key]+" "+checked[key]);
-        if(connectionTable[fromID][key]===true && checked[key]==undefined){//接続できているところをたどる
+        if(connectionTable[fromID][key]==true && checked[key]==undefined){//接続できているところをたどる
             checked[key]=true;
         //移り変わる相手は、送信の余裕はなくてもいいけど受信は１つ
             if(min>connectionTable[key]['counter']){
                 min =connectionTable[key]['counter'];
                 new_from = key;
+                writeLog(new_from);
                 //接続数最小のものを決める
             }else{
                 if(new_from==undefined){new_from = key;}
