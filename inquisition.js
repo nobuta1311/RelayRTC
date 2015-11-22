@@ -52,7 +52,7 @@ function inquiry_roop(){
     inquiry_tables();
     setInterval(function loop(){
         inquiry_tables();
-    },2000);
+    },5000);
 }
 
 function id_exchange(command_str,mode){

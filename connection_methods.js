@@ -56,7 +56,7 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     connectedNum++; //どこでつかうかわからんけど接続数
     //writeLog(call);
     noticeConnect(myID,to_id,1);
-    calledDo(call);
+    calledDo(to_id);
   //connectedDo(); //接続したあとにデータのやりとり
 }
 function disconnect(to_id){

@@ -7,6 +7,7 @@ var peerTable = Array();
 var connectionTable = Array();
 //配信者がサーバに設定
 //inquiryで照会
+var masterStream=undefined;
 var localStream;
 var streams = Array();  //自分の保持するstreamのURLをここに記録する。
 var connectedNum;   //接続数
@@ -20,7 +21,7 @@ peer.on('open', function(){ //回線を開く
 peer.on('call', function(call){ //かかってきたとき
    var pid = id_exchange(call.peer,2);
    writeLog("Connected by "+pid);
-    call.answer(localStream);  //何も返さないようにしておく。
+    call.answer();  //何も返さないようにしておく。
     connectedCall[pid]=call;
     calledDo(pid);
 });
@@ -61,7 +62,7 @@ $('#joinReceiver').click(function(){
 
 navigator.getUserMedia({ video: true,audio: false}, function(stream){
      localStream = stream;
-     $('#my-video').prop('src', window.URL.createObjectURL(localStream));
+ //    $('#my-video').prop('src', window.URL.createObjectURL(localStream));
      //$('#my-video').src = window.URL.createObjectURL(stream);
     },function() { alert("Error!");});
 });
@@ -91,6 +92,7 @@ function initialize(){
 
 
 function calledDo(pid){ //コネクションした後のやりとり
+        writeLog("CalledDo()"+pid);
         connectedCall[pid].on('stream', function(stream){//callのリスナ
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
