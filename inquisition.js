@@ -14,8 +14,8 @@ function inquiry_tables(){
             if(peerTable[key]===undefined){  //新しいやつならば
                 peerTable[key] = new_peerTable[key];
                 Object.keys(peerTable).forEach(function(key2){
-                    noticeConnect(key,key2,0);
-                    writeLog("参照して登録 "+key+" "+key2);
+                    if(key1!=key2)
+                        noticeConnect(key,key2,0);
                 });
                 var div = $("<button type=\"button\" id=\"connect-"+key+"\">"+key+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
@@ -26,12 +26,15 @@ function inquiry_tables(){
         //connectionTableを埋める
         Object.keys(peerTable).forEach(function(key1){
                 Object.keys(peerTable).forEach(function(key2){
-                    if(key1!=key2)
+                    if(key1!=key2){
                         noticeConnect(key1,key2,0);
+                        writeLog("参照して登録 "+key+" "+key2);
+                        }
                     });
         });
         response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
+        writeLog(connectionTable);
         $("#connection-table").text("");
         Object.keys(connectionTable).forEach(function(key1){
                 //alert(key1);
