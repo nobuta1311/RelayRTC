@@ -31,6 +31,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$b]["counter"]--;
         echo true;
     }
+    echo "モード"+mode
 }else if(isset($_GET["from"])){
     if(isset($database[$_GET["from"]]))
         echo json_encode($database[$_GET["from"]]);
@@ -38,9 +39,10 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$_GET["from"]]["counter"]=0;
         echo true;
     }
+    echo "モード3"
 }else if(isset($_GET["clear"])){
     $database="";
-    echo true;
+    echo "モード4";
 }else{
     //すべての接続状態をまとめて
     echo json_encode($database);
