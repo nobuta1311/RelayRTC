@@ -54,7 +54,7 @@ function commandByPeers(data){
     switch (mode){
         case 0 :    //接続命令  0,送る相手,送るストリーム  
         writeLog("Command: connect to "+commands[1]);
-        connect(commands[1],streams[commands[2]]);
+        connect(commands[1],masterStream);  //streams[commands[2]
         break;
         case 1 :    //切断 1,相手
         writeLog("Command: disconnect to "+commands[1]);

@@ -33,7 +33,7 @@ function connect_func(fromID,toID,count){
     }
     //fromIDがすでに接続している相手をみつける
     //複数いる場合はその相手が接続している数が少ないほう
-    var min = 100; var new_from=0;
+    var min = 100; var new_from=undefined;
     Object.keys(connectionTable[fromID]).forEach(function(key){
         if(connectionTable[fromID][key]===true){//接続できているところをたどる
  //           alert("ルーティング中"+key+"のカウンターは？"+connectionTable[key]['counter']);
@@ -42,7 +42,7 @@ function connect_func(fromID,toID,count){
                 new_from = key;
                 //接続数最小のものを決める
             }else{
-                if(new_from===0){new_from = key;}
+                if(new_from==undefined){new_from = key;}
             }
         }
     });
@@ -50,7 +50,7 @@ function connect_func(fromID,toID,count){
     return connect_func(new_from,toID,count);
 }
 function connect(to_id,send_stream){  //コネクションボタン押した
-    var call = peer.call(id_exchange(to_id,1),send_stream);
+    var call = peer.call(id_exchange(to_id,1),send_stream); //send_stream
     connectedCall[to_id]=call;
     //var call = peer.call(id_exchange(to_id,1),localStream);
     connectedNum++; //どこでつかうかわからんけど接続数

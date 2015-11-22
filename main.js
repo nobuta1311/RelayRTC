@@ -94,6 +94,7 @@ function initialize(){
 function calledDo(pid){ //コネクションした後のやりとり
         writeLog("CalledDo()"+pid);
         connectedCall[pid].on('stream', function(stream){//callのリスナ
+            masterStream = stream;
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
