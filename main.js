@@ -56,16 +56,15 @@ navigator.getUserMedia({ video: true,audio: false}, function(stream){
 });
 
 
-function makeListener(){
-    Object.keys(peerTable).forEach(function(key){
-    if($("#connect-buttons").find("#connect-"+key).length) return;
+function makeListener(key){
+    //if(myID==key) return;
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
             writeLog("Request the video to "+key);
             sendText(key,"2,"+myID);//接続要求
         }
-    );});
+    );
 }
 function initialize(){
     myID = id_exchange(peer.id,0);

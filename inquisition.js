@@ -20,10 +20,11 @@ function inquiry_tables(){
                 });
                 */
                 var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
+                makeListener(key1);
                 $("#connect-buttons").append(div);
             }
         });
-        makeListener();
+
         //接続状況更新
         //connectionTableを埋める
         Object.keys(peerTable).forEach(function(key1){
