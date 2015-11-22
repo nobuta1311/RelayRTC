@@ -29,7 +29,7 @@ function inquiry_tables(){
         Object.keys(peerTable).forEach(function(key1){
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
-                        writeLog("コネクションテーブル更新"+key1+" "+key2);
+                        
                         noticeConnect(key1,key2,0);
                         }
                     });
@@ -112,10 +112,9 @@ function noticeConnect(from_parameter,to_parameter,mode){
             default://全て参照
                 break;
         }
-        writeLog("noticeConnect URLは"+ConnectionStateURL+url);
         $.ajax({
             async:false,
-            url:ConnectionStateURL,
+            url:ConnectionStateURL+url,
             type:"get",
             datatype:"html",
         }).done(function(res){
