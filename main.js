@@ -58,7 +58,7 @@ navigator.getUserMedia({ video: true,audio: false}, function(stream){
 
 function makeListener(){
     Object.keys(peerTable).forEach(function(key){
-    if($("#connect-buttons").find("#connect-"+key).length)
+    if($("#connect-buttons").find("#connect-"+key).length) return;
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
