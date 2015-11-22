@@ -91,7 +91,7 @@ function calledDo(call){ //コネクションした後のやりとり
         connectedCall[pid]=call;
         //$("#peer-num").text(connectedNum);//相手のID表示
         //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
-        writeLog("CalledDo by"+pid):
+        writeLog("CalledDo by"+pid);
         call.on('stream', function(stream){//callのリスナ
             var url = URL.createObjectURL(stream);
             writeLog("Get Stream by "+pid+" : "+url);
