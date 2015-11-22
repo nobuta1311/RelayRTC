@@ -40,7 +40,7 @@ function connect_func(fromID,toID,count,checked){
         if(connectionTable[fromID][key]===true && checked[key]==undefined){//接続できているところをたどる
             checked[key]=true;
         //移り変わる相手は、送信の余裕はなくてもいいけど受信は１つ
-            if(min>connectionTable[key]['counter'] && connectionTable[key]["connected"]<Branch[counter]){
+            if(min>connectionTable[key]['counter']){
                 min =connectionTable[key]['counter'];
                 new_from = key;
                 //接続数最小のものを決める
