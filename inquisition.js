@@ -13,10 +13,12 @@ function inquiry_tables(){
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
+                /*
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2)
                         noticeConnect(key1,key2,0);
                 });
+                */
                 var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
                 $("#connect-buttons").append(div);
             }
@@ -27,6 +29,7 @@ function inquiry_tables(){
         Object.keys(peerTable).forEach(function(key1){
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
+                        writeLog("コネクションテーブル更新"+key1+" "+key2);
                         noticeConnect(key1,key2,0);
                         }
                     });
