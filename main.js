@@ -18,9 +18,11 @@ var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
 });
 peer.on('call', function(call){ //かかってきたとき
-   writeLog("Connected by "+id_exchange(call.peer,2));
+   var pid = id_exchange(call.peer,2);
+   writeLog("Connected by "+pid);
     call.answer(localStream);  //何も返さないようにしておく。
-    calledDo(call);
+    connectedCall[pid]=call;
+    calledDo(pid);
 });
 
 
@@ -88,15 +90,10 @@ function initialize(){
 }
 
 
-function calledDo(call){ //コネクションした後のやりとり
-    //genuineIDはcall.peerなので
-        //$("#peer-num").text(connectedNum);//相手のID表示
-        //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
-        call.on('stream', function(stream){//callのリスナ
-           var pid = id_exchange(call.peer,2);
-          //      alert("callきた！！やった！");
+function calledDo(pid){ //コネクションした後のやりとり
+        connectedCall[pid].on('stream', function(stream){//callのリスナ
+            streams[pid]=stream;
             var url = URL.createObjectURL(stream);
-            streams[pid]=url;   //urlを保管
             //url変換したものを格納し、したの行のように表示させる。
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 300px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);

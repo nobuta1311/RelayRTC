@@ -42,7 +42,7 @@ function connect_func(fromID,toID,count){
                 new_from = key;
                 //接続数最小のものを決める
             }else{
-                if(new_from==0){new_from = key;}
+                if(new_from===0){new_from = key;}
             }
         }
     });
@@ -51,12 +51,14 @@ function connect_func(fromID,toID,count){
 }
 function connect(to_id,send_stream){  //コネクションボタン押した
     var call = peer.call(id_exchange(to_id,1),send_stream);
+    connectedCall[to_id]=call;
+    //var call = peer.call(id_exchange(to_id,1),localStream);
     connectedNum++; //どこでつかうかわからんけど接続数
     //writeLog(call);
     noticeConnect(myID,to_id,1);
     calledDo(call);
   //connectedDo(); //接続したあとにデータのやりとり
-};
+}
 function disconnect(to_id){
     connectedNum--;
         //connectedCall[selected].close();        //connectedConn[selected].close();

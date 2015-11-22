@@ -23,6 +23,7 @@ function dataDisconnectAll(){
 function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1);
         connectedConn[partnerID] = peer.connect(genuineID);
+        connectedDo(connectedConn[partnerID]);
         console.log(connectedConn[partnerID]);
         //writeLog("DataConnected to "+partnerID+" "+genuineID+"result ");
         return true;
@@ -39,8 +40,6 @@ function connectedDo(conn){ //データのやりとり
 peer.on('connection',function(conn){    //接続されたとき
     writeLog("DataConnected by "+id_exchange(conn.peer,2));
     connectedConn[id_exchange(conn.peer,2)]=conn;
-    alert(connectedConn[id_exchange(conn.peer,2)].peer);
-
     connectedDo(conn);
 });
 
@@ -54,7 +53,7 @@ function commandByPeers(data){
     var mode =parseInt(commands[0]);
     switch (mode){
         case 0 :    //接続命令  0,送る相手,送るストリーム  
-        writeLog("Command: connect to "+commands[2]);
+        writeLog("Command: connect to "+commands[1]);
         connect(commands[1],streams[commands[2]]);
         break;
         case 1 :    //切断 1,相手
@@ -71,5 +70,6 @@ function commandByPeers(data){
     }
 }
 function sendText(peerid,data){
-    connectedConn[peerid].send(data+"");
+    writeLog("Send to "+connectedConn[peerid].peer);
+    connectedConn[peerid].send(data);
 }
