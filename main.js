@@ -48,8 +48,8 @@ $('#joinReceiver').click(function(){
 });
 
 navigator.getUserMedia({ video: true,audio: false}, function(stream){
-     localStream = window.URL.createObjectURL(stream);
-     $('#my-video').prop('src', localStream);
+     localStream = stream;
+     $('#my-video').prop('src', window.URL.createObjectURL(localStream));
      //$('#my-video').src = window.URL.createObjectURL(stream);
     },function() { alert("Error!"); 
 });
