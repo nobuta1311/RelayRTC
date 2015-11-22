@@ -38,7 +38,9 @@ function connectedDo(conn){ //データのやりとり
 
 peer.on('connection',function(conn){    //接続されたとき
     writeLog("DataConnected by "+id_exchange(conn.peer,2));
-    connectedConn[id_exchange(conn.peer,2)];
+    connectedConn[id_exchange(conn.peer,2)]=conn;
+    alert(connectedConn[id_exchange(conn.peer,2)].peer);
+
     connectedDo(conn);
 });
 
@@ -69,6 +71,5 @@ function commandByPeers(data){
     }
 }
 function sendText(peerid,data){
-    alert(connectedConn[peerid].peer);
-    connectedConn[peerid].send(data);
+    connectedConn[peerid].send(data+"");
 }
