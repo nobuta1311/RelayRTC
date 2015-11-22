@@ -51,8 +51,7 @@ navigator.getUserMedia({ video: true,audio: false}, function(stream){
      localStream = stream;
      $('#my-video').prop('src', window.URL.createObjectURL(localStream));
      //$('#my-video').src = window.URL.createObjectURL(stream);
-    },function() { alert("Error!"); 
-});
+    },function() { alert("Error!");});
 });
 
 

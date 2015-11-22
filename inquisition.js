@@ -30,7 +30,6 @@ function inquiry_tables(){
         Object.keys(peerTable).forEach(function(key1){
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
-                        
                         noticeConnect(key1,key2,0);
                         }
                     });
