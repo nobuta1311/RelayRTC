@@ -1,3 +1,5 @@
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
 var peerTable = Array();
 //参加したときはそれぞれが更新
 //消えるときもそれぞれが更新
@@ -13,6 +15,15 @@ var connectedConn = Array();
 var myID;
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
+peer.on('open', function(){ //回線を開く
+});
+peer.on('call', function(call){ //かかってきたとき
+   writeLog("Connected by "+id_exchange(call.peer,2));
+    call.answer(localStream);  //何も返さないようにしておく。
+    calledDo(call);
+});
+
+
 $(function (){
 $('#joinProvider').click(function(){
     if($(this).text()=="exit"){
@@ -36,7 +47,6 @@ $('#joinReceiver').click(function(){
     }
 });
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 navigator.getUserMedia({ video: true,audio: false}, function(stream){
      localStream = window.URL.createObjectURL(stream);
      $('#my-video').prop('src', localStream);
@@ -44,14 +54,7 @@ navigator.getUserMedia({ video: true,audio: false}, function(stream){
     },function() { alert("Error!"); 
 });
 });
-peer.on('open', function(){ //回線を開く
-});
 
-peer.on('call', function(call){ //かかってきたとき
-   writeLog("Connected by "+id_exchange(call.peer,2));
-    call.answer(localStream);  //何も返さないようにしておく。
-    calledDo(call);
-});
 
 function makeListener(){
     Object.keys(peerTable).forEach(function(key){
