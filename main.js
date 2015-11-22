@@ -80,14 +80,8 @@ function initialize(){
 
 
 function calledDo(call){ //コネクションした後のやりとり
-
     //genuineIDはcall.peerなので
         var pid = id_exchange(call.peer,2);
-        if(pid=="false"){
-            writeLog("Connection Failed");
-            return false;   //失敗したらfalse返す
-        }
-        connectedCall[pid]=call;
         //$("#peer-num").text(connectedNum);//相手のID表示
         //$("#peer-id"+connectedNum).text(connectedCall[connectedNum].peer);
         writeLog("CalledDo by"+pid);
