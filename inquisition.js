@@ -28,7 +28,7 @@ function inquiry_tables(){
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
                         noticeConnect(key1,key2,0);
-                        writeLog("参照して登録 "+key+" "+key2);
+                        writeLog("参照して登録 "+key1+" "+key2);
                         }
                     });
         });
