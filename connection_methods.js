@@ -12,18 +12,19 @@ function routing(partnerID){
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
        writeLog("Routing: direct to "+partnerID);
-       connectionTable[myID]["counter"]++;
+      // connectionTable[myID]["counter"]++;
        connect(partnerID,localStream);
     }else{  //リレー式につなげる場合。
         writeLog("Routing: relay-connect to "+partnerID);
-        connect_func(myID,partnerID,0);
+        var checked = Array();
+        connect_func(myID,partnerID,0,checked);
            //繋げ元から余裕があればそこから繋げる
            //そうでなければすでに繋がっているところを見つける
     }
     //次に自分の映像を持っている他のピアから直接つなげるかどうか
    
 }
-function connect_func(fromID,toID,count){
+function connect_func(fromID,toID,count,checked){
     writeLog("Connect-Func "+fromID+" to "+toID+" "+count);
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
@@ -34,10 +35,12 @@ function connect_func(fromID,toID,count){
     //fromIDがすでに接続している相手をみつける
     //複数いる場合はその相手が接続している数が少ないほう
     var min = 100; var new_from=undefined;
+
     Object.keys(connectionTable[fromID]).forEach(function(key){
-        if(connectionTable[fromID][key]===true){//接続できているところをたどる
- //           alert("ルーティング中"+key+"のカウンターは？"+connectionTable[key]['counter']);
-            if(min>connectionTable[key]['counter']){
+        if(connectionTable[fromID][key]===true && checked[key]==undefined){//接続できているところをたどる
+            checked[key]=true;
+        //移り変わる相手は、送信の余裕はなくてもいいけど受信は１つ
+            if(min>connectionTable[key]['counter'] && connectionTable[key]["connected"]<Branch[counter]){
                 min =connectionTable[key]['counter'];
                 new_from = key;
                 //接続数最小のものを決める

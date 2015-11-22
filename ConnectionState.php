@@ -10,6 +10,8 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
     $a = $_GET["from"]; $b=$_GET["to"];
     if(!isset($database[$a]["counter"]))$database[$a]["counter"]=0;
     if(!isset($database[$b]["counter"]))$database[$b]["counter"]=0;
+    if(!isset($database[$a]["connected"]))$database[$a]["connected"]=0;
+    if(!isset($database[$b]["connected"]))$database[$b]["connected"]=0;
     if($_GET["mode"]==0){//参照
         if(isset($database[$a][$b]))echo $database[$a][$b];
         else{   //セットされてない
@@ -22,6 +24,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$a][$b]=true;
         $database[$b][$a]=true;
         $database[$a]["counter"]++;
+        $database[$b]["connected"]++;
  //       $database[$b]["counter"]++;
         file_put_contents("./connection.txt",serialize($database));
         //接続通知
@@ -30,7 +33,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$a][$b]=false;
         $database[$b[$a]]=false;
         $database[$a]["counter"]--;
-        $database[$b]["counter"]--;
+        $database[$b]["connected"]--;
         file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
@@ -39,6 +42,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         echo json_encode($database[$_GET["from"]]);
     else{   //セットされてない相手は
         $database[$_GET["from"]]["counter"]=0;
+        $database[$_GET["from"]]["connected"]=0;
         file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
