@@ -51,7 +51,7 @@ function connect_func(fromID,toID,count,checked){
         }
     });
     //fromIDとnew_fromは既につながっているからその先を確かめる
-    return connect_func(new_from,toID,count);
+    return connect_func(new_from,toID,count,checked);
 }
 function connect(to_id,send_stream){  //コネクションボタン押した
     var call = peer.call(id_exchange(to_id,1),send_stream); //send_stream
