@@ -117,7 +117,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
             async:false,
             url:ConnectionStateURL,
             type:"get",
-            datatype:"json",
+            datatype:"html",
         }).done(function(res){
             result = res;
         })  ;  
