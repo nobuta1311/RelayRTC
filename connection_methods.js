@@ -17,7 +17,7 @@ function routing(partnerID){
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
        writeLog("Routing: direct to "+partnerID);
-       connect(id_exchange(partnerID,1));
+       connect(partnerID);
     }else{  //リレー式につなげる場合。
         writeLog("Routing: relay-connect to "+partnerID);
         connect_func(myID,partnerID,0);
