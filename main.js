@@ -29,11 +29,13 @@ $('#joinProvider').click(function(){
     if($(this).text()=="exit"){
         id_exchange(myID,3);
         $(this).text("Join as a Provider");
-        connectedConn.forEach(value,index,ar){
-            value.close();
-        }
+        Object.keys(peerTable).forEach(function(key1){
+            connectedConn[key1].close();
+            connectedCall[key1].close();
+        });
     }else{
         writeLog("You've joined as a provider");
+        noticeConnect("","",4);
         id_exchange("all",5);
         initialize();
         $(this).text("exit");
@@ -43,6 +45,11 @@ $('#joinReceiver').click(function(){
     if($(this).text()=="exit"){
         id_exchange(myID,3);
         $(this).text("Join as a Receiver");
+        Object.keys(peerTable).forEach(function(key1){
+            connectedConn[key1].close();
+            connectedCall[key1].close();
+        });
+
     }else{
         writeLog("You've joined as a receiver");
         initialize();        
@@ -70,7 +77,6 @@ function makeListener(key){
 }
 function initialize(){
     myID = id_exchange(peer.id,0);
-    noticeConnect("","",4);
     noticeConnect(myID,"",3);
     inquiry_roop();
     dataConnectAll();

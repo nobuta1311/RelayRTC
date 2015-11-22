@@ -45,7 +45,7 @@ function inquiry_tables(){
                 if(key2!="counter")
                 $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
                 });
-            $("#connection-table").append("<br>");
+            $("#connection-table").append("sum"+connectionTable[key1]['counter']+"<br>");
         });
 }
 function inquiry_roop(){

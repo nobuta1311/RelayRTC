@@ -8,20 +8,22 @@ if($database=="")$database=array();
 //すべての接続状態をまとめて json
 if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
     $a = $_GET["from"]; $b=$_GET["to"];
-    if(!isset($database[$a]))$database[$a]["counter"]=0;
-    if(!isset($database[$b]))$database[$b]["counter"]=0;
+    if(!isset($database[$a]["counter"]))$database[$a]["counter"]=0;
+    if(!isset($database[$b]["counter"]))$database[$b]["counter"]=0;
     if($_GET["mode"]==0){//参照
         if(isset($database[$a][$b]))echo $database[$a][$b];
         else{   //セットされてない
             $database[$a][$b]=false;
             $database[$b][$a]=false;
+            file_put_contents("./connection.txt",serialize($database));
             echo false;
         }
     }else if($_GET["mode"]==1){//1ならばtrueにする
         $database[$a][$b]=true;
         $database[$b][$a]=true;
         $database[$a]["counter"]++;
-        $database[$b]["counter"]++;
+ //       $database[$b]["counter"]++;
+        file_put_contents("./connection.txt",serialize($database));
         //接続通知
         echo true;
     }else{//2ならばfalseにする
@@ -29,19 +31,21 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$b[$a]]=false;
         $database[$a]["counter"]--;
         $database[$b]["counter"]--;
+        file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
-}else if(isset($_GET["from"])){
+}else if(isset($_GET["from"])){ //from指定して参照
     if(isset($database[$_GET["from"]]))
         echo json_encode($database[$_GET["from"]]);
-    else{
+    else{   //セットされてない相手は
         $database[$_GET["from"]]["counter"]=0;
+        file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
 }else if(isset($_GET["clear"])){
     $database="";
+    file_put_contents("./connection.txt",serialize($database));
 }else{
     //すべての接続状態をまとめて
     echo json_encode($database);
 }
-file_put_contents("./connection.txt",serialize($database));

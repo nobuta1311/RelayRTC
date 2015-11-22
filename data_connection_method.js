@@ -29,9 +29,9 @@ function dataConnect(partnerID){
 }
 
 function connectedDo(conn){ //データのやりとり
-        writeLog("Waiting datas");
+ //       writeLog("Waiting datas");
         conn.on("data",function(data){//data受信リスナ
-                writeLog("受信データ : "+data); //テキストとして受信データを表示
+                writeLog("Received Data: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
         });
 }
@@ -69,5 +69,6 @@ function commandByPeers(data){
     }
 }
 function sendText(peerid,data){
+    alert(connectedConn[peerid].peer);
     connectedConn[peerid].send(data);
 }

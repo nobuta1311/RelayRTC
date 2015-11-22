@@ -25,8 +25,7 @@ function routing(partnerID){
 }
 function connect_func(fromID,toID,count){
     writeLog("Connect-Func "+fromID+" to "+toID+" "+count);
-    //相手が見つかるならば接続させる
-    //なお初回は絶対に引っかからない
+    //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("letConnect "+fromID+" "+toID);
         letConnect(fromID,toID);
@@ -34,13 +33,16 @@ function connect_func(fromID,toID,count){
     }
     //fromIDがすでに接続している相手をみつける
     //複数いる場合はその相手が接続している数が少ないほう
-    var min = 100; var new_from;
+    var min = 100; var new_from=0;
     Object.keys(connectionTable[fromID]).forEach(function(key){
-        if(connectionTable[fromID][key]==true){//接続できているところをたどる
-            if(min>connectionTable[key]["counter"]){
-                min =connectionTable[key]["counter"];
+        if(connectionTable[fromID][key]===true){//接続できているところをたどる
+ //           alert("ルーティング中"+key+"のカウンターは？"+connectionTable[key]['counter']);
+            if(min>connectionTable[key]['counter']){
+                min =connectionTable[key]['counter'];
                 new_from = key;
                 //接続数最小のものを決める
+            }else{
+                if(new_from==0){new_from = key;}
             }
         }
     });
