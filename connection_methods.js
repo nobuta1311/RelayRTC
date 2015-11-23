@@ -26,7 +26,6 @@ function routing(partnerID){
    
 }
 function connect_func(fromID,toID,count,checked){
-    writeLog("Connect-Func "+fromID+" to "+toID+" "+count);
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("letConnect "+fromID+" "+toID);
@@ -41,14 +40,10 @@ function connect_func(fromID,toID,count,checked){
         var cState = connectionTable[fromID][key];
 
         if(key!="counter" && key!="connected" && cState==true && checked[key]===undefined){//接続できているところをたどる
-            writeLog("connect_func内ループ、from: "+fromID+" key:"+key+" "+connectionTable[fromID][key]+" "+checked[key]);
-            writeLog("checked"+key+" = "+checked[key]);
             checked[key]=false;
-            writeLog("checked"+key+" = "+checked[key]);
             if(min>connectionTable[key]['counter']){
                 min =connectionTable[key]['counter'];
                 new_from = key;
-                writeLog(new_from);
                 //接続数最小のものを決める
             }else{
                 if(new_from==undefined){new_from = key;}
