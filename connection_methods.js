@@ -17,6 +17,7 @@ function routing(partnerID){
     }else{  //リレー式につなげる場合。
         writeLog("Routing: relay-connect to "+partnerID);
         var checked = Array();
+        checked[0]=false;
         connect_func(myID,partnerID,0,checked);
            //繋げ元から余裕があればそこから繋げる
            //そうでなければすでに繋がっているところを見つける
