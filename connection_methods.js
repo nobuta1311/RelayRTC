@@ -37,10 +37,11 @@ function connect_func(fromID,toID,count,checked){
     var min = 100; var new_from=undefined;
 
     Object.keys(connectionTable[fromID]).forEach(function(key){
-         writeLog("connect_func内ループ、from: "+fromID+" key:"+key+" "+connectionTable[fromID][key]+" "+checked[key]);
-        if(connectionTable[fromID][key]==true && checked[key]==undefined){//接続できているところをたどる
+        var cState = connectionTable[fromID][key];
+
+        if(cState==true && checked[key]==undefined){//接続できているところをたどる
+            writeLog("connect_func内ループ、from: "+fromID+" key:"+key+" "+connectionTable[fromID][key]+" "+checked[key]);
             checked[key]=true;
-        //移り変わる相手は、送信の余裕はなくてもいいけど受信は１つ
             if(min>connectionTable[key]['counter']){
                 min =connectionTable[key]['counter'];
                 new_from = key;
