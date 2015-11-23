@@ -60,7 +60,7 @@ $('#joinReceiver').click(function(){
     }
 });
 
-navigator.getUserMedia({ video: true,audio: false}, function(stream){
+navigator.getUserMedia({ video: true,audio: true}, function(stream){
      localStream = stream;
  //    $('#my-video').prop('src', window.URL.createObjectURL(localStream));
      //$('#my-video').src = window.URL.createObjectURL(stream);
