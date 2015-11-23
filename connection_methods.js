@@ -41,7 +41,9 @@ function connect_func(fromID,toID,count,checked){
 
         if(key!="counter" && key!="connected" && cState==true && checked[key]===undefined){//接続できているところをたどる
             writeLog("connect_func内ループ、from: "+fromID+" key:"+key+" "+connectionTable[fromID][key]+" "+checked[key]);
-            checked[key]=true;
+            writeLog("checked"+key+" = "+checked[key]);
+            checked[key]=false;
+            writeLog("checked"+key+" = "+checked[key]);
             if(min>connectionTable[key]['counter']){
                 min =connectionTable[key]['counter'];
                 new_from = key;
