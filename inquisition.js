@@ -73,7 +73,7 @@ function id_exchange(command_str,mode){
     }
     var accessurl =IDURL+mode_str+"="+command_str; 
     $.ajax({
-        //async:false,
+        async:false,
         url: accessurl,
             type: "GET",
             dataType: "html"
@@ -106,7 +106,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
                 break;
         }
         $.ajax({
-          //  async:false,
+            async:false,
             url:ConnectionStateURL+url,
             type:"get",
             datatype:"html",
