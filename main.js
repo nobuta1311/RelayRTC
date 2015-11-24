@@ -59,8 +59,12 @@ $('#joinReceiver').click(function(){
         $(this).text("exit");
     }
 });
-
-navigator.getUserMedia({ video: true,audio: true}, function(stream){
+var constraints = {
+    "mandatory": {"aspectRatio": 1.3333}, 
+    "optional": [{"width": {"min": 640}},
+                 {"height": {"max": 400}}]
+};
+navigator.getUserMedia({ video: constraints,audio: true}, function(stream){
      localStream = stream;
  //    $('#my-video').prop('src', window.URL.createObjectURL(localStream));
      //$('#my-video').src = window.URL.createObjectURL(stream);
