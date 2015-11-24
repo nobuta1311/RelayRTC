@@ -98,7 +98,7 @@ function calledDo(pid){ //コネクションした後のやりとり
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
-            var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 500px;\" autoplay=\"1\"></video>");//disabledにできる
+            var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 1000px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
         });
