@@ -13,12 +13,6 @@ function inquiry_tables(){
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
-                /*
-                Object.keys(peerTable).forEach(function(key2){
-                    if(key1!=key2)
-                        noticeConnect(key1,key2,0);
-                });
-                */
                 var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
                 makeListener(key1);
                 $("#connect-buttons").append(div);
@@ -39,7 +33,6 @@ function inquiry_tables(){
        //writeLog(connectionTable);
         $("#connection-table").text("");
         Object.keys(connectionTable).forEach(function(key1){
-                //alert(key1);
             var ar2 = connectionTable[key1];
             Object.keys(ar2).forEach(function(key2){
                 if(key2!="counter")
@@ -52,7 +45,7 @@ function inquiry_roop(){
     inquiry_tables();
     setInterval(function loop(){
         inquiry_tables();
-    },5000);
+    },2000);
 }
 
 function id_exchange(command_str,mode){
@@ -80,7 +73,7 @@ function id_exchange(command_str,mode){
     }
     var accessurl =IDURL+mode_str+"="+command_str; 
     $.ajax({
-        async:false,
+        //async:false,
         url: accessurl,
             type: "GET",
             dataType: "html"
@@ -113,7 +106,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
                 break;
         }
         $.ajax({
-            async:false,
+          //  async:false,
             url:ConnectionStateURL+url,
             type:"get",
             datatype:"html",
