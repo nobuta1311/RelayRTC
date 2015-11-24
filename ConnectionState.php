@@ -45,9 +45,10 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$_GET["from"]]["counter"]=0;
         $database[$_GET["from"]]["connected"]=0;
         file_put_contents("./connection.txt",serialize($database));
-        echo true;
+        echo "mode3";//true
     }
    }else{   //mode=-1なので全部false
+        echo "mode -1";
         foreach($database as $key => $data){
             if($data[$_GET["from"]]==true){
                 $database[$key][$_GET["from"]]=false;
