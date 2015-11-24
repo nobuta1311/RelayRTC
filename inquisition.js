@@ -15,19 +15,17 @@ function inquiry_tables(){
                 peerTable[key1] = new_peerTable[key1];
                 var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
                 makeListener(key1);
-                $("#connect-buttons").append(div);
-            }
-        });
-
-        //接続状況更新
-        //connectionTableを埋める
-        Object.keys(peerTable).forEach(function(key1){
+                //ConnectionTableを埋める．Falseにする．
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
                         noticeConnect(key1,key2,0);
-                        }
-                    });
+                        noticeConnect(key2,key1,0);
+                    }
+                });
+                $("#connect-buttons").append(div);
+            }
         });
+        //接続状況更新
         response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
        //writeLog(connectionTable);
