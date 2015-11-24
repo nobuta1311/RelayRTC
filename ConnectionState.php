@@ -50,13 +50,13 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
    }else{   //mode=-1なので全部false
         foreach($database as $key => $data){
             if($data[$_GET["from"]]==true){
-                $data[$_GET["from"]]=false;
+                $database[$key][$_GET["from"]]=false;
                 $data["counter"]--;
                 $data["connected"]--;
             }
         }
         foreach($database[$_GET["from"]] as $key => $data){
-            $data = false;
+            $database[$_GET["from"]][$key] = false;
         }
         $database[$_GET["from"]]["counter"]=0;
         $database[$_GET["from"]]["connected"]=0;
