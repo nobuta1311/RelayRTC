@@ -3,7 +3,7 @@
  *
 */
 //用意する変数
-var Branch = Array(1,1,1,1,1,1,1,1,1,1,1);
+var Branch = Array(2,2,2,2,2,2,1,1,1,1,1);
 var peerNum;
 function routing(partnerID){
     //1つのピアからの接続可能人数を指定

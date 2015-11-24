@@ -96,7 +96,6 @@ function initialize(){
 
 
 function calledDo(pid){ //コネクションした後のやりとり
-        writeLog("CalledDo()"+pid);
         connectedCall[pid].on('stream', function(stream){//callのリスナ
             masterStream = stream;
             streams[pid]=stream;
