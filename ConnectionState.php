@@ -55,7 +55,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
                 $data["connected"]--;
             }
         }
-        foreach($database["from"] as $key => $data){
+        foreach($database[$_GET["from"]] as $key => $data){
             $data = false;
         }
         $database[$_GET["from"]]["counter"]=0;
