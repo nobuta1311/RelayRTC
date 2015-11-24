@@ -25,8 +25,6 @@ peer.on('call', function(call){ //かかってきたとき
     connectedCall[pid]=call;
     calledDo(pid);
 });
-
-
 $(function (){
 $('#joinProvider').click(function(){
     if($(this).text()=="exit"){
@@ -34,9 +32,11 @@ $('#joinProvider').click(function(){
         $(this).text("Join as a Provider");
         Object.keys(peerTable).forEach(function(key1){
             connectedConn[key1].close();
-            connectedCall[key1].close();
+            if(connectedCall[key1]!=null)
+                connectedCall[key1].close();
         });
         noticeConnect(myID,"",-1);
+        writeLog("Finished Exitting");
     }else{
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
@@ -54,6 +54,7 @@ $('#joinReceiver').click(function(){
             connectedCall[key1].close();
         });
         noticeConnect(myID,"",-1);
+        writeLog("Finished Exitting");
     }else{
         writeLog("You've joined as a receiver");
         initialize();        
