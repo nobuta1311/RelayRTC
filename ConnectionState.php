@@ -37,7 +37,8 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
-}else if(isset($_GET["from"])){ //from指定して参照
+}else if(isset($_GET["from"])){ //from -1で全部false 3で参照
+   if($_GET["mode"]==3){
     if(isset($database[$_GET["from"]]))
         echo json_encode($database[$_GET["from"]]);
     else{   //セットされてない相手は
@@ -46,6 +47,20 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
+   }else{   //mode=-1なので全部false
+        foreach($database as $key => $data){
+            if($data[$_GET["from"]]==true){
+                $data[$_GET["from"]]=false;
+                $data["counter"]--;
+                $data["connected"]--;
+            }
+        }
+        foreach($database["from"] as $key => $data){
+            $data = false;
+        }
+        $database[$_GET["from"]]["counter"]=0;
+        $database[$_GET["from"]]["connected"]=0;
+   }
 }else if(isset($_GET["clear"])){
     $database="";
     file_put_contents("./connection.txt",serialize($database));

@@ -36,6 +36,7 @@ $('#joinProvider').click(function(){
             connectedConn[key1].close();
             connectedCall[key1].close();
         });
+        noticeConnect(myID,"",-1);
     }else{
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
@@ -52,7 +53,7 @@ $('#joinReceiver').click(function(){
             connectedConn[key1].close();
             connectedCall[key1].close();
         });
-
+        noticeConnect(myID,"",-1);
     }else{
         writeLog("You've joined as a receiver");
         initialize();        

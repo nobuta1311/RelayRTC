@@ -85,6 +85,9 @@ function noticeConnect(from_parameter,to_parameter,mode){
     var url = "";
     var result ="false";
         switch(mode){
+            case -1: //fromユーザのすべてをfalseにする
+                url = "from="+from_parameter+"&mode="+mode;
+                break;
             case 0: //特定の関係を参照
                 url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
                 break;
@@ -95,7 +98,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
                 url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
                 break;
             case 3: //fromを指定して接続相手をすべて表示
-                url = "from="+from_parameter;
+                url = "from="+from_parameter+"&mode"+mode;
                 break;
             case 4:
                 url = "clear=all";
