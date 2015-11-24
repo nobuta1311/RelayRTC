@@ -48,8 +48,8 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         echo "mode3";//true
     }
    }else{   //mode=-1なので全部false
-        echo "mode -1";
         foreach($database as $key => $data){
+            print_r($data);
             if($data[$_GET["from"]]==true){
                 $database[$key][$_GET["from"]]=false;
                 $data["counter"]--;
@@ -57,6 +57,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
             }
         }
         foreach($database[$_GET["from"]] as $key => $data){
+            print_r($data);
             $database[$_GET["from"]][$key] = false;
         }
         $database[$_GET["from"]]["counter"]=0;
