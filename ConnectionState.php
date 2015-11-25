@@ -25,7 +25,6 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         $database[$b][$a]=true;
         $database[$a]["counter"]++;
         $database[$b]["connected"]++;
- //       $database[$b]["counter"]++;
         file_put_contents("./connection.txt",serialize($database));
         //接続通知
         echo true;
@@ -37,8 +36,8 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         file_put_contents("./connection.txt",serialize($database));
         echo true;
     }
-}else if(isset($_GET["from"])){ //from -1で全部false 3で参照
-   if($_GET["mode"]==3){
+}else if(isset($_GET["from"])){ //from 6で全部false 3で参照
+    if($_GET["mode"]==3){
     if(isset($database[$_GET["from"]]))
         echo json_encode($database[$_GET["from"]]);
     else{   //セットされてない相手は
@@ -47,21 +46,20 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         file_put_contents("./connection.txt",serialize($database));
         echo "mode3";//true
     }
-   }else{   //mode=-1なので全部false
-        foreach($database as $key => $data){
-            print_r($data);
-            if($data[$_GET["from"]]==true){
-                $database[$key][$_GET["from"]]=false;
-                $data["counter"]--;
-                $data["connected"]--;
+    }else{   //mode=6なので全部false
+        print_r($database);
+       foreach($database as $key1 => $data1){
+           foreach($data1 as $key2 => $data2){
+               if(($key1==$_GET["from"] || $key2==$_GET["from"])&& $key2!="counter" && $key2!="connected"){
+                   $database[$key1][$key2]=false;
+                   $database[$key2][$key1]=false;
+                   $database[$key1]["counter"]--;$database[$key2]["counter"]--;
+                   $database[$key1]["connected"]--;$database[$key2]["connected"]--;
+                }
             }
-        }
-        foreach($database[$_GET["from"]] as $key => $data){
-            print_r($data);
-            $database[$_GET["from"]][$key] = false;
-        }
-        $database[$_GET["from"]]["counter"]=0;
-        $database[$_GET["from"]]["connected"]=0;
+       }
+        print_r($database);
+        file_put_contents("./connection.txt",serialize($database));
    }
 }else if(isset($_GET["clear"])){
     $database="";

@@ -35,7 +35,7 @@ $('#joinProvider').click(function(){
             if(connectedCall[key1]!=null)
                 connectedCall[key1].close();
         });
-        noticeConnect(myID,"",-1);
+        noticeConnect(myID,"",6);
         writeLog("Finished Exitting");
     }else{
         writeLog("You've joined as a provider");
@@ -51,9 +51,10 @@ $('#joinReceiver').click(function(){
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){
             connectedConn[key1].close();
-            connectedCall[key1].close();
+            if(connectedCall[key1]!=null)
+                connectedCall[key1].close();
         });
-        noticeConnect(myID,"",-1);
+        noticeConnect(myID,"",6);
         writeLog("Finished Exitting");
     }else{
         writeLog("You've joined as a receiver");

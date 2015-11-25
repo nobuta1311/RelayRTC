@@ -6,12 +6,10 @@
 <script type="text/javascript" src="inquisition.js"></script>
 <script type="text/javascript" src="connection_methods.js"></script>
 <script type="text/javascript" src="data_connection_method.js"></script>
-<!--<script type="text/javascript" src="fileupload.js"></script> -->
-
+<link rel="stylesheet" href="common.css" type="text/css" />
 </head>
 <style type="text/css">
-
-.scr {
+.scr{
   overflow: scroll;   /* スクロール表示 */
   width: 800px;
   height: 150px;
@@ -19,31 +17,33 @@
 }
 </style>
 <body>
-<h1><img src="./logo_simple.png" width="500" height="150" /></h1>
-<h1>One Provider Relay-WebRTC</h1>
+<div id="main">
+<img src="./logo_simple.png" width="500" height="150"></img>
+<h3>One Provider Relay-WebRTC</h3>
 <div id="joining-button">
 <!--参加・退出をするボタン。状態によって書き換える。-->
 <button type="button" id="joinProvider">Join as a Provider</button>        
 <button type="button" id="joinReceiver">Join as a Receiver</button>
 </div>
 <p>MyPeerID: <span id="my-id">-</span>  MyNumberID: <span id="my-number">-</span></p>
-<p>Logs</p>        
+<h4>Logs</h4>        
 <div id="log-space" class="scr">
         -logs-<br>
 </div>
-<p>Joined Users and the Request Buttons</p>
+<h4>Joined Users and the Request Buttons</h4>
 <div id="connect-buttons">
         <!--<button type="button" id="connect-2">2</button> -->
         
 </div>
-<p>Received Videos</p>
+<h4>Connection Table</h4>
+<div id="connection-table">
+</div>
+<br>
+<h4>Received Videos</h4>
 <div id="videos">
         <!--video id="my-video" style="width: 300px;" autoplay="1"></video-->
         <!--<video id="peer-video" style="width: 300px;" autoplay="1"></video>-->
 </div>
-<p>Connection Table</p>
-<div id="connection-table" class="scr">
-        -connections-<br>
 </div>
 </body>
 </html>
