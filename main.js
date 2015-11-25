@@ -14,6 +14,8 @@ var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
 var myID;
+var recorder =  null;   //録画のスケジューリング
+var blobUrl = null; //録画済みデータの保管場所
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
@@ -47,6 +49,7 @@ $('#joinProvider').click(function(){
 });
 $('#joinReceiver').click(function(){
     if($(this).text()=="exit"){
+        stopRecording();
         id_exchange(myID,3);
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){
@@ -100,6 +103,7 @@ function initialize(){
 
 function calledDo(pid){ //コネクションした後のやりとり
         connectedCall[pid].on('stream', function(stream){//callのリスナ
+            startRecording(stream);
             masterStream = stream;
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
@@ -112,4 +116,22 @@ function calledDo(pid){ //コネクションした後のやりとり
 function writeLog(logstr){
     console.log(logstr);
     $("#log-space").prepend(logstr+"<br>");
+}
+
+function startRecording(stream) {
+ recorder = new MediaRecorder(stream);
+ recorder.ondataavailable = function(evt) {
+  // 録画が終了したタイミングで呼び出される
+    var videoBlob = new Blob([evt.data], { type: evt.data.type });
+    blobUrl = window.URL.createObjectURL(videoBlob);
+    $("#downloadlink").download = 'recorded.webm';
+    $("#downloadlink").href = blobUrl;
+ }
+ // 録画開始
+ recorder.start();
+}
+ 
+// 録画停止
+function stopRecording() {
+ recorder.stop();
 }
