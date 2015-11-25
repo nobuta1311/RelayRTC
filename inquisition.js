@@ -37,7 +37,7 @@ function inquiry_tables(){
         tableText+="<th>Connect</th><th>ConnectedBy</th></tr>";
         Object.keys(connectionTable).forEach(function(key1){
             var ar2 = connectionTable[key1];
-            ar2[key1]="";
+            ar2[key1]="＼";
             tableText+="<tr><td>"+key1+"</td>";
             Object.keys(ar2).forEach(function(key2){
              //   if(key2!="counter"&&key2!="connected")
