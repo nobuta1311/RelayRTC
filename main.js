@@ -12,9 +12,13 @@ var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
 var myID;
-var localRecorder =  null;   //録画のスケジューリング
-var remoteRecorder = null;
-var blobUrl = null; //録画済みデータの保管場所
+
+var canvasElement = document.getElementById("canvas");
+var canvasContext = canvasElement.getContext("2d");
+var videoElement
+//var localRecorder =  null;   //録画のスケジューリング
+//var remoteRecorder = null;
+//var blobUrl = null; //録画済みデータの保管場所
 //$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
@@ -113,13 +117,17 @@ function calledDo(pid){ //コネクションした後のやりとり
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 1000px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
+            videoElement = document.getElementByID("peer-video"+pid);
+            canvasElement.width = videoElement.videoWidth;
+            canvasElement.width = videoElement.videoHeight;
+            canvasContext.drawImage(videoElement,0,0);
         });
 }
 function writeLog(logstr){
     console.log(logstr);
     $("#log-space").prepend(logstr+"<br>");
 }
-
+/*
 function startRecording(stream,recorder) {
  writeLog("Start Recording");
  recorder = new MediaRecorder(stream);
@@ -140,3 +148,4 @@ function stopRecording(recorder) {
  writeLog("StopRecording");
  recorder.stop();
 }
+*/
