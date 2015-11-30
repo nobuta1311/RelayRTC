@@ -61,6 +61,7 @@ function inquiry_roop(){
     inquiry_tables();
     setInterval(function loop(){
         inquiry_tables();
+
     },2000);
 }
 

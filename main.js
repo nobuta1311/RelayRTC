@@ -12,9 +12,8 @@ var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
 var myID;
-
-var canvasElement = document.getElementById("canvas");
-var canvasContext = canvasElement.getContext("2d");
+var canvasElement;
+var canvasContext;
 var videoElement
 //var localRecorder =  null;   //録画のスケジューリング
 //var remoteRecorder = null;
@@ -114,18 +113,40 @@ function calledDo(pid){ //コネクションした後のやりとり
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
-            var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 1000px;\" autoplay=\"1\"></video>");//disabledにできる
+            var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
-            videoElement = document.getElementByID("peer-video"+pid);
-            canvasElement.width = videoElement.videoWidth;
-            canvasElement.width = videoElement.videoHeight;
-            canvasContext.drawImage(videoElement,0,0);
+            videoElement = document.getElementById("peer-video"+pid);
+            canvasElement = document.getElementById("canvas");
+            canvasContext = canvasElement.getContext("2d");
+            canvasElement.width = 600;
+            canvasElement.height = 400;            
+            saveCapture();
+            // canvasContext.drawImage(videoElement,0,0);
         });
 }
 function writeLog(logstr){
     console.log(logstr);
     $("#log-space").prepend(logstr+"<br>");
+}
+function saveCapture(){
+    count = 0;
+    canvasContext.lineWidth = 10;
+    canvasContext.font="bold 30px sans-serif";
+    canvasContext.fillStyle="black";
+    var e = document.createEvent("MouseEvents");
+    setInterval(function loop(){
+        e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        var date_obj = new Date();
+        var now_text = date_obj.getMinutes()+"分"+date_obj.getSeconds()+"秒"+date_obj.getMilliseconds();
+        canvasContext.drawImage(videoElement,0,0);
+        canvasContext.fillText(now_text,50,50);
+        var btn= document.getElementById("btn-download");
+        btn.href = canvasElement.toDataURL('image/png');
+        btn.download = count++ +'.png';
+        btn.dispatchEvent(e);
+    },1000);
+
 }
 /*
 function startRecording(stream,recorder) {
