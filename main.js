@@ -46,7 +46,17 @@ $('#joinProvider').click(function(){
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
         id_exchange("all",5);
+        navigator.getUserMedia({ video: constraints,audio: false}, function(stream){
+            localStream = stream;
+            var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
+            $("#videos").append(div);
+
+            $('#my-video').prop('src', window.URL.createObjectURL(stream));
+//            $('#my-video').src = window.URL.createObjectURL(stream);
+            },function() { alert("Error to getUserMedia.");
+        });
         initialize();
+        saveCapture("my-video");
         $(this).text("exit");
     }
 });
@@ -74,14 +84,7 @@ var constraints = {
     "optional": [{"width": {"min": 640}},
                  {"height": {"max": 400}}]
 };
-navigator.getUserMedia({ video: constraints,audio: true}, function(stream){
-     localStream = stream;
-    // startRecording(localStream,localRecorder);
- //    $('#my-video').prop('src', window.URL.createObjectURL(localStream));
-     //$('#my-video').src = window.URL.createObjectURL(stream);
-    },function() { alert("Error!");});
 });
-
 
 function makeListener(key){
     //if(myID==key) return;
@@ -116,12 +119,7 @@ function calledDo(pid){ //コネクションした後のやりとり
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
-            videoElement = document.getElementById("peer-video"+pid);
-            canvasElement = document.getElementById("canvas");
-            canvasContext = canvasElement.getContext("2d");
-            canvasElement.width = 600;
-            canvasElement.height = 400;            
-            saveCapture();
+            saveCapture("peer-video"+pid);
             // canvasContext.drawImage(videoElement,0,0);
         });
 }
@@ -129,7 +127,12 @@ function writeLog(logstr){
     console.log(logstr);
     $("#log-space").prepend(logstr+"<br>");
 }
-function saveCapture(){
+function saveCapture(videoid){
+    videoElement = document.getElementById(videoid);
+    canvasElement = document.getElementById("canvas");
+    canvasContext = canvasElement.getContext("2d");
+    canvasElement.width = 600;
+    canvasElement.height = 400;            
     count = 0;
     canvasContext.lineWidth = 10;
     canvasContext.font="bold 30px sans-serif";
