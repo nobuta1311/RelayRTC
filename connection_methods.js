@@ -54,7 +54,7 @@ function connect_func(fromID,toID,count,checked){
     return connect_func(new_from,toID,count,checked);
 }
 function connect(to_id,send_stream){  //コネクションボタン押した
-    var call = peer.call(id_exchange(to_id,1),send_stream); //send_stream
+    var call = peer.call(id_exchange(to_id,1,false),send_stream); //send_stream
     connectedCall[to_id]=call;
     //var call = peer.call(id_exchange(to_id,1),localStream);
     connectedNum++; //どこでつかうかわからんけど接続数

@@ -23,7 +23,7 @@ var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
 });
 peer.on('call', function(call){ //かかってきたとき
-   var pid = id_exchange(call.peer,2);
+   var pid = id_exchange(call.peer,2,false);
    writeLog("Connected by "+pid);
     call.answer();  //何も返さないようにしておく。
     connectedCall[pid]=call;
@@ -33,7 +33,7 @@ $(function (){
 $('#joinProvider').click(function(){
     if($(this).text()=="exit"){
  //       stopRecording(localRecorder);
-        id_exchange(myID,3);
+        id_exchange(myID,3,false);
         $(this).text("Join as a Provider");
         Object.keys(peerTable).forEach(function(key1){
             connectedConn[key1].close();
@@ -45,7 +45,7 @@ $('#joinProvider').click(function(){
     }else{
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
-        id_exchange("all",5);
+        id_exchange("all",5,false);
         navigator.getUserMedia({ video: constraints,audio: false}, function(stream){
             localStream = stream;
             var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
@@ -56,15 +56,13 @@ $('#joinProvider').click(function(){
             },function() { alert("Error to getUserMedia.");
         });
         initialize();
-        saveCapture("my-video");
+ //       saveCapture("my-video");
         $(this).text("exit");
     }
 });
 $('#joinReceiver').click(function(){
     if($(this).text()=="exit"){
-   //     stopRecording(localRecorder);
-     //   stopRecording(remoteRecorder);
-        id_exchange(myID,3);
+        id_exchange(myID,3,false);
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){
             connectedConn[key1].close();
@@ -97,7 +95,7 @@ function makeListener(key){
     );
 }
 function initialize(){
-    myID = id_exchange(peer.id,0);
+    myID = id_exchange(peer.id,0,false);
     noticeConnect(myID,"",3);
     inquiry_roop();
     dataConnectAll();
@@ -119,7 +117,7 @@ function calledDo(pid){ //コネクションした後のやりとり
             var div = $("<video id=\"peer-video"+pid+"\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video'+pid).prop('src', url);
-            saveCapture("peer-video"+pid);
+            //saveCapture("peer-video"+pid);
             // canvasContext.drawImage(videoElement,0,0);
         });
 }
@@ -127,6 +125,7 @@ function writeLog(logstr){
     console.log(logstr);
     $("#log-space").prepend(logstr+"<br>");
 }
+
 function saveCapture(videoid){
     videoElement = document.getElementById(videoid);
     canvasElement = document.getElementById("canvas");

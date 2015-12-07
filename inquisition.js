@@ -1,13 +1,13 @@
 //テスト用にここに記述
 var ConnectionStateURL="./ConnectionState.php?";
 var IDURL = "./ID.php?";
-function inquiry_tables(){
+function inquiry_tables(isasync){
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
     //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
         //writeLog("Get Tables.");
         //ID一覧を取得   
-        var response =id_exchange("all",4);
+        var response =id_exchange("all",4,false);
         //参加しているIDを一覧表示
         var new_peerTable = JSON.parse(response);
         Object.keys(new_peerTable).forEach(function(key1){
@@ -58,14 +58,14 @@ function inquiry_tables(){
        $("#connection-table").append($(tableText));
 }
 function inquiry_roop(){
-    inquiry_tables();
+    inquiry_tables(false);
     setInterval(function loop(){
-        inquiry_tables();
+        inquiry_tables(true);
 
     },2000);
 }
 
-function id_exchange(command_str,mode){
+function id_exchange(command_str,mode,isasync){
     var mode_str="";
     var result;
     switch(mode){
@@ -90,7 +90,7 @@ function id_exchange(command_str,mode){
     }
     var accessurl =IDURL+mode_str+"="+command_str; 
     $.ajax({
-        async:false,
+        async:isasync,
         url: accessurl,
             type: "GET",
             dataType: "html"
