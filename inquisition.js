@@ -1,20 +1,21 @@
 //テスト用にここに記述
 var ConnectionStateURL="./ConnectionState.php?";
 var IDURL = "./ID.php?";
-function inquiry_tables(isasync){
+function inquiry_tables(){
+    //ID一覧を取得   
+    var response =id_exchange("all",4,false);
+    //参加しているIDを一覧表示
+    var new_peerTable = JSON.parse(response);
+    isasync = arguments[0];
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
-    //接続命令などはオプション（実装はあと）
     //peerTableとConnectionTableで
         //writeLog("Get Tables.");
-        //ID一覧を取得   
-        var response =id_exchange("all",4,false);
-        //参加しているIDを一覧表示
-        var new_peerTable = JSON.parse(response);
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
                 var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
                 makeListener(key1);
+
                 //ConnectionTableを埋める．Falseにする．
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){
@@ -101,6 +102,10 @@ function id_exchange(command_str,mode,isasync){
 }
 
 function noticeConnect(from_parameter,to_parameter,mode){
+    var isasync = false;
+    if(mode===0){
+        isasync=true;
+    }
     var url = "";
     var result ="false";
         switch(mode){
@@ -126,7 +131,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
                 break;
         }
         $.ajax({
-            async:false,
+            async:isasync,
             url:ConnectionStateURL+url,
             type:"get",
             datatype:"html",

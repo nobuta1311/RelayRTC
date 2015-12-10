@@ -41,6 +41,11 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
     if(isset($database[$_GET["from"]]))
         echo json_encode($database[$_GET["from"]]);
     else{   //セットされてない相手は
+        foreach($database as $key => $data){
+            $database[$_GET["from"]][$key]=false;
+            $database[$key][$_GET["from"]]=false;
+            echo $key."と".$_GET["from"]."をfalseにする";
+        }
         $database[$_GET["from"]]["counter"]=0;
         $database[$_GET["from"]]["connected"]=0;
         file_put_contents("./connection.txt",serialize($database));
