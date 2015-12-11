@@ -3,7 +3,8 @@ var peerTable = Array();
 //参加したときはそれぞれが更新
 //消えるときもそれぞれが更新
 //inquiryで照会
-var Timer;
+var date_obj;
+var saving=true;
 var connectionTable = Array();
 //配信者がサーバに設定
 //inquiryで照会
@@ -17,6 +18,7 @@ var myID;
 var canvasElement;
 var canvasContext;
 var videoElement;
+var e = document.createEvent("MouseEvents");
 //var localRecorder =  null;   //録画のスケジューリング
 //var remoteRecorder = null;
 //var blobUrl = null; //録画済みデータの保管場所
@@ -140,7 +142,7 @@ function writeLog(logstr){
 
 function saveCapture(videoid){
     if(videoid=="STOP"){
-        clearInterval(Timer);
+        saving=false;
     }else{
     videoElement = document.getElementById(videoid);
     canvasElement = document.getElementById("canvas");
@@ -151,19 +153,27 @@ function saveCapture(videoid){
     canvasContext.lineWidth = 10;
     canvasContext.font="bold 30px sans-serif";
     canvasContext.fillStyle="black";
-    var e = document.createEvent("MouseEvents");
-    Timer=setInterval(function loop(){
+    date_obj = new Date();
+    setTimeout(saveFunc,calcWaitingTime(10),videoid);
+    }
+}
+function saveFunc(videoid){
+        date_obj = new Date();
         e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        var date_obj = new Date();
         var now_text = date_obj.getMinutes()+"分"+date_obj.getSeconds()+"秒"+date_obj.getMilliseconds();
         canvasContext.drawImage(videoElement,0,0);
-        canvasContext.fillText(now_text,50,50);
+        canvasContext.fillText(now_text,100,100);
         var btn= document.getElementById("btn-download");
         btn.href = canvasElement.toDataURL('image/png');
         btn.download = myID+"-"+now_text+'.png';
         btn.dispatchEvent(e);
-    },1000);
-    }
+        if(saving){
+            setTimeout(saveFunc,calcWaitingTime(10),videoid);
+        }
+}
+function calcWaitingTime(t){//秒
+    date_obj = new Date();
+    return ((t-date_obj.getSeconds()%10)*1000-date_obj.getMilliseconds());
 }
 /*
 function startRecording(stream,recorder) {
