@@ -160,12 +160,12 @@ function saveCapture(videoid){
 function saveFunc(videoid){
         date_obj = new Date();
         e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        var now_text = date_obj.getMinutes()+"分"+date_obj.getSeconds()+"秒"+date_obj.getMilliseconds();
+        var now_text = date_obj.getMinutes()+""+date_obj.getSeconds()+""+date_obj.getMilliseconds();
         canvasContext.drawImage(videoElement,0,0);
-        canvasContext.fillText(now_text,100,100);
+       // canvasContext.fillText(now_text,100,100);
         var btn= document.getElementById("btn-download");
-        btn.href = canvasElement.toDataURL('image/png');
-        btn.download = myID+"-"+now_text+'.png';
+        btn.href = canvasElement.toDataURL('image/bmp');
+        btn.download = myID+"-"+now_text+'.bmp';
         btn.dispatchEvent(e);
         if(saving){
             setTimeout(saveFunc,calcWaitingTime(10),videoid);
