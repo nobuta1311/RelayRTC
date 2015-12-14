@@ -31,6 +31,9 @@ function dataConnect(partnerID){
 
 function connectedDo(conn){ //データのやりとり
  //       writeLog("Waiting datas");
+        conn.on('close',function(){
+            writeLog(id_exchange(conn.peer,2,false)+"'s connection has closed.");
+        });
         conn.on("data",function(data){//data受信リスナ
                 writeLog("Received Data: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
