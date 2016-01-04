@@ -44,12 +44,13 @@ function inquiry_tables(){
              //   if(key2!="counter"&&key2!="connected")
             //    $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
                 if(connectionTable[key1][key2]===true)
-                    tableText+="<td>"+"◯"+"</td>";
-                else if(connectionTable[key1][key2]===false){
+                    tableText+="<td>"+"→"+"</td>";
+                else if (key2!="counter" && key2!="connected" &&  connectionTable[key2][key1]===true)
+                    tableText+="<td>"+"←"+"</td>";
+                else if(connectionTable[key1][key2]===false)
                     tableText+="<td>"+"×"+"</td>";
-                }else{
+                else
                     tableText+="<td>"+connectionTable[key1][key2]+"</td>";
-                }
                 });
           //  $("#connection-table").append("sum"+connectionTable[key1]['counter']+"<br>");
             tableText+="</tr>";

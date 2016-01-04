@@ -22,7 +22,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         }
     }else if($_GET["mode"]==1){//1ならばtrueにする
         $database[$a][$b]=true;
-        $database[$b][$a]=true;
+        $database[$b][$a]=false;
         $database[$a]["counter"]++;
         $database[$b]["connected"]++;
         file_put_contents("./connection.txt",serialize($database));
@@ -30,7 +30,7 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
         echo true;
     }else{//2ならばfalseにする
         $database[$a][$b]=false;
-        $database[$b[$a]]=false;
+        $database[$b][$a]=false;
         $database[$a]["counter"]--;
         $database[$b]["connected"]--;
         file_put_contents("./connection.txt",serialize($database));
@@ -56,10 +56,16 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
        foreach($database as $key1 => $data1){
            foreach($data1 as $key2 => $data2){
                if(($key1==$_GET["from"] || $key2==$_GET["from"])&& $key2!="counter" && $key2!="connected"){
-                   $database[$key1][$key2]=false;
-                   $database[$key2][$key1]=false;
-                   $database[$key1]["counter"]--;$database[$key2]["counter"]--;
-                   $database[$key1]["connected"]--;$database[$key2]["connected"]--;
+                   if($database[$key1][$key2]==true){
+                       $database[$key1][$key2]=false; 
+                       $database[$key1]["counter"]--;                       
+                       $database[$key2]["connected"]--;
+                   }
+                   else if($database[$key2][$key1]==true){
+                       $database[$key2][$key1]=false;
+                       $database[$key2]["counter"]--;
+                       $database[$key1]["connected"]--;
+                   }
                 }
             }
        }
