@@ -70,6 +70,7 @@ function disconnect(to_id){
 }
 
 function letConnect(fromID,toID){
+    showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
     if(connectionTable[fromID][toID]==false)
         sendText(fromID,"0,"+toID+","+myID);
 }

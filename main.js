@@ -30,13 +30,14 @@ peer.on('open', function(){ //回線を開く
 });
 peer.on('call', function(call){ //かかってきたとき
    var pid = id_exchange(call.peer,2,false);
+   showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("Connected by "+pid);
     call.answer();  //何も返さないようにしておく。
     connectedCall[pid]=call;
     calledDo(pid);
 });
 $(function (){
-$('#joinProvider').click(function(){
+    $('#joinProvider').click(function(){
     for(var i=0;i<9;i++){
         Branch[i]=$("[name=br"+i+"]").val();
     }
@@ -214,3 +215,17 @@ function stopRecording(recorder) {
  recorder.stop();
 }
 */
+
+function showNortify(str1,str2) {
+    var nortify = window.Notification || window.mozNotification || window.webkitNotification;
+    nortify.requestPermission(function(permission){
+    });
+    var nortifyins = new nortify(str1,
+               {
+                body:str2,
+                icon:"logo_color.png",
+                autoClose: 1000,
+            }
+    );
+    //nortifyins .config({autoClose:1000});
+}
