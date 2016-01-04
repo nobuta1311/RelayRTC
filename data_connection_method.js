@@ -32,7 +32,13 @@ function dataConnect(partnerID){
 function connectedDo(conn){ //データのやりとり
  //       writeLog("Waiting datas");
         conn.on('close',function(){
-            writeLog(id_exchange(conn.peer,2,false)+"'s connection has closed.");
+            var tempid=id_exchange(conn.peer,2,false);
+            writeLog(tempid+"'s connection has closed.");
+            if(connectionTable[tempid][myID]==true){
+                sendText(0,"2,"+myID);//接続要求
+                writeLog("ReConnect to "+tempid);
+            }
+            //再要求する
         });
         conn.on("data",function(data){//data受信リスナ
                 writeLog("Received Data: "+data); //テキストとして受信データを表示

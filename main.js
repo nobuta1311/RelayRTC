@@ -37,6 +37,10 @@ peer.on('call', function(call){ //かかってきたとき
 });
 $(function (){
 $('#joinProvider').click(function(){
+    for(var i=0;i<9;i++){
+        Branch[i]=$("[name=br"+i+"]").val();
+    }
+    $("#branch-selector").remove();
     if($(this).text()=="exit"){
  //       stopRecording(localRecorder);
         id_exchange(myID,3,false);
@@ -66,6 +70,7 @@ $('#joinProvider').click(function(){
     }
 });
 $('#joinReceiver').click(function(){
+    $("#branch-selector").remove();
     if($(this).text()=="exit"){
         id_exchange(myID,3,false);
         $(this).text("Join as a Receiver");

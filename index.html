@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="common.css" type="text/css" />
 </head>
 <style type="text/css">
+input{width:40px;}
 .scr{
   overflow: scroll;   /* スクロール表示 */
   width: 800px;
@@ -20,8 +21,26 @@
 <div id="main">
 <img src="./logo_color.png" width="400" height="120"></img>
 <h3>One Provider Relay-WebRTC</h3>
-<div id="joining-button">
 <!--参加・退出をするボタン。状態によって書き換える。-->
+<div id="branch-selector">
+Branch-Number for each level
+<table border=1>
+    <tr><th>Lv.0</th><th>Lv.1</th><th>Lv.2</th><th>Lv.3</th><th>Lv.4</th><th>Lv.5</th><th>Lv.6</th><th>Lv.7</th><th>Lv.8</th></tr>
+    <tr>
+        <th><input type="number" name="br0" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br1" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br2" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br3" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br4" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br5" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br6" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br7" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br8" value="1" min="1" max="5"></th>
+    </tr>
+</table>
+<br>
+</div>
+<div id="joining-button">
 <button type="button" id="joinProvider">Join as a Provider</button>        
 <button type="button" id="joinReceiver">Join as a Receiver</button>
 </div>
