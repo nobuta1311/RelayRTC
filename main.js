@@ -58,7 +58,7 @@ $(function (){
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
         id_exchange("all",5,false);
-        navigator.getUserMedia({ video: constraints,audio: false}, function(stream){
+        navigator.getUserMedia({ video: constraints,audio:false}, function(stream){
             localStream = stream;
             var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
