@@ -1,4 +1,4 @@
-navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;// || navigator.msGetUserMedia;
 var peerTable = Array();
 //参加したときはそれぞれが更新
 //消えるときもそれぞれが更新
@@ -58,7 +58,8 @@ $(function (){
         writeLog("You've joined as a provider");
         noticeConnect("","",4);
         id_exchange("all",5,false);
-        navigator.getUserMedia({ video: constraints,audio:false}, function(stream){
+        /*video : constraints*/
+        navigator.getUserMedia({ video:true,audio:false}, function(stream){
             localStream = stream;
             var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
@@ -102,6 +103,7 @@ $("#save-cap").click(function(){
             $(this).text("Save");
         }
 });
+
 var constraints = {
     "mandatory": {"aspectRatio": 1.3333}, 
     "optional": [{"width": {"min": 640}},
