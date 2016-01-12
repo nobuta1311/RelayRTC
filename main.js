@@ -95,7 +95,7 @@ $("#save-cap").click(function(){
             $(this).text("Save");
         }
 });
-
+});
 function makeListener(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
@@ -128,4 +128,3 @@ function calledDo(pid){ //コネクションした後のやりとり
             $('#peer-video').prop('src', url);
         });
 }
-
