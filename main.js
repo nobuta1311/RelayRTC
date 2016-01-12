@@ -21,10 +21,6 @@ var canvasContext;
 var canvasContext2;
 var videoElement;
 var e = document.createEvent("MouseEvents");
-//var localRecorder =  null;   //録画のスケジューリング
-//var remoteRecorder = null;
-//var blobUrl = null; //録画済みデータの保管場所
-//$(function() {  グローバルにしたくない部分
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
 });
@@ -43,7 +39,7 @@ $(function (){
     }
     $("#branch-selector").remove();
     if($(this).text()=="exit"){
- //       stopRecording(localRecorder);
+          stopRecording(localRecorder);
         id_exchange(myID,3,false);
         $(this).text("Join as a Provider");
         Object.keys(peerTable).forEach(function(key1){
@@ -67,6 +63,7 @@ $(function (){
             $('#my-video').prop('src', window.URL.createObjectURL(stream));
             },function() { alert("Error to getUserMedia.");
         });
+        //startRecording(localStream);
         initialize();
         $(this).text("exit");
     }
@@ -136,7 +133,6 @@ function initialize(){
 function calledDo(pid){ //コネクションした後のやりとり
         connectedCall[pid].on('stream', function(stream){//callのリスナ
       //      startRecording(stream);
-            masterStream = stream;
             streams[pid]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
@@ -196,9 +192,9 @@ function calcWaitingTime(t){//秒
     return ((t-date_obj.getSeconds()%10)*1000-date_obj.getMilliseconds());
 }
 /*
-function startRecording(stream,recorder) {
+function startRecording() {
  writeLog("Start Recording");
- recorder = new MediaRecorder(stream);
+ recorder = new MediaRecorder(localStream);
  recorder.ondataavailable = function(evt) {
   // 録画が終了したタイミングで呼び出される
     var videoBlob = new Blob([evt.data], { type: evt.data.type });
