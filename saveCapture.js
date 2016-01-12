@@ -1,4 +1,4 @@
-
+var date_obj;
 $("#save-cap").click(function(){
         if($(this).text()=="Save"){
         $(this).text("Stop");

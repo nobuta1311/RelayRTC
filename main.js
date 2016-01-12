@@ -1,20 +1,16 @@
 navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia|| navigator.msGetUserMedia;
 /*変数定義*/
 var peerTable = Array();
-var date_obj;
 var saving=true;
 var connectionTable = Array();
 var target=0;
 var localStream;
 var streams = Array();  //自分の保持するstreamのURLをここに記録する。
-var connectedNum;   //接続数
 var connectedCall = Array();
 var connectedConn = Array();
 var myID;
-var canvasElement;
-var canvasElement2;
-var canvasContext;
-var canvasContext2;
+var canvasElement,canvasElement2;
+var canvasContext,canvasContext2;
 var videoElement;
 var e = document.createEvent("MouseEvents");
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
@@ -33,7 +29,7 @@ peer.on('call', function(call){ //かかってきたとき
 /*総合関数*/
 $(function (){
     $('#joinProvider').click(function(){//配信者参加処理
-    for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
+        for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
         //stopRecording(localRecorder);
