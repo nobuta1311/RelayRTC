@@ -59,13 +59,6 @@ function inquiry_tables(){
        $("#connection-table").empty();
        $("#connection-table").append($(tableText));
 }
-function inquiry_roop(){
-    inquiry_tables(false);
-    setInterval(function loop(){
-        inquiry_tables(true);
-
-    },1000);
-}
 
 function id_exchange(command_str,mode,isasync){
     var mode_str="";

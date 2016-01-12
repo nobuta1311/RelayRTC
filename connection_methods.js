@@ -6,6 +6,7 @@
 var Branch = Array(2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 var peerNum;
 function routing(partnerID){
+    inquiry_tables();
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
     console.log(connectionTable);

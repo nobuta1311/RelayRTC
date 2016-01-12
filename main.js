@@ -22,6 +22,8 @@ var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
 });
 peer.on('call', function(call){ //かかってきたとき
+   inquiry_tables();
+   //TEST
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("Connected by "+pid);
@@ -36,14 +38,13 @@ $(function (){
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
         //stopRecording(localRecorder);
-        id_exchange(myID,3,false);//myIDをサーバに登録する
+        id_exchange(myID,3,false);//myIDを削除
         $(this).text("Join as a Provider");
         Object.keys(peerTable).forEach(function(key1){
-            //connectedConn[key1].close();
             if(connectedCall[key1]!=null)//配信してたら切る
                 connectedCall[key1].close();
         });
-        noticeConnect(myID,"",6);//去る
+        noticeConnect(myID,"",6);//callコネクション削除
         dataDisconnectAll();//コネクションも切断
         writeLog("Finished Exitting");
     }else{
@@ -63,13 +64,12 @@ $(function (){
         $(this).text("exit");
     }
 });
-$('#joinReceiver').click(function(){
-    $("#branch-selector").remove();
+$('#joinReceiver').click(function(){//受信者参加処理
+    $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
-        id_exchange(myID,3,false);
+        id_exchange(myID,3,false);//myIDをサーバから除去
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){
-            connectedConn[key1].close();
             if(connectedCall[key1]!=null)
                 connectedCall[key1].close();
         });
@@ -82,21 +82,9 @@ $('#joinReceiver').click(function(){
         $(this).text("exit");
     }
 });
-$("#save-cap").click(function(){
-        if($(this).text()=="Save"){
-        $(this).text("Stop");
-        if($("#my-video").length){
-            saveCapture("my-video");
-        }else{
-            saveCapture("peer-video");
-        }
-        }else{
-            saveCapture("STOP");
-            $(this).text("Save");
-        }
 });
-});
-function makeListener(key){
+
+function makeListener(key){//接続ボタンをつくる
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
@@ -107,8 +95,9 @@ function makeListener(key){
     );
 }
 function initialize(){
+    inquiry_tables();
+   // inquiry_roop(); TEST
     myID = id_exchange(peer.id,0,false);
-    inquiry_roop();
     dataConnectAll();
     console.log(peerTable);
     writeLog("Your peer is opened by peerID:"+peer.id);
