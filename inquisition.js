@@ -13,9 +13,10 @@ function inquiry_tables(){
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
-                var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+key1+"</button>");//disabledにできる
-                makeListener(key1);
-
+                if(key1==0){
+                    var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+"Connect to "+key1+"</button>");//disabledにできる
+                    makeListener(key1);
+                }
                 //ConnectionTableを埋める．Falseにする．
                 Object.keys(peerTable).forEach(function(key2){
                     if(key1!=key2){

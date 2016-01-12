@@ -5,9 +5,9 @@ peerTableが最新のものになっていることを前提としており、
 connectionTableのデータコネクション部分は、この関数群で更新する。
 */
 function dataConnectAll(){
+
     writeLog("dataconnectall");
     //writeLog(Object.keys(peerTable)[52]);
-    console.log(peerTable);
     Object.keys(peerTable).forEach(function(key){
         dataConnect(key);
     });

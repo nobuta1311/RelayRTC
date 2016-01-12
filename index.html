@@ -17,13 +17,13 @@ input{width:40px;}
 .scr{
   overflow: scroll;   /* スクロール表示 */
   width: 800px;
-  height: 150px;
+  height: 50px;
   background-color: floralwhite;
 }
 </style>
 <body>
 <div id="main">
-<img src="./logo_color.png" width="400" height="120"></img>
+<img src="./logo_color.png" width="200" height="60"></img>
 <h3>One Provider Relay-WebRTC</h3>
 <!--参加・退出をするボタン。状態によって書き換える。-->
 <div id="branch-selector">
@@ -48,29 +48,28 @@ Branch-Number of each levels for the provider.
 <button type="button" id="joinProvider">Join as a Provider</button>        
 <button type="button" id="joinReceiver">Join as a Receiver</button>
 </div>
-<p>MyPeerID: <span id="my-id">-</span>  MyNumberID: <span id="my-number">-</span></p>
+MyPeerID: <span id="my-id">-</span>  MyNumberID: <span id="my-number">-</span>
+<div id="connect-buttons">
+        <!--<button type="button" id="connect-2">2</button> -->       
+</div>
+<br>
 <h4>Logs</h4>        
 <div id="log-space" class="scr">
         -logs-<br>
 </div>
-<h4>Joined Users and the Request Buttons</h4>
-<div id="connect-buttons">
-        <!--<button type="button" id="connect-2">2</button> -->
-        
-</div>
-<h4>Connection Table</h4>
-<div id="connection-table">
-</div>
-<br>
+
+
 <h4>Received Videos</h4>
 <button type="button" id="save-cap">Save</button>        
 <div id="videos">
         <!--video id="peer-video" style="width: 300px;" autoplay="1"></video-->
         <a download="sample" style="visibility:hidden;" id="btn-download">Download</a>
 </div>
-<canvas style="visibility:hidden;" id="canvas" ></canvas>
-<br>
-<canvas style="visibility:hidden;" id="canvas2" ></canvas>
+<!--canvas style="visibility:hidden;" id="canvas" ></canvas-->
+<!--canvas style="visibility:hidden;" id="canvas2" ></canvas-->
+<h4>Connection Table</h4>
+<div id="connection-table">
+</div>
 </div>
 </body>
 </html>

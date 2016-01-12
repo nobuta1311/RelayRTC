@@ -93,7 +93,6 @@ function initialize(){
     inquiry_tables();
     myID = id_exchange(peer.id,0,false);
     dataConnectAll();
-    console.log(peerTable);
     writeLog("Your peer is opened by peerID:"+peer.id);
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);
