@@ -58,7 +58,7 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     connectedCall[to_id]=call;
     //var call = peer.call(id_exchange(to_id,1),localStream);
     connectedNum++; //どこでつかうかわからんけど接続数
-    writeLog(to_id+"に接続");
+    writeLog("Connect to "+to_id);
     noticeConnect(myID,to_id,1);
     calledDo(to_id);
   //connectedDo(); //接続したあとにデータのやりとり

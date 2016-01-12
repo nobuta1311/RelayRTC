@@ -96,13 +96,6 @@ $("#save-cap").click(function(){
         }
 });
 
-var constraints = {
-    "mandatory": {"aspectRatio": 1.3333}, 
-    "optional": [{"width": {"min": 640}},
-                 {"height": {"max": 400}}]
-};
-});
-
 function makeListener(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
@@ -135,20 +128,4 @@ function calledDo(pid){ //コネクションした後のやりとり
             $('#peer-video').prop('src', url);
         });
 }
-function writeLog(logstr){
-    console.log(logstr);
-    $("#log-space").prepend(logstr+"<br>");
-}
 
-function showNortify(str1,str2) {
-    var nortify = window.Notification || window.mozNotification || window.webkitNotification;
-    nortify.requestPermission(function(permission){
-    });
-    var nortifyins = new nortify(str1,
-               {
-                body:str2,
-                icon:"logo_color.png",
-                autoClose: 1000,
-            }
-    );
-}

@@ -1,3 +1,17 @@
+$("#save-cap").click(function(){
+        if($(this).text()=="Save"){
+        $(this).text("Stop");
+        if($("#my-video").length){
+            saveCapture("my-video");
+        }else{
+            saveCapture("peer-video");
+        }
+        }else{
+            saveCapture("STOP");
+            $(this).text("Save");
+        }
+});
+
 function saveCapture(videoid){
     if(videoid=="STOP"){
         saving=false;
