@@ -60,7 +60,6 @@ function dataDisconnect(partnerID){
 }
 function commandByPeers(data){
     inquiry_tables();
-    //TEST
     var commands = data.split(",");
     var mode =parseInt(commands[0]);
     switch (mode){
