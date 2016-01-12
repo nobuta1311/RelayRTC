@@ -1,4 +1,4 @@
-navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;// || navigator.msGetUserMedia;
+navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia|| navigator.msGetUserMedia;
 var peerTable = Array();
 //参加したときはそれぞれが更新
 //消えるときもそれぞれが更新
@@ -8,8 +8,8 @@ var saving=true;
 var connectionTable = Array();
 //配信者がサーバに設定
 //inquiryで照会
+var target=0;
 var localStream;
-var masterStream;
 var streams = Array();  //自分の保持するstreamのURLをここに記録する。
 var connectedNum;   //接続数
 var connectedCall = Array();
@@ -28,9 +28,10 @@ peer.on('call', function(call){ //かかってきたとき
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("Connected by "+pid);
-    call.answer();  //何も返さないようにしておく。
-    connectedCall[pid]=call;
-    calledDo(pid);
+   call.answer(null);  //何も返さないようにしておく。
+   connectedCall[pid]=call;
+   writeLog(connectedCall[pid]);
+   calledDo(pid);
 });
 $(function (){
     $('#joinProvider').click(function(){
@@ -55,7 +56,7 @@ $(function (){
         noticeConnect("","",4);
         id_exchange("all",5,false);
         /*video : constraints*/
-        navigator.getUserMedia({ video:true,audio:false}, function(stream){
+        navigator.getUserMedia({ video: true,audio:false}, function(stream){
             localStream = stream;
             var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
@@ -113,6 +114,7 @@ function makeListener(key){
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
         function(){
+            target = key;
             writeLog("Request the video to "+key);
             sendText(key,"2,"+myID);//接続要求
         }
@@ -133,7 +135,7 @@ function initialize(){
 function calledDo(pid){ //コネクションした後のやりとり
         connectedCall[pid].on('stream', function(stream){//callのリスナ
       //      startRecording(stream);
-            streams[pid]=stream;
+            streams[target]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
             var div = $("<video id=\"peer-video"+"\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
