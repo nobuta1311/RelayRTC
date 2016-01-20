@@ -49,6 +49,7 @@ function connectedDo(conn){ //データのやりとり
 peer.on('connection',function(conn){    //接続されたとき
     var connectedid = id_exchange(conn.peer,2,false);
     writeLog("DataConnected by "+connectedid);
+//conn.addTransceiver({sendEncodings:[{scaleResolutionDownBy:1}]}).sender;
     connectedConn[connectedid]=conn;
     connectedDo(conn);
 });

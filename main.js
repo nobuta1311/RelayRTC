@@ -49,7 +49,7 @@ $(function (){
         /*video : constraints*/
         navigator.getUserMedia({ video: true,audio:false}, function(stream){
             localStream = stream;
-            var div = $("<video id=\"my-video\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
+            var div = $("<video id=\"my-video\" autoplay=\"1\"></video>");//disabledにできるwidth: 600px;\
             $("#videos").append(div);
             $('#my-video').prop('src', window.URL.createObjectURL(stream));
             },function() { alert("Error to getUserMedia.");
@@ -74,6 +74,7 @@ $('#joinReceiver').click(function(){//受信者参加処理
     }else{
         writeLog("You've joined as a receiver");
         initialize();        
+        sendText(0,"2,"+myID);
         $(this).text("exit");
     }
 });
@@ -85,7 +86,6 @@ function makeListener(key){//接続ボタンをつくる
         function(){
             target = key;
             writeLog("Request the video to "+key);
-            sendText(key,"2,"+myID);//接続要求
         }
     );
 }
