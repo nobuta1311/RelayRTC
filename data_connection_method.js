@@ -48,12 +48,14 @@ peer.on('connection',function(conn){    //接続されたとき
     peerTable[connectedid] = conn.peer;//peerTable更新
     //ConnectionTableを埋める 自分に関係するところを全部falseにして値リセット
     //noticeConnect(myID,"",3);
+    connectionTable[connectedid]=[];
     connectionTable[connectedid]["counter"]=0;
     connectionTable[connectedid]["connected"]=0;
     Object.keys(connectionTable).forEach(function(key){
         connectionTable[key][connectedid]=false;
         connectionTable[connectedid][key]=false;
     });
+    renewTable();
     connectedConn[connectedid]=conn;
     connectedDo(conn);
 });

@@ -25,6 +25,7 @@ peer.on('call', function(call){ //かかってきたとき
    call.answer(null);  //何も返さないようにしておく。
    connectedCall[pid]=call;
    calledDo(pid);
+   renewTable();
 });
 /*総合関数*/
 $(function (){
@@ -97,8 +98,8 @@ function makeListener(key){//接続ボタンをつくる
 }
 function initialize(){
     myID = id_exchange(peer.id,0,false);
+    noticeConnect(myID,"",3);
     inquiry_tables();
-    noticeConnect(myID,"",3)
     dataConnectAll();
     writeLog("YOU ARE : "+peer.id);
     $("#my-id").text(peer.id);

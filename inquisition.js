@@ -70,7 +70,7 @@ function noticeConnect(from_parameter,to_parameter,mode){
                 url = "from="+from_parameter+"&to="+to_parameter+"&mode="+mode;
                 break;
             case 3: //fromを指定して接続相手をすべて表示
-                url = "from="+from_parameter+"&mode"+mode;
+                url = "from="+from_parameter+"&mode="+mode;
                 break;
             case 4:
                 url = "clear=all";
