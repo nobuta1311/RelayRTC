@@ -2,18 +2,21 @@
 var ConnectionStateURL="./ConnectionState.php?";
 var IDURL = "./ID.php?";
 function inquiry_tables(){
-    //ID一覧を取得   
+    //参加者一覧をポーリング
     var response =id_exchange("all",4,false);
-    //参加しているIDを一覧表示
     var new_peerTable = JSON.parse(response);
-    isasync = arguments[0];
-    //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
+    writeLog(new_peerTable);
+    //isasync = arguments[0];
+    //古いピアテーブルを比較し，新しいピアならばボタンを設置したりconnectionTableを整備する．
+    //これはデータコネクションが来た時にできるよね？
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
                 if(key1==0){
+                    //0ならばボタンを追加する．しかし0がくるときには，からっぽのはずだよね
                     var div = $("<button type=\"button\" id=\"connect-"+key1+"\">"+"Connect to "+key1+"</button>");//disabledにできる
                     makeListener(key1);
+                    $("#connect-buttons").append(div);
                 }
                 //ConnectionTableを埋める．Falseにする．
                 Object.keys(peerTable).forEach(function(key2){
@@ -22,7 +25,7 @@ function inquiry_tables(){
                         noticeConnect(key2,key1,0);
                     }
                 });
-                $("#connect-buttons").append(div);
+                
             }
         });
         //接続状況ポーリング
