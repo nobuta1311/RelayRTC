@@ -90,10 +90,8 @@ function makeListener(key){//接続ボタンをつくる
         'click',"#connect-"+key,
         function(){
             target = key;
-<<<<<<< HEAD
             writeLog("REQUEST VIDEO :"+key);
             sendText(0,"2,"+myID);
->>>>>>> origin/master
         }
     );
 }
