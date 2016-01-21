@@ -62,6 +62,10 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     Object.keys(peerTable).forEach(function(key){
         sendText(key,"4,"+myID+","+to_id);
     });
+    connectionTable[myID][to_id]=true;
+    connectionTable[myID]["counter"]++;
+    connectionTable[to_id]["connected"]++;
+    renewTable();
     calledDo(to_id);
 }
 function disconnect(to_id){

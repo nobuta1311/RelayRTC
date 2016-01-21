@@ -88,6 +88,9 @@ function commandByPeers(data){
         case 4:
         writeLog(commands[1]+" CALL TO "+commands[2]);
         connectionTable[commands[1]][commands[2]]=true;
+        connectionTable[commands[1]]["counter"]++;
+        connectionTable[commands[2]]["connected"]++;
+        renewTable();
         break;
         default:
         writeLog("BAD REQUEST");
