@@ -8,8 +8,6 @@ function inquiry_tables(){
     var new_peerTable = JSON.parse(response);
     isasync = arguments[0];
     //サーバにアクセスしてID一覧と接続状態一覧を更新するのがメイン
-    //peerTableとConnectionTableで
-        //writeLog("Get Tables.");
         Object.keys(new_peerTable).forEach(function(key1){
             if(peerTable[key1]===undefined){  //新しいやつならば
                 peerTable[key1] = new_peerTable[key1];
@@ -30,7 +28,6 @@ function inquiry_tables(){
         //接続状況更新
         response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
-       //writeLog(connectionTable);
        // $("#connection-table").text("");
         var tableText = "<table border=1><tr><th></th>";//<tr><th></th><th>列-A</th><th>列-B</th></tr>
         Object.keys(peerTable).forEach(function(key){

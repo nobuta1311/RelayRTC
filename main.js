@@ -21,7 +21,7 @@ peer.on('call', function(call){ //かかってきたとき
    inquiry_tables();
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
-   writeLog("Connected by "+pid);
+   writeLog("CALLED BY: "+pid);
    call.answer(null);  //何も返さないようにしておく。
    connectedCall[pid]=call;
    calledDo(pid);
@@ -41,9 +41,9 @@ $(function (){
         });
         noticeConnect(myID,"",6);//callコネクション削除
         dataDisconnectAll();//コネクションも切断
-        writeLog("Finished Exitting");
+        writeLog("COMPLETE EXITTING");
     }else{
-        writeLog("You've joined as a provider");
+        writeLog("YOU ARE PROVIDER");
         noticeConnect("","",4);
         id_exchange("all",5,false);
         /*video : constraints*/
@@ -70,9 +70,9 @@ $('#joinReceiver').click(function(){//受信者参加処理
         });
         noticeConnect(myID,"",6);
         dataDisconnectAll();
-        writeLog("Finished Exitting");
+        writeLog("FINISH EXITTING");
     }else{
-        writeLog("You've joined as a receiver");
+        writeLog("YOU ARE RECEIVER");
         initialize();        
         sendText(0,"2,"+myID);
         $(this).text("exit");
@@ -85,7 +85,7 @@ function makeListener(key){//接続ボタンをつくる
         'click',"#connect-"+key,
         function(){
             target = key;
-            writeLog("Request the video to "+key);
+            writeLog("REQUEST VIDEO :"+key);
         }
     );
 }
@@ -93,10 +93,10 @@ function initialize(){
     inquiry_tables();
     myID = id_exchange(peer.id,0,false);
     dataConnectAll();
-    writeLog("Your peer is opened by peerID:"+peer.id);
+    writeLog("YOU ARE : "+peer.id);
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);
-    writeLog("Your id is "+myID);    
+    writeLog("YOUR ID : "+myID);    
 }
 
 
