@@ -76,6 +76,9 @@ function commandByPeers(data){
         writeLog("Request: provide your video to "+commands[1]);
         routing(commands[1]);
         break;
+        case 3:
+        //writeLog("By "+commands[1]+" "+commands[2]);
+        break;
         default:
         writeLog("Bad Request");
         break;

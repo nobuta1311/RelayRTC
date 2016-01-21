@@ -74,9 +74,14 @@ $('#joinReceiver').click(function(){//受信者参加処理
     }else{
         writeLog("You've joined as a receiver");
         initialize();        
-        sendText(0,"2,"+myID);
+        //ここでリクエスト
         $(this).text("exit");
     }
+});
+$("#SendTextButton").click(function(){
+        Object.keys(peerTable).forEach(function(key1){
+            sendText(key1,"3,"+myID+","+$("#mes").val());
+        });
 });
 });
 
@@ -86,6 +91,7 @@ function makeListener(key){//接続ボタンをつくる
         function(){
             target = key;
             writeLog("Request the video to "+key);
+            sendText(0,"2,"+myID);
         }
     );
 }
