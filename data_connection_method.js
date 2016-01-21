@@ -51,7 +51,7 @@ peer.on('connection',function(conn){    //接続されたとき
     connectionTable[connectedid]=[];
     connectionTable[connectedid]["counter"]=0;
     connectionTable[connectedid]["connected"]=0;
-    Object.keys(connectionTable).forEach(function(key){
+    Object.keys(peerTable).forEach(function(key){
         connectionTable[key][connectedid]=false;
         connectionTable[connectedid][key]=false;
     });
