@@ -6,8 +6,7 @@ connectionTableのデータコネクション部分は、この関数群で更�
 */
 function dataConnectAll(){
 
-    writeLog("dataconnectall");
-    //writeLog(Object.keys(peerTable)[52]);
+    writeLog("CONNECT TO ALL");
     Object.keys(peerTable).forEach(function(key){
         dataConnect(key);
     });
@@ -24,31 +23,28 @@ function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1,false);
         connectedConn[partnerID] = peer.connect(genuineID);
         connectedDo(connectedConn[partnerID]);
-        console.log(connectedConn[partnerID]);
-        //writeLog("DataConnected to "+partnerID+" "+genuineID+"result ");
         return true;
 }
 
 function connectedDo(conn){ //データのやりとり
- //       writeLog("Waiting datas");
         conn.on('close',function(){
             var tempid=id_exchange(conn.peer,2,false);
             writeLog(tempid+"'s connection has closed.");
             if(connectionTable[tempid][myID]==true){
                 sendText(0,"2,"+myID);//接続要求
-                writeLog("ReConnect to "+tempid);
+                writeLog("RECONNECT : "+tempid);
             }
             //再要求する
         });
         conn.on("data",function(data){//data受信リスナ
-                writeLog("Received Data: "+data); //テキストとして受信データを表示
+                writeLog("RECEIVED: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
         });
 }
 
 peer.on('connection',function(conn){    //接続されたとき
     var connectedid = id_exchange(conn.peer,2,false);
-    writeLog("DataConnected by "+connectedid);
+    writeLog("DATA-CONNECTED:"+connectedid);
 //conn.addTransceiver({sendEncodings:[{scaleResolutionDownBy:1}]}).sender;
     connectedConn[connectedid]=conn;
     connectedDo(conn);
@@ -65,23 +61,23 @@ function commandByPeers(data){
     var mode =parseInt(commands[0]);
     switch (mode){
         case 0 :    //接続命令  0,送る相手,送るストリーム  
-        writeLog("Command: connect to "+commands[1]);
+        writeLog("COMMAND: CONNECT :"+commands[1]);
         connect(commands[1],streams[commands[2]]);  //streams[commands[2]
         break;
         case 1 :    //切断 1,相手
-        writeLog("Command: disconnect to "+commands[1]);
+        writeLog("COMMAND:DISCONNECT: "+commands[1]);
         disconnect(commands[1]);
         break; 
         case 2 : //配信要求 2,相手
-        writeLog("Request: provide your video to "+commands[1]);
+        writeLog("REQUEST VIDEO :"+commands[1]);
         routing(commands[1]);
         break;
         default:
-        writeLog("Bad Request");
+        writeLog("BAD REQUEST");
         break;
     }
 }
 function sendText(peerid,data){
-    writeLog("Send to "+connectedConn[peerid].peer);
+    writeLog("SEND \""+data+"\" TO "+connectedConn[peerid].peer);
     connectedConn[peerid].send(data);
 }

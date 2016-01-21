@@ -4,6 +4,7 @@ function writeLog(logstr){
 }
 
 function showNortify(str1,str2) {
+    return; //今は使わないようにしておく
     var nortify = window.Notification || window.mozNotification || window.webkitNotification;
     nortify.requestPermission(function(permission){
     });
