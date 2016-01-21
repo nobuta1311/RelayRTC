@@ -12,11 +12,11 @@ function routing(partnerID){
     console.log(connectionTable);
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
-       writeLog("Routing: direct to "+partnerID);
+       writeLog("DIRECT CONNECT : "+partnerID);
       // connectionTable[myID]["counter"]++;
        connect(partnerID,localStream);
     }else{  //リレー式につなげる場合。
-        writeLog("Routing: relay-connect to "+partnerID);
+        writeLog("RELAYLY CONNECT : "+partnerID);
         var checked = Array();
         checked[0]=false;
         connect_func(myID,partnerID,0,checked);
@@ -29,7 +29,7 @@ function routing(partnerID){
 function connect_func(fromID,toID,count,checked){
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
-        writeLog("letConnect "+fromID+" "+toID);
+        writeLog("LET CONNECT : "+fromID+" "+toID);
         letConnect(fromID,toID);
         return 0;
     }
@@ -57,7 +57,7 @@ function connect_func(fromID,toID,count,checked){
 function connect(to_id,send_stream){  //コネクションボタン押した
     var call = peer.call(id_exchange(to_id,1,false),send_stream); //send_stream
     connectedCall[to_id]=call;
-    writeLog("Connect to "+to_id);
+    writeLog("CONNECT : "+to_id);
     noticeConnect(myID,to_id,1);
     calledDo(to_id);
 }
