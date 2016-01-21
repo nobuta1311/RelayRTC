@@ -45,7 +45,15 @@ function connectedDo(conn){ //データのやりとり
 peer.on('connection',function(conn){    //接続されたとき
     var connectedid = id_exchange(conn.peer,2,false);
     writeLog("DATA-CONNECTED:"+connectedid);
-//conn.addTransceiver({sendEncodings:[{scaleResolutionDownBy:1}]}).sender;
+    peerTable[connectedid] = conn.peer;//peerTable更新
+    //ConnectionTableを埋める 自分に関係するところを全部falseにして値リセット
+    //noticeConnect(myID,"",3);
+    connectionTable[connectedid]["counter"]=0;
+    connectionTable[connectedid]["connected"]=0;
+    Object.keys(connectionTable).forEach(function(key){
+        connectionTable[key][connectedid]=false;
+        connectionTable[connectedid][key]=false;
+    });
     connectedConn[connectedid]=conn;
     connectedDo(conn);
 });
@@ -56,7 +64,7 @@ function dataDisconnect(partnerID){
         return true;
 }
 function commandByPeers(data){
-    inquiry_tables();
+    //inquiry_tables();
     var commands = data.split(",");
     var mode =parseInt(commands[0]);
     switch (mode){
@@ -74,6 +82,10 @@ function commandByPeers(data){
         break;
         case 3:
         //writeLog("By "+commands[1]+" "+commands[2]);
+        break;
+        case 4:
+        writeLog(commands[1]+" CALL TO "+commands[2]);
+        connectionTable[commands[1]][commands[2]]=true;
         break;
         default:
         writeLog("BAD REQUEST");

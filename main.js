@@ -18,7 +18,7 @@ var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
 peer.on('open', function(){ //回線を開く
 });
 peer.on('call', function(call){ //かかってきたとき
-   inquiry_tables();
+   //inquiry_tables();
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("CALLED BY: "+pid);
@@ -96,8 +96,9 @@ function makeListener(key){//接続ボタンをつくる
     );
 }
 function initialize(){
-    inquiry_tables();
     myID = id_exchange(peer.id,0,false);
+    inquiry_tables();
+    noticeConnect(myID,"",3)
     dataConnectAll();
     writeLog("YOU ARE : "+peer.id);
     $("#my-id").text(peer.id);

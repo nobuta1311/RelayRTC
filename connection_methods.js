@@ -6,7 +6,7 @@
 var Branch = Array(2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 var peerNum;
 function routing(partnerID){
-    inquiry_tables();
+    //inquiry_tables();
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
     console.log(connectionTable);
@@ -59,6 +59,9 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     connectedCall[to_id]=call;
     writeLog("CONNECT : "+to_id);
     noticeConnect(myID,to_id,1);
+    Object.keys(peerTable).forEach(function(key){
+        sendText(key,"4,"+myID+","+to_id);
+    });
     calledDo(to_id);
 }
 function disconnect(to_id){
