@@ -25,37 +25,13 @@ function inquiry_tables(){
                 $("#connect-buttons").append(div);
             }
         });
-        //接続状況更新
+        //接続状況ポーリング
         response = noticeConnect("","",5); 
         connectionTable = JSON.parse(response);
-       // $("#connection-table").text("");
-        var tableText = "<table border=1><tr><th></th>";//<tr><th></th><th>列-A</th><th>列-B</th></tr>
-        Object.keys(peerTable).forEach(function(key){
-                tableText+="<th>"+key+"</th>";
-        });
-        tableText+="<th>Connect</th><th>ConnectedBy</th></tr>";
-        Object.keys(connectionTable).forEach(function(key1){
-            var ar2 = connectionTable[key1];
-            ar2[key1]="＼";
-            tableText+="<tr><td>"+key1+"</td>";
-            Object.keys(ar2).forEach(function(key2){
-             //   if(key2!="counter"&&key2!="connected")
-            //    $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
-                if(connectionTable[key1][key2]===true)
-                    tableText+="<td>"+"→"+"</td>";
-                else if (key2!="counter" && key2!="connected" &&  connectionTable[key2][key1]===true)
-                    tableText+="<td>"+"←"+"</td>";
-                else if(connectionTable[key1][key2]===false)
-                    tableText+="<td>"+"×"+"</td>";
-                else
-                    tableText+="<td>"+connectionTable[key1][key2]+"</td>";
-                });
-          //  $("#connection-table").append("sum"+connectionTable[key1]['counter']+"<br>");
-            tableText+="</tr>";
-        });
-        tableText+="</table>";
-       $("#connection-table").empty();
-       $("#connection-table").append($(tableText));
+        //テーブル更新
+        
+        renewTable();
+        
 }
 
 function id_exchange(command_str,mode,isasync){
