@@ -1,6 +1,9 @@
 function writeLog(logstr){
+    DD = new Date();
+    var time = DD.getDate()+"日"+DD.getHours()+"時"+DD.getMinutes()+"分"+DD.getSeconds()+"秒"+DD.getMilliseconds()+"\t||";
+
     console.log(logstr);
-    $("#log-space").prepend(logstr+"<br>");
+    $("#log-space").prepend(time+logstr+"<br>");
 }
 
 function showNortify(str1,str2) {

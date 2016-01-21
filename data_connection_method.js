@@ -58,6 +58,7 @@ peer.on('connection',function(conn){    //接続されたとき
     renewTable();
     connectedConn[connectedid]=conn;
     connectedDo(conn);
+    if(myID==0)routing(connectedid);
 });
 
 

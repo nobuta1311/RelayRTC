@@ -25,6 +25,9 @@ peer.on('call', function(call){ //かかってきたとき
    call.answer(null);  //何も返さないようにしておく。
    connectedCall[pid]=call;
    calledDo(pid);
+   connectionTable[pid][myID]=true;
+   //connectionTable[pid]["counter"]++;
+   //connectionTable[myID]["connected"]++;
    renewTable();
 });
 /*総合関数*/
@@ -75,7 +78,6 @@ $('#joinReceiver').click(function(){//受信者参加処理
     }else{
         writeLog("YOU ARE RECEIVER");
         initialize();        
-        //ここでリクエスト
         $(this).text("exit");
     }
 });
