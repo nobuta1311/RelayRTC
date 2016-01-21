@@ -50,10 +50,11 @@ peer.on('connection',function(conn){    //接続されたとき
     //noticeConnect(myID,"",3);
     connectionTable[connectedid]["counter"]=0;
     connectionTable[connectedid]["connected"]=0;
-    Object.keys(connectionTable).forEach(function(key){
+    Object.keys(peerTable).forEach(function(key){
         connectionTable[key][connectedid]=false;
         connectionTable[connectedid][key]=false;
     });
+    renewTable();
     connectedConn[connectedid]=conn;
     connectedDo(conn);
 });
@@ -86,6 +87,7 @@ function commandByPeers(data){
         case 4:
         writeLog(commands[1]+" CALL TO "+commands[2]);
         connectionTable[commands[1]][commands[2]]=true;
+        renewTable();
         break;
         default:
         writeLog("BAD REQUEST");
