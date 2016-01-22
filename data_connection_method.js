@@ -5,12 +5,10 @@ peerTableが最新のものになっていることを前提としており、
 connectionTableのデータコネクション部分は、この関数群で更新する。
 */
 function dataConnectAll(){
-
     writeLog("CONNECT TO ALL");
     Object.keys(peerTable).forEach(function(key){
         if(key!=myID){
         dataConnect(key);
-        sendText(key,"5,"+myID+","+peerTable[myID]);
         } 
         });
     return true;
@@ -24,7 +22,7 @@ function dataDisconnectAll(){
 }
 function dataConnect(partnerID){
         var genuineID = id_exchange(partnerID,1,false);
-        connectedConn[partnerID] = peer.connect(genuineID);
+        connectedConn[partnerID] = peer.connect(genuineID,{label:myID+""});
         connectedDo(connectedConn[partnerID]);
         return true;
 }
@@ -36,6 +34,7 @@ function connectedDo(conn){ //データのやりとり
         });
         conn.on('close',function(){
             var tempid=id_exchange(conn.peer,2,false);
+            if(myID==0){return;}
             writeLog(tempid+"'s connection has closed.");
             if(connectionTable[tempid][myID]==true){
                 sendText(0,"2,"+myID);//接続要求
@@ -46,10 +45,11 @@ function connectedDo(conn){ //データのやりとり
 }
 
 peer.on('connection',function(conn){    //接続されたとき
-    connectedDo(conn);
-    var connectedid = id_exchange(conn.peer,2,false);
-    writeLog("DATA-CONNECTED:"+connectedid);
+    var connectedid = conn.label;
+    connectedConn[connectedid]=conn;
     peerTable[connectedid] = conn.peer;//peerTable更新
+    connectedDo(conn);
+    writeLog("DATA-CONNECTED:"+connectedid);
     //ConnectionTableを埋める 自分に関係するところを全部falseにして値リセット
     //noticeConnect(myID,"",3);
     connectionTable[connectedid]=[];
@@ -60,7 +60,6 @@ peer.on('connection',function(conn){    //接続されたとき
         connectionTable[connectedid][key]=false;
     });
     renewTable();
-    connectedConn[connectedid]=conn;
     if(myID==0)routing(connectedid);
 });
 
@@ -83,8 +82,9 @@ function commandByPeers(data){
         disconnect(commands[1]);
         break; 
         case 2 : //配信要求 2,相手
-        writeLog("REQUEST VIDEO :"+commands[1]);
-        routing(commands[1]);
+            connectedConn[connectedid]=conn;
+             writeLog("REQUEST VIDEO :"+commands[1]);
+            routing(commands[1]);
         break;
         case 3:
         //writeLog("By "+commands[1]+" "+commands[2]);
@@ -107,6 +107,6 @@ function commandByPeers(data){
     }
 }
 function sendText(peerid,data){
-    writeLog("SEND \""+data+"\" TO "+connectedConn[peerid].peer);
+    writeLog("SEND \""+data+"\" TO "+peerid);
     connectedConn[peerid].send(data);
 }

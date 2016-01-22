@@ -60,7 +60,9 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     writeLog("CALL TO : "+to_id);
     noticeConnect(myID,to_id,1);
     Object.keys(peerTable).forEach(function(key){
-        sendText(key,"4,"+myID+","+to_id);
+        if(key!=myID){
+            sendText(key,"4,"+myID+","+to_id);
+        }
     });
     connectionTable[myID][to_id]=true;
     connectionTable[myID]["counter"]++;

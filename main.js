@@ -26,6 +26,12 @@ peer.on('call', function(call){ //かかってきたとき
    connectedCall[pid]=call;
    calledDo(pid);
    connectionTable[pid][myID]=true;
+   Object.keys(peerTable).forEach(function(key){    //connectionTableを埋める
+       if(myID!=key){
+           if(connectionTable[key][myID]==undefined){connectionTable[key][myID]=false;}
+           if(connectionTable[myID][key]==undefined){connectionTable[myID][key]=false;}
+       }
+   });
    //connectionTable[pid]["counter"]++;
    //connectionTable[myID]["connected"]++;
    renewTable();
@@ -100,9 +106,13 @@ function makeListener(key){//接続ボタンをつくる
 }
 function initialize(){
     myID = id_exchange(peer.id,0,false);
-    noticeConnect(myID,"",3);
-    inquiry_tables();
-    dataConnectAll();
+    peerTable[myID]=peer.id;
+    inquiry_tables();   //他の状況をサーバから取得する．
+    noticeConnect(myID,"",3);//サーバのコネクションテーブルの自分の部分更新 asyncでなくてよい
+    connectionTable[myID]=[];
+    connectionTable[myID]["counter"]=0;
+    connectionTable[myID]["connected"]=0;
+    dataConnectAll();   //全員に接続する．これにより相手は自分のID2つを知る．
     writeLog("YOU ARE : "+peer.id);
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);

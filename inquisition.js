@@ -22,15 +22,16 @@ function id_exchange(command_str,mode,isasync){
             mode_str = "peerid";
             break;
         case 1: //num-genuine参照
-            mode_str = "myid";
+            //mode_str = "myid";
+            return peerTable[command_str];
             break;
         case 2: //genuine-num参照
             Object.keys(peerTable).forEach(function(key){
-                writeLog("TESSST "+peerTable[key]+" "+command_str);
-                if(peerTable[key]==command_str){
-                    return key;
+                if(peerTable[key]===command_str){
+                    result=key;
                 }
             });
+            return result;
             break;
         case 3: //終了するIDを伝える。
             mode_str = "exit";
