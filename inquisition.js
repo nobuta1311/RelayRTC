@@ -5,7 +5,7 @@ function inquiry_tables(){
     //参加者一覧をポーリング
     var response =id_exchange("all",4,false);
     peerTable = JSON.parse(response);   //参加しているgenuineIDのみ帰ってくる
-    var div = $("<button type=\"button\" id=\"connect-"+0+"\">"+"Connect to "+0+"</button>");//disabledにできる
+     var div = $("<button type=\"button\" id=\"connect-"+0+"\">"+"Connect to "+0+"</button>");//disabledにできる
     makeListener(0);
     $("#connect-buttons").append(div);
     response = noticeConnect("","",5);  //接続状況ポーリング
@@ -25,7 +25,12 @@ function id_exchange(command_str,mode,isasync){
             mode_str = "myid";
             break;
         case 2: //genuine-num参照
-            mode_str = "genuineid";
+            Object.keys(peerTable).forEach(function(key){
+                writeLog("TESSST "+peerTable[key]+" "+command_str);
+                if(peerTable[key]==command_str){
+                    return key;
+                }
+            });
             break;
         case 3: //終了するIDを伝える。
             mode_str = "exit";

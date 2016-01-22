@@ -57,7 +57,7 @@ function connect_func(fromID,toID,count,checked){
 function connect(to_id,send_stream){  //コネクションボタン押した
     var call = peer.call(id_exchange(to_id,1,false),send_stream); //send_stream
     connectedCall[to_id]=call;
-    writeLog("CONNECT : "+to_id);
+    writeLog("CALL TO : "+to_id);
     noticeConnect(myID,to_id,1);
     Object.keys(peerTable).forEach(function(key){
         sendText(key,"4,"+myID+","+to_id);

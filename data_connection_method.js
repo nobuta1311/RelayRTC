@@ -8,8 +8,11 @@ function dataConnectAll(){
 
     writeLog("CONNECT TO ALL");
     Object.keys(peerTable).forEach(function(key){
+        if(key!=myID){
         dataConnect(key);
-    });
+        sendText(key,"5,"+myID+","+peerTable[myID]);
+        } 
+        });
     return true;
 }
 function dataDisconnectAll(){
@@ -27,6 +30,10 @@ function dataConnect(partnerID){
 }
 
 function connectedDo(conn){ //データのやりとり
+         conn.on("data",function(data){//data受信リスナ
+                writeLog("RECEIVED: "+data); //テキストとして受信データを表示
+                commandByPeers(data);
+        });
         conn.on('close',function(){
             var tempid=id_exchange(conn.peer,2,false);
             writeLog(tempid+"'s connection has closed.");
@@ -36,13 +43,10 @@ function connectedDo(conn){ //データのやりとり
             }
             //再要求する
         });
-        conn.on("data",function(data){//data受信リスナ
-                writeLog("RECEIVED: "+data); //テキストとして受信データを表示
-                commandByPeers(data);
-        });
 }
 
 peer.on('connection',function(conn){    //接続されたとき
+    connectedDo(conn);
     var connectedid = id_exchange(conn.peer,2,false);
     writeLog("DATA-CONNECTED:"+connectedid);
     peerTable[connectedid] = conn.peer;//peerTable更新
@@ -57,7 +61,6 @@ peer.on('connection',function(conn){    //接続されたとき
     });
     renewTable();
     connectedConn[connectedid]=conn;
-    connectedDo(conn);
     if(myID==0)routing(connectedid);
 });
 
@@ -86,12 +89,17 @@ function commandByPeers(data){
         case 3:
         //writeLog("By "+commands[1]+" "+commands[2]);
         break;
-        case 4:
+        case 4: //どこかで接続が起きたことを知らせる
         writeLog(commands[1]+" CALL TO "+commands[2]);
         connectionTable[commands[1]][commands[2]]=true;
         connectionTable[commands[1]]["counter"]++;
         connectionTable[commands[2]]["connected"]++;
         renewTable();
+        break;
+        case 5:
+            writeLog("JOINNING "+commands[2]+" AS "+commands[1]);
+            peerTable[commands[1]]=peerTable[commands[2]];
+            //renewTable(); //表示して確認したいが表示欄が今のところ存在しない
         break;
         default:
         writeLog("BAD REQUEST");
