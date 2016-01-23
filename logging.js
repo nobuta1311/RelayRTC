@@ -1,11 +1,24 @@
+var LoggingURL="./Logging.php";
+var logdump={};
 function writeLog(logstr){
     DD = new Date();
-    var time = DD.getDate()+"日"+DD.getHours()+"時"+DD.getMinutes()+"分"+DD.getSeconds()+"秒"+DD.getMilliseconds()+"\t||";
-
+    var time = DD.getHours()+":"+DD.getMinutes()+":"+DD.getSeconds()+":"+DD.getMilliseconds();
+    $("#log-space").prepend(time+"\t||"+logstr+"<br>");
     console.log(logstr);
-    $("#log-space").prepend(time+logstr+"<br>");
+    logdump[time]=logstr;
 }
-
+function upload(){  //今はログデータだけ
+    logdump["ID"]=myID;
+    logdump["host"]=peerTable[0];
+    var sendjson = JSON.stringify(logdump);
+    $.ajax({
+            url:LoggingURL,
+            type:"post",
+            datatype:"application/json",
+            data:sendjson,
+    }).done(function(res){
+    });
+}
 function showNortify(str1,str2) {
     return; //今は使わないようにしておく
     var nortify = window.Notification || window.mozNotification || window.webkitNotification;

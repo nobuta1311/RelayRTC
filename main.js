@@ -14,9 +14,11 @@ var canvasContext,canvasContext2;
 var videoElement;
 var e = document.createEvent("MouseEvents");
 var peer = new Peer({ key: '2e8076d1-e14c-46d4-a001-53637dfee5a4', debug: 3});
-
+/*
 peer.on('open', function(){ //回線を開く
+    writeLog("OPENED");
 });
+*/
 peer.on('call', function(call){ //かかってきたとき
    //inquiry_tables();
    var pid = id_exchange(call.peer,2,false);
@@ -42,6 +44,7 @@ $(function (){
         for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
+        upload();
         //stopRecording(localRecorder);
         id_exchange(myID,3,false);//myIDを削除
         $(this).text("Join as a Provider");
@@ -53,7 +56,6 @@ $(function (){
         dataDisconnectAll();//コネクションも切断
         writeLog("COMPLETE EXITTING");
     }else{
-        writeLog("YOU ARE PROVIDER");
         noticeConnect("","",4);
         id_exchange("all",5,false);
         /*video : constraints*/
@@ -64,7 +66,7 @@ $(function (){
             $('#my-video').prop('src', window.URL.createObjectURL(stream));
             },function() { alert("Error to getUserMedia.");
         });
-        //startRecording(localStream);
+        writeLog("YOU ARE PROVIDER");
         initialize();
         $(this).text("exit");
     }
@@ -72,6 +74,7 @@ $(function (){
 $('#joinReceiver').click(function(){//受信者参加処理
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
+        upload();
         id_exchange(myID,3,false);//myIDをサーバから除去
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){

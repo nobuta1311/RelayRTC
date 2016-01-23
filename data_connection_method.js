@@ -14,7 +14,7 @@ function dataConnectAll(){
     return true;
 }
 function dataDisconnectAll(){
-    for(var pid in peerTable){
+        for(var pid in peerTable){
         if(pid==myID){break;}
         dataDisconnect(pid);
     }
