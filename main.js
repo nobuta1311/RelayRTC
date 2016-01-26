@@ -96,7 +96,9 @@ $("#SendTextButton").click(function(){
         });
 });
 });
-
+/*
+接続ボタンを作る関数
+実験時には用いない
 function makeListener(key){//接続ボタンをつくる
     $("#connect-buttons").on( 
         'click',"#connect-"+key,
@@ -107,6 +109,7 @@ function makeListener(key){//接続ボタンをつくる
         }
     );
 }
+*/
 function initialize(){
     myID = id_exchange(peer.id,0,false);
     peerTable[myID]=peer.id;

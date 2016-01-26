@@ -5,9 +5,10 @@ function inquiry_tables(){
     //参加者一覧をポーリング
     var response =id_exchange("all",4,false);
     peerTable = JSON.parse(response);   //参加しているgenuineIDのみ帰ってくる
-     var div = $("<button type=\"button\" id=\"connect-"+0+"\">"+"Connect to "+0+"</button>");//disabledにできる
-    makeListener(0);
-    $("#connect-buttons").append(div);
+    //接続ボタンを作る　実験時には用いない
+    // var div = $("<button type=\"button\" id=\"connect-"+0+"\">"+"Connect to "+0+"</button>");//disabledにできる
+    //makeListener(0);
+    //$("#connect-buttons").append(div);
     response = noticeConnect("","",5);  //接続状況ポーリング
     connectionTable = JSON.parse(response);//connectionTable更新
     renewTable();//テーブルの表示更新
