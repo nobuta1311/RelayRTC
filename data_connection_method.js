@@ -1,23 +1,18 @@
-/*
-data_connection_method.js
-データコネクションを確立したり切断するための関数群である。
-peerTableが最新のものになっていることを前提としており、
-connectionTableのデータコネクション部分は、この関数群で更新する。
-*/
 function dataConnectAll(){
     writeLog("CONNECT TO ALL");
     Object.keys(peerTable).forEach(function(key){
         if(key!=myID){
         dataConnect(key);
         } 
-        });
+    });
     return true;
 }
 function dataDisconnectAll(){
-        for(var pid in peerTable){
-        if(pid==myID){break;}
-        dataDisconnect(pid);
-    }
+    Object.keys(peerTable).forEach(function(key){
+        if(key!=myID){
+            dataDisconnect(key);
+        }
+    });
     return true;
 }
 function dataConnect(partnerID){
@@ -33,14 +28,32 @@ function connectedDo(conn){ //データのやりとり
                 commandByPeers(data);
         });
         conn.on('close',function(){
+            //閉じた閉じられた両方に送られるがその後操作できるのは閉じられた側のみ
             var tempid=id_exchange(conn.peer,2,false);
-            if(myID==0){return;}
             writeLog(tempid+"'s connection has closed.");
-            if(connectionTable[tempid][myID]==true){
-                sendText(0,"2,"+myID);//接続要求
+            Object.keys(peerTable).forEach(function(key){
+                if(connectionTable[key][tempid]===true){
+                    connectionTable[key]["counter"]--;
+                    connectionTable[tempid]["connected"]--;
+                }
+                if(connectionTable[tempid][key]===true){
+                    connectionTable[key]["counter"]--;
+                    connectionTable[tempid]["connected"]--;
+                }
+                connectionTable[key][tempid]=null;
+            });
+            peerTable[tempid]=null;
+            connectionTable[tempid]=null;
+            renewTable();
+            /*
+            if(myID!=tempid && connectionTable[tempID][myID]==true){
+                //直接の被接続者であれば
+                //再接続を要求し，さらに下のピアと切断する．
+                //MediaConnectionだけを切りたい
+                sendText(0,"2,"+tempid);//接続要求
                 writeLog("RECONNECT : "+tempid);
             }
-            //再要求する
+            */
         });
 }
 

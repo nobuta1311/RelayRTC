@@ -116,6 +116,7 @@ function initialize(){
     inquiry_tables();   //他の状況をサーバから取得する．
     noticeConnect(myID,"",3);//サーバのコネクションテーブルの自分の部分更新 asyncでなくてよい
     connectionTable[myID]=[];
+    writeLog(peerTable);
     connectionTable[myID]["counter"]=0;
     connectionTable[myID]["connected"]=0;
     dataConnectAll();   //全員に接続する．これにより相手は自分のID2つを知る．

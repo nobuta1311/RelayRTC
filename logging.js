@@ -2,7 +2,7 @@ var LoggingURL="./Logging.php";
 var logdump={};
 function writeLog(logstr){
     DD = new Date();
-    var time = DD.getHours()+":"+DD.getMinutes()+":"+DD.getSeconds()+":"+DD.getMilliseconds();
+    var time = ("0"+DD.getHours()).slice(-2)+":"+("0"+DD.getMinutes()).slice(-2)+":"+("0"+DD.getSeconds()).slice(-2)+":"+("00"+DD.getMilliseconds()).slice(-3);
     $("#log-space").prepend(time+"\t||"+logstr+"<br>");
     console.log(logstr);
     logdump[time]=logstr;
@@ -33,17 +33,19 @@ function showNortify(str1,str2) {
     );
 }
 function renewTable(){  
+        console.log(connectionTable);
     //コネクションテーブルを現時点保有している変数に従って更新　変化があったあとに使用
     var tableText = "<table border=1><tr><th></th>";
-        Object.keys(peerTable).forEach(function(key){   //peerTableから１行目
+        Object.keys(connectionTable).forEach(function(key){   //peerTableから１行目
                 tableText+="<th>"+key+"</th>";
         });
         tableText+="<th>Connect</th><th>ConnectedBy</th></tr>"; //1行目右端
         Object.keys(connectionTable).forEach(function(key1){    //connectionTableから2行目以降
-            var ar2 = connectionTable[key1];
+            var ar2 = peerTable[key1];
             ar2[key1]="＼";
             tableText+="<tr><td>"+key1+"</td>";
             Object.keys(ar2).forEach(function(key2){
+                writeLog(key1+" "+key2);
              //   if(key2!="counter"&&key2!="connected")
             //    $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
                 if(connectionTable[key1][key2]===true)
