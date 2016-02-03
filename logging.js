@@ -7,7 +7,7 @@ function writeLog(logstr){
     console.log(logstr);
     logdump[time]=logstr;
 }
-function upload(){  //今はログデータだけ
+function uploadLog(){
     logdump["ID"]=myID;
     logdump["host"]=peerTable[0];
     var sendjson = JSON.stringify(logdump);
@@ -45,7 +45,7 @@ function renewTable(){
             ar2[key1]="＼";
             tableText+="<tr><td>"+key1+"</td>";
             Object.keys(ar2).forEach(function(key2){
-                writeLog(key1+" "+key2);
+              //  writeLog(key1+" "+key2);
              //   if(key2!="counter"&&key2!="connected")
             //    $("#connection-table").append(key1+" "+key2+"  "+connectionTable[key1][key2]+"   ");
                 if(connectionTable[key1][key2]===true)

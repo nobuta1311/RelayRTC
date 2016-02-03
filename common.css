@@ -19,8 +19,8 @@ body {
 input{width:40px;}
 .scr{
   overflow: scroll;   /* スクロール表示 */
-  width: 800px;
-  height:150px;
+  width: 600px;
+  height:120px;
   background-color: floralwhite;
 }
 
@@ -50,9 +50,10 @@ h1,h2,h3,h4,h5,h6 {
 
 /* ========TEMPLATE LAYOUT======== */
 #top {
-   width:779px;
-   margin:10px auto;
-   border:10px solid #ccc;
+    text-align: center;
+  // width:779px;
+   margin:0 auto;
+ //  border:10px solid #ccc;
 }
 
 #header {
@@ -73,17 +74,16 @@ h1,h2,h3,h4,h5,h6 {
 
 #main {
    float:left;
-   width:800px;
    margin:10px 0;
    padding:10px;
    background:#fff;
 }
 
 #sub {
-   float:right;
-   width:200px;
-   margin:10px 0;
-   padding:0;
+   float:left;
+   width:640px;
+   margin:100px 0;
+   padding:10px;
 }
 
 #pageTop {
@@ -234,7 +234,7 @@ overflow:hidden;
 }
 
 #main table {
-   width:100%;
+  // width:100%;
    border-collapse:collapse;
 }
 
@@ -257,6 +257,13 @@ overflow:hidden;
 /* ========SUBCONTENTS CUSTOMIZE======== */
 #sub .section {
    margin-bottom:10px;
+}
+#sub h4{
+   margin-bottom:5px;
+   padding:5px;
+   font-size:13px;
+   color:#fff;
+   background:#0089a1;
 }
 
 #sub h3 {

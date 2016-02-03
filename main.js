@@ -44,7 +44,7 @@ $(function (){
         for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
-        upload();
+        uploadLog();
         //stopRecording(localRecorder);
         id_exchange(myID,3,false);//myIDを削除
         $(this).text("Join as a Provider");
@@ -74,7 +74,7 @@ $(function (){
 $('#joinReceiver').click(function(){//受信者参加処理
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
-        upload();
+        uploadLog();
         id_exchange(myID,3,false);//myIDをサーバから除去
         $(this).text("Join as a Receiver");
         Object.keys(peerTable).forEach(function(key1){
@@ -132,7 +132,7 @@ function calledDo(pid){ //コネクションした後のやりとり
             streams[target]=stream;
             var url = URL.createObjectURL(stream);
             //url変換したものを格納し、したの行のように表示させる。
-            var div = $("<video id=\"peer-video"+"\" style=\"width: 600px;\" autoplay=\"1\"></video>");//disabledにできる
+            var div = $("<video id=\"peer-video"+"\" width=\"640\";  autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video').prop('src', url);
         });

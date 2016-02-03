@@ -3,9 +3,8 @@
 $json_string = file_get_contents('php://input'); ##今回のキモ
 
 $obj = json_decode($json_string,true);
-$host=$obj["host"];$obj["host"]=null;
-$myid=$obj["ID"];
-$obj["ID"]=null;
+$host=$obj["host"];//$obj["host"]=null;
+$myid=$obj["ID"];//$obj["ID"]=null;
 //配信者
 //hostが入ってない→ディレクトリをつくる
 //hostが入っている→自分のファイルに保存
