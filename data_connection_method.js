@@ -41,6 +41,9 @@ function connectedDo(conn){ //データのやりとり
                     connectionTable[key]["connected"]--;
                     connectionTable[tempid]["counter"]--;
                     connectionTable[tempid][key]=false;
+                    if(myID==0){
+                        routing(key);
+                    }
                 }
                 delete connectionTable[key][tempid]
             });
@@ -92,19 +95,23 @@ function commandByPeers(data){
     switch (mode){
         case 0 :    //接続命令  0,送る相手,送るストリーム  
         writeLog("COMMAND: CONNECT :"+commands[1]);
+        //接続準備完了してから
+        //var delay =0;
+        //if(connectionTable[myID]["connected"]==0)delay=1000;
+        //window.setTimeout(function(){    
         connect(commands[1],streams[commands[2]]);  //streams[commands[2]
+        //},delay);
         break;
         case 1 :    //切断 1,相手
         writeLog("COMMAND:DISCONNECT: "+commands[1]);
         disconnect(commands[1]);
         break; 
         case 2 : //配信要求 2,相手
-            connectedConn[connectedid]=conn;
-             writeLog("REQUEST VIDEO :"+commands[1]);
+            writeLog("REQUEST VIDEO :"+commands[1]);
             routing(commands[1]);
         break;
-        case 3:
-        //writeLog("By "+commands[1]+" "+commands[2]);
+        case 3: //
+        //
         break;
         case 4: //どこかで接続が起きたことを知らせる
         if(commands[1]!=myID&&commands[2]!=myID){

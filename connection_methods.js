@@ -9,12 +9,12 @@ function routing(partnerID){
         //自分から直接つなげる
        writeLog("DIRECT CONNECT : "+partnerID);
       // connectionTable[myID]["counter"]++;
-        /*ここに実験用の分岐強制設定*/
+        /*ここに実験用の分岐強制設定
         if(connectionTable[myID]["counter"]!=0){
             connectionTable[partnerID]["counter"]=Branch[1];
         }
+        ここまで実験用の分岐強制設定*/
         connect(partnerID,localStream);
-        /*ここまで実験用の分岐強制設定*/
 
     }else{  //リレー式につなげる場合。
         writeLog("RELAYLY CONNECT : "+partnerID);
@@ -32,15 +32,15 @@ function connect_func(fromID,toID,count,checked){
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("LET CONNECT : "+fromID+" "+toID);
-        /*ここに実験用の分岐強制設定*/
+        /*ここに実験用の分岐強制設定
         if(connectionTable[fromID]["counter"]!=0){
             //許容範囲内で最後の接続でなければ，つまり1人を除いてすべて
             //counterをマックスにしておくことにより，そこからつながないようにする
             connectionTable[toID]["counter"]=Branch[count+1];
          //   writeLog("counterとBが"+connectionTable[fromID]["counter"]+""+Branch[count]+"なので"+toID+"の接続数を"+Branch[count+1]+"にする");
         }
+        ここまで実験用の分岐強制設定*/
         letConnect(fromID,toID);
-        /*ここまで実験用の分岐強制設定*/
         return 0;
     }
     //fromIDがすでに接続している相手をみつける
@@ -87,7 +87,15 @@ function disconnect(to_id){
 }
 
 function letConnect(fromID,toID){
-    showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
-    if(connectionTable[fromID][toID]==false)
-        sendText(fromID,"0,"+toID+","+myID);
+   // showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
+    if(connectionTable[fromID]["connected"]!=0){
+         sendText(fromID,"0,"+toID+","+myID);
+    }else{
+    var handler = window.setInterval(function(){
+        if(connectionTable[fromID]["connected"]!=0){
+            sendText(fromID,"0,"+toID+","+myID);
+            clearInterval(handler);
+        }
+    },1000);
+    }
 }
