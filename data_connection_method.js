@@ -2,7 +2,7 @@ function dataConnectAll(){
     writeLog("CONNECT TO ALL");
     Object.keys(peerTable).forEach(function(key){
         if(key!=myID){
-        dataConnect(key);
+            dataConnect(key);
         } 
     });
     return true;
@@ -23,7 +23,7 @@ function dataConnect(partnerID){
 }
 
 function connectedDo(conn){ //データのやりとり
-         conn.on("data",function(data){//data受信リスナ
+        conn.on("data",function(data){//data受信リスナ
                 writeLog("RECEIVED: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
         });
@@ -35,16 +35,20 @@ function connectedDo(conn){ //データのやりとり
                 if(connectionTable[key][tempid]===true){
                     connectionTable[key]["counter"]--;
                     connectionTable[tempid]["connected"]--;
+                    connectionTable[key][tempid]=false;
                 }
                 if(connectionTable[tempid][key]===true){
-                    connectionTable[key]["counter"]--;
-                    connectionTable[tempid]["connected"]--;
+                    connectionTable[key]["connected"]--;
+                    connectionTable[tempid]["counter"]--;
+                    connectionTable[tempid][key]=false;
                 }
-                connectionTable[key][tempid]=null;
+                delete connectionTable[key][tempid]
             });
-            peerTable[tempid]=null;
-            connectionTable[tempid]=null;
-            renewTable();
+            if($('#joinProvider').text()=="exit" || $('#joinReceiver').text()=="exit"){
+                delete peerTable[tempid];
+                delete connectionTable[tempid];
+                renewTable();
+            }
             /*
             if(myID!=tempid && connectionTable[tempID][myID]==true){
                 //直接の被接続者であれば
@@ -103,11 +107,13 @@ function commandByPeers(data){
         //writeLog("By "+commands[1]+" "+commands[2]);
         break;
         case 4: //どこかで接続が起きたことを知らせる
+        if(commands[1]!=myID&&commands[2]!=myID){
         writeLog(commands[1]+" CALL TO "+commands[2]);
         connectionTable[commands[1]][commands[2]]=true;
         connectionTable[commands[1]]["counter"]++;
         connectionTable[commands[2]]["connected"]++;
         renewTable();
+        }
         break;
         case 5:
             writeLog("JOINNING "+commands[2]+" AS "+commands[1]);
@@ -120,6 +126,7 @@ function commandByPeers(data){
     }
 }
 function sendText(peerid,data){
+    if(peerid==myID)return;
     writeLog("SEND \""+data+"\" TO "+peerid);
     connectedConn[peerid].send(data);
 }

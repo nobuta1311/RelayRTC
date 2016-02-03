@@ -5,7 +5,6 @@ function routing(partnerID){
     //inquiry_tables();
     //1つのピアからの接続可能人数を指定
     //1ならば直線状につながる
-    console.log(connectionTable);
     if(connectionTable[myID]["counter"]<Branch[0]){
         //自分から直接つなげる
        writeLog("DIRECT CONNECT : "+partnerID);
@@ -82,7 +81,9 @@ function connect(to_id,send_stream){  //コネクションボタン押した
     calledDo(to_id);
 }
 function disconnect(to_id){
+    writeLog(connectedCall[to_id].open);
     to_id.destroy();
+    writeLog(connectedCall[to_id].open);
 }
 
 function letConnect(fromID,toID){

@@ -27,6 +27,9 @@ peer.on('call', function(call){ //かかってきたとき
    call.answer(null);  //何も返さないようにしておく。
    connectedCall[pid]=call;
    calledDo(pid);
+   connectionTable[pid]["counter"]++;
+   connectionTable[myID]["connected"]++;
+
    connectionTable[pid][myID]=true;
    Object.keys(peerTable).forEach(function(key){    //connectionTableを埋める
        if(myID!=key){
@@ -34,9 +37,7 @@ peer.on('call', function(call){ //かかってきたとき
            if(connectionTable[myID][key]==undefined){connectionTable[myID][key]=false;}
        }
    });
-   //connectionTable[pid]["counter"]++;
-   //connectionTable[myID]["connected"]++;
-   renewTable();
+      renewTable();
 });
 /*総合関数*/
 $(function (){
@@ -77,9 +78,10 @@ $('#joinReceiver').click(function(){//受信者参加処理
         uploadLog();
         id_exchange(myID,3,false);//myIDをサーバから除去
         $(this).text("Join as a Receiver");
-        Object.keys(peerTable).forEach(function(key1){
-            if(connectedCall[key1]!=null)
-                connectedCall[key1].close();
+        Object.keys(peerTable).forEach(function(key){
+            if(connectedCall[key]!=null){
+                connectedCall[key].close();
+            }
         });
         noticeConnect(myID,"",6);
         dataDisconnectAll();
@@ -116,7 +118,6 @@ function initialize(){
     inquiry_tables();   //他の状況をサーバから取得する．
     noticeConnect(myID,"",3);//サーバのコネクションテーブルの自分の部分更新 asyncでなくてよい
     connectionTable[myID]=[];
-    writeLog(peerTable);
     connectionTable[myID]["counter"]=0;
     connectionTable[myID]["connected"]=0;
     dataConnectAll();   //全員に接続する．これにより相手は自分のID2つを知る．
@@ -135,5 +136,8 @@ function calledDo(pid){ //コネクションした後のやりとり
             var div = $("<video id=\"peer-video"+"\" width=\"640\";  autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);
             $('#peer-video').prop('src', url);
+        });
+        connectedCall[pid].on('close',function(){
+            writeLog(pid+"'s stream has closed.");
         });
 }

@@ -4,7 +4,6 @@ function writeLog(logstr){
     DD = new Date();
     var time = ("0"+DD.getHours()).slice(-2)+":"+("0"+DD.getMinutes()).slice(-2)+":"+("0"+DD.getSeconds()).slice(-2)+":"+("00"+DD.getMilliseconds()).slice(-3);
     $("#log-space").prepend(time+"\t||"+logstr+"<br>");
-    console.log(logstr);
     logdump[time]=logstr;
 }
 function uploadLog(){
@@ -33,7 +32,6 @@ function showNortify(str1,str2) {
     );
 }
 function renewTable(){  
-        console.log(connectionTable);
     //コネクションテーブルを現時点保有している変数に従って更新　変化があったあとに使用
     var tableText = "<table border=1><tr><th></th>";
         Object.keys(peerTable).forEach(function(key){   //peerTableから１行目
