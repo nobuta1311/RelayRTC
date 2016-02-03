@@ -43,6 +43,7 @@ peer.on('call', function(call){ //かかってきたとき
 $(function (){
     $('#joinProvider').click(function(){//配信者参加処理
         for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
+    isexam=$('#isexam').prop("checked");
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
         uploadLog();

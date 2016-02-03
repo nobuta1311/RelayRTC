@@ -1,5 +1,6 @@
 //用意する変数
-var Branch = Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+var Branch = Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+var isexam=false;
 var peerNum;
 function routing(partnerID){
     //inquiry_tables();
@@ -9,11 +10,11 @@ function routing(partnerID){
         //自分から直接つなげる
        writeLog("DIRECT CONNECT : "+partnerID);
       // connectionTable[myID]["counter"]++;
-        /*ここに実験用の分岐強制設定
-        if(connectionTable[myID]["counter"]!=0){
+        /*ここに実験用の分岐強制設定*/
+        if(connectionTable[myID]["counter"]!=0 && isexam){
             connectionTable[partnerID]["counter"]=Branch[1];
         }
-        ここまで実験用の分岐強制設定*/
+        /*ここまで実験用の分岐強制設定*/
         connect(partnerID,localStream);
 
     }else{  //リレー式につなげる場合。
@@ -32,14 +33,14 @@ function connect_func(fromID,toID,count,checked){
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("LET CONNECT : "+fromID+" "+toID);
-        /*ここに実験用の分岐強制設定
-        if(connectionTable[fromID]["counter"]!=0){
+        /*ここに実験用の分岐強制設定*/
+        if(connectionTable[fromID]["counter"]!=0 && isexam===true){
             //許容範囲内で最後の接続でなければ，つまり1人を除いてすべて
             //counterをマックスにしておくことにより，そこからつながないようにする
             connectionTable[toID]["counter"]=Branch[count+1];
          //   writeLog("counterとBが"+connectionTable[fromID]["counter"]+""+Branch[count]+"なので"+toID+"の接続数を"+Branch[count+1]+"にする");
         }
-        ここまで実験用の分岐強制設定*/
+       /* ここまで実験用の分岐強制設定*/
         letConnect(fromID,toID);
         return 0;
     }

@@ -39,10 +39,12 @@ function saveFunc(videoid){
         var imageData = canvasContext.getImageData(0,0,canvasElement.width-1, canvasElement.height-1);
         canvasContext.drawImage(videoElement,0,0);
         upload(canvasElement,now_text);
-        var btn= document.getElementById("btn-download");
+        /*
+         * var btn= document.getElementById("btn-download");
         btn.href = canvasElement.toDataURL('image/bmp');
         btn.download = myID+"-"+now_text+'.bmp';
         btn.dispatchEvent(e);
+        */
         if(saving){
             setTimeout(saveFunc,calcWaitingTime(10),videoid);
         }
