@@ -10,11 +10,11 @@ function routing(partnerID){
         //自分から直接つなげる
        writeLog("DIRECT CONNECT : "+partnerID);
       // connectionTable[myID]["counter"]++;
-       connect(partnerID,localStream);
         /*ここに実験用の分岐強制設定*/
-        if(connectionTable[myID]["counter"]!=Branch[0]-1){
+        if(connectionTable[myID]["counter"]!=0){
             connectionTable[partnerID]["counter"]=Branch[1];
         }
+        connect(partnerID,localStream);
         /*ここまで実験用の分岐強制設定*/
 
     }else{  //リレー式につなげる場合。
@@ -29,18 +29,18 @@ function routing(partnerID){
    
 }
 function connect_func(fromID,toID,count,checked){
-    writeLog("B,toID,counter"+Branch[count]+","+toID+","+count);
+    writeLog("from,B,toID,counter"+fromID+","+Branch[count]+","+toID+","+count);
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("LET CONNECT : "+fromID+" "+toID);
-        letConnect(fromID,toID);
         /*ここに実験用の分岐強制設定*/
-        if(connectionTable[fromID]["counter"]!=Branch[count]-1){
+        if(connectionTable[fromID]["counter"]!=0){
             //許容範囲内で最後の接続でなければ，つまり1人を除いてすべて
             //counterをマックスにしておくことにより，そこからつながないようにする
             connectionTable[toID]["counter"]=Branch[count+1];
          //   writeLog("counterとBが"+connectionTable[fromID]["counter"]+""+Branch[count]+"なので"+toID+"の接続数を"+Branch[count+1]+"にする");
         }
+        letConnect(fromID,toID);
         /*ここまで実験用の分岐強制設定*/
         return 0;
     }
@@ -57,8 +57,8 @@ function connect_func(fromID,toID,count,checked){
                 min =connectionTable[key]['counter'];
                 new_from = key;
                 //接続数最小のものを決める
-            }else{
-                if(new_from==undefined){new_from = key;}
+            }else if(new_from==undefined){
+                new_from = key;
             }
         }
     });
