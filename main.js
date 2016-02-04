@@ -1,5 +1,6 @@
 navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia || navigator.mozGetUserMedia|| navigator.msGetUserMedia;
 /*変数定義*/
+var localAudio;
 var peerTable = Array();
 var saving=true;
 var connectionTable = Array();
@@ -60,14 +61,21 @@ $(function (){
     }else{
         noticeConnect("","",4);
         id_exchange("all",5,false);
-        /*video : constraints*/
-        navigator.getUserMedia({ video: true,audio:false}, function(stream){
-            localStream = stream;
+        navigator.getUserMedia({ video:true,audio:false}, function(stream){
             var div = $("<video id=\"my-video\" autoplay=\"1\"></video>");//disabledにできるwidth: 600px;\
+            localStream = stream;
             $("#videos").append(div);
-            $('#my-video').prop('src', window.URL.createObjectURL(stream));
+            $('#my-video').prop('src', window.URL.createObjectURL(localStream));
             },function() { alert("Error to getUserMedia.");
         });
+        /*
+        navigator.getUserMedia({video:false,audio:true},function(stream){
+                localAudio = stream;
+                $("#audio").prop("src",URL.createObjectURL(localAudio));
+
+                },function(){alert("Error to get Audio.");
+        });
+        */
         writeLog("YOU ARE PROVIDER");
         initialize();
         $(this).text("exit");
@@ -132,7 +140,14 @@ function initialize(){
 function calledDo(pid){ //コネクションした後のやりとり
         connectedCall[pid].on('stream', function(stream){//callのリスナ
             streams[target]=stream;
-            var url = URL.createObjectURL(stream);
+            /*
+            if(stream.getAudioTracks()[0]!=undefined){
+                localAudio=stream;
+                $("#audio").prop("src",URL.createObjectURL(localAudio));
+                return;
+            }
+            */
+            var url = URL.createObjectURL(streams[target]);
             //url変換したものを格納し、したの行のように表示させる。
             var div = $("<video id=\"peer-video"+"\" width=\"640\";  autoplay=\"1\"></video>");//disabledにできる
             $("#videos").append(div);

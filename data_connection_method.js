@@ -65,6 +65,7 @@ function connectedDo(conn){ //データのやりとり
 }
 
 peer.on('connection',function(conn){    //接続されたとき
+
     var connectedid = conn.label;
     connectedConn[connectedid]=conn;
     peerTable[connectedid] = conn.peer;//peerTable更新
@@ -80,7 +81,11 @@ peer.on('connection',function(conn){    //接続されたとき
         connectionTable[connectedid][key]=false;
     });
     renewTable();
-    if(myID==0)routing(connectedid);
+    if(myID==0){
+     //   peer.call(conn.peer,localAudio); //send_stream
+        routing(connectedid);
+    }
+
 });
 
 

@@ -53,22 +53,12 @@ if(isset($_GET["from"])&& isset($_GET["to"]) && isset($_GET["mode"])){
     }
     }else{   //mode=6なので全部false
         print_r($database);
-       foreach($database as $key1 => $data1){
-           foreach($data1 as $key2 => $data2){
-               if(($key1==$_GET["from"] || $key2==$_GET["from"])&& $key2!="counter" && $key2!="connected"){
-                   if($database[$key1][$key2]==true){
-                       $database[$key1][$key2]=false; 
-                       $database[$key1]["counter"]--;                       
-                       $database[$key2]["connected"]--;
-                   }
-                   else if($database[$key2][$key1]==true){
-                       $database[$key2][$key1]=false;
-                       $database[$key2]["counter"]--;
-                       $database[$key1]["connected"]--;
-                   }
-                }
-            }
-       }
+        foreach($database as $key1 => $data1){
+            if($database[$key1][$_GET["from"]]==true)$database[$key1]["counter"]--;
+            else if($database[$_GET["from"]][$key1]==true)$database[$key1]["connected"]--;
+            unset($database[$key1][$_GET["from"]]);
+        }
+        unset($database[$_GET["from"]]);
         print_r($database);
         file_put_contents("./connection.txt",serialize($database));
    }
