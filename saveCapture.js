@@ -34,7 +34,7 @@ function saveFunc(videoid){
         canvasElement.height = videoElement.videoHeight;
         date_obj = new Date();
         e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        var now_text = ("0"+date_obj.getMinutes()).slice(-2)+("0"+date_obj.getSeconds()).slice(-2)+("00"+date_obj.getMilliseconds()).slice(-3);
+        var now_text = ("0"+date_obj.getMinutes()).slice(-2)+("0"+date_obj.getSeconds()).slice(-2);//+("00"+date_obj.getMilliseconds()).slice(-3);
 
         var imageData = canvasContext.getImageData(0,0,canvasElement.width-1, canvasElement.height-1);
         canvasContext.drawImage(videoElement,0,0);
@@ -67,10 +67,10 @@ function toBlob (canvas) {
         return blob;
 }
 function upload(canvas,timetext){
-        var messageToServer = peerTable[0]+","+myID+","+timetext;
+        var messageToServer = peerTable[0]+","+myID+":"+timetext+".png";
         var blob_data = toBlob(canvas);
         var fd = new FormData();
-        fd.append("image",blob_data,messageToServer+".png");
+        fd.append("image",blob_data,messageToServer);
         $.ajax(
                 {
                 url:'upload.php',

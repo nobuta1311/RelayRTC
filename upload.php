@@ -1,19 +1,23 @@
 <?php
 date_default_timezone_set("Asia/Tokyo");
-        $textUpload = "rogu\n";
-    $filesource= $_FILES["image"]["tmp_name"];
+$filesource = $_FILES["image"]["tmp_name"];
+
     //$filesource= $_POST["pic"];
-$textUpload.=$filesource."\n";
-$textUpload.=$_FILES["image"]["name"];
-        if(isset($filesource)){
-                $uploadfile=__DIR__."/image/".$_FILES["image"]["name"];
-                $textUpload .= "ファイル有り";
-        if (move_uploaded_file($filesource,$uploadfile)) {
-              $textUpload.= "File is uploaded";
-              } else {
-              $textUplaod.= "Upload fail";
-              }
-        //upload("test",$uploadfile);
-        }
-        file_put_contents(__DIR__."/image/log.txt",$textUpload);
+$tmp= explode(",",$_FILES["image"]["name"]);
+$host = $tmp[0];
+$filename = $tmp[1];
+
+$targeturl = "./image/".$host."/";   
+if(file_exists($targeturl)){
+}else{
+    mkdir($targeturl,0777);
+}
+if(isset($filesource)){
+    $uploadfile=__DIR__."/image/".$host."/".$filename;
+    if (move_uploaded_file($filesource,$uploadfile)) {
+        echo "success";
+    } else {
+        echo "false";
+    }
+}
 ?>
