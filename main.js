@@ -131,6 +131,7 @@ function initialize(){
     connectionTable[myID]["connected"]=0;
     dataConnectAll();   //全員に接続する．これにより相手は自分のID2つを知る．
     writeLog("YOU ARE : "+peer.id);
+    renewTable();
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);
     writeLog("YOUR ID : "+myID);    

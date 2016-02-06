@@ -11,8 +11,6 @@ function inquiry_tables(){
     //$("#connect-buttons").append(div);
     response = noticeConnect("","",5);  //接続状況ポーリング
     connectionTable = JSON.parse(response);//connectionTable更新
-    renewTable();//テーブルの表示更新
-        
 }
 
 function id_exchange(command_str,mode,isasync){
