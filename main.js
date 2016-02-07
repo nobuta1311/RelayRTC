@@ -21,7 +21,6 @@ peer.on('open', function(){ //回線を開く
 });
 */
 peer.on('call', function(call){ //かかってきたとき
-   //inquiry_tables();
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("CALLED BY: "+pid);
@@ -42,6 +41,8 @@ peer.on('call', function(call){ //かかってきたとき
 });
 /*総合関数*/
 $(function (){
+    $("#joinReceiver").attr("disabled",false);
+    $("#joinProvider").attr("disabled",false);
     $('#joinProvider').click(function(){//配信者参加処理
     $("h4").css("background","#0089a1");
         for(var i=0;i<12;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
@@ -151,6 +152,7 @@ function initialize(){
 function calledDo(pid){ //コネクションした後のやりとり
         connectedCall[pid].on('stream', function(stream){//callのリスナ
             streams[target]=stream;
+            $("#peer-video").empty();
             /*
             if(stream.getAudioTracks()[0]!=undefined){
                 localAudio=stream;

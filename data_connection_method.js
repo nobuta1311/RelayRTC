@@ -28,7 +28,6 @@ function connectedDo(conn){ //データのやりとり
                 commandByPeers(data);
         });
         conn.on('close',function(){
-            //閉じた閉じられた両方に送られるがその後操作できるのは閉じられた側のみ
             var tempid=id_exchange(conn.peer,2,false);
             writeLog(tempid+"'s connection has closed.");
             Object.keys(peerTable).forEach(function(key){
@@ -43,6 +42,7 @@ function connectedDo(conn){ //データのやりとり
                     connectionTable[tempid][key]=false;
                     if(myID==0){
                         routing(key);
+                        recallFunc(key);
                     }
                 }
                 delete connectionTable[key][tempid]
@@ -62,6 +62,18 @@ function connectedDo(conn){ //データのやりとり
             }
             */
         });
+}
+function recallFunc(pid){
+    console.log(pid);
+    Object.keys(connectionTable[pid]).forEach(function(key){
+        if(key!="counter"&& key!="connected" && connectionTable[pid][key]==true){
+            connectionTable[pid][key]=false;
+            connectionTable[pid]["counter"]=0;
+            connectionTable[key]["connected"]=0;
+            routing(key);
+            recallFunc(key);
+        }
+    });
 }
 
 peer.on('connection',function(conn){    //接続されたとき
