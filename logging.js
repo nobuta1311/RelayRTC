@@ -37,7 +37,7 @@ function renewTable(){
         Object.keys(peerTable).forEach(function(key){   //peerTableから１行目
                 tableText+="<th>"+key+"</th>";
         });
-        tableText+="<th>Connect</th><th>ConnectedBy</th></tr>"; //1行目右端
+        tableText+="<th>→</th><th>←</th></tr>"; //1行目右端
         Object.keys(connectionTable).forEach(function(key1){    //connectionTableから2行目以降
             var ar2 = connectionTable[key1];
             ar2[key1]="＼";

@@ -65,7 +65,6 @@ function connectedDo(conn){ //データのやりとり
 }
 
 peer.on('connection',function(conn){    //接続されたとき
-
     var connectedid = conn.label;
     connectedConn[connectedid]=conn;
     peerTable[connectedid] = conn.peer;//peerTable更新

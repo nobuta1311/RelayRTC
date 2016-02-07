@@ -15,42 +15,41 @@
 </head>
 <body>
 <div id="main">
-<div id="top">
-<img src="./logo_color.png" width="300" height="100">
-</div>
+<div id="top"><img src="./logo_color.png" width="300" height="100"></div>
 <h3>One Provider Relay-WebRTC</h3>
 <!--参加・退出をするボタン。状態によって書き換える。-->
 <div id="branch-selector">
-Branch-Number of each levels for the provider.
-<table border=1>
-    <tr><th>Lv.0</th><th>Lv.1</th><th>Lv.2</th><th>Lv.3</th><th>Lv.4</th><th>Lv.5</th><th>Lv.6</th><th>Lv.7</th><th>Lv.8</th></tr>
+    Branch-Number of each levels for the provider.
+    <table border=1>
+    <tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr>
     <tr>
-        <th><input type="number" name="br0" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br1" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br2" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br3" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br4" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br5" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br6" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br7" value="1" min="1" max="5"></th>
-        <th><input type="number" name="br8" value="1" min="1" max="5"></th>
+        <th><input type="number" name="br0" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br1" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br2" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br3" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br4" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br5" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br6" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br7" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br8" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br9" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br10" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br11" value="1" min="1" max="6"></th>
+        <th><input type="number" name="br12" value="1" min="1" max="6"></th>
     </tr>
-</table>
-実験モード<input type="checkbox" name="hyouka" id="isexam" value="1">
-
-<br>
+    </table>
+    実験モード<input type="checkbox" name="hyouka" id="isexam" value="1">
+    <br>
 </div>
 <div id="joining-button">
-<button type="button" id="joinProvider" style="HEIGHT: 40px">Join as a Provider</button>        
-<button type="button" id="joinReceiver" style="HEIGHT: 40px">Join as a Receiver</button>
-MyPeerID: <span id="my-id">-</span>  MyNumberID: <span id="my-number">-</span>
-<br>
-SendText to Peers<input id="mes" type="text" size="20" value="Ping"/>
-<button type="button" id="SendTextButton">Send</button>
+    <button type="button" id="joinProvider" style="HEIGHT: 40px">Join as a Provider</button>        
+    <button type="button" id="joinReceiver" style="HEIGHT: 40px">Join as a Receiver</button>
+    MyPeerID: <span id="my-id">-</span>  MyNumberID: <span id="my-number">-</span>
+    <br>
+    SendText to Peers<input id="mes" type="text" size="20" value="Ping"/>
+    <button type="button" id="SendTextButton">Send</button>
 </div>
-<div id="connect-buttons">
-        <!--<button type="button" id="connect-2">2</button> -->       
-</div>
+<div id="connect-buttons"></div>
 <br>
 <h4>Logs</h4>        
 <div id="log-space" class="scr">
@@ -58,18 +57,15 @@ SendText to Peers<input id="mes" type="text" size="20" value="Ping"/>
 </div>
 
 <h4>Connection Table</h4>
-<div id="connection-table">
-</div>
-</div>
+<div id="connection-table"></div>
+</div><!--/main-->
 <div id="sub">
-<h4>Received Videos</h4>
+<h4>Videos</h4>
 <button type="button" id="save-cap">Save</button>
 <div id="videos">
-        <!--video id="audio" autoplay></video-->
-
         <a download="sample" style="visibility:hidden;" id="btn-download">Download</a>
         <canvas style="height:0px; width:0px;visibility:hidden;" id="canvas" ></canvas>
 </div>
-</div>
+</div><!--/sub-->
 </body>
 </html>

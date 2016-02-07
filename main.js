@@ -43,7 +43,8 @@ peer.on('call', function(call){ //かかってきたとき
 /*総合関数*/
 $(function (){
     $('#joinProvider').click(function(){//配信者参加処理
-        for(var i=0;i<9;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
+    $("h4").css("background","#0089a1");
+        for(var i=0;i<12;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
     isexam=$('#isexam').prop("checked");
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
@@ -58,6 +59,7 @@ $(function (){
         noticeConnect(myID,"",6);//callコネクション削除
         dataDisconnectAll();//コネクションも切断
         writeLog("COMPLETE EXITTING");
+        $("#joinReceiver").attr("disabled", "false");
     }else{
         noticeConnect("","",4);
         id_exchange("all",5,false);
@@ -67,6 +69,7 @@ $(function (){
             $("#videos").append(div);
             $('#my-video').prop('src', window.URL.createObjectURL(localStream));
             },function() { alert("Error to getUserMedia.");
+
         });
         /*
         navigator.getUserMedia({video:false,audio:true},function(stream){
@@ -79,11 +82,14 @@ $(function (){
         writeLog("YOU ARE PROVIDER");
         initialize();
         $(this).text("exit");
+        $("h4").css("background","salmon");
+        $("#joinReceiver").attr("disabled", "true");
     }
 });
 $('#joinReceiver').click(function(){//受信者参加処理
     $("#branch-selector").remove();//分岐数設定消去
     if($(this).text()=="exit"){
+        $("h4").css("background","#0089a1");
         uploadLog();
         id_exchange(myID,3,false);//myIDをサーバから除去
         $(this).text("Join as a Receiver");
@@ -95,10 +101,14 @@ $('#joinReceiver').click(function(){//受信者参加処理
         noticeConnect(myID,"",6);
         dataDisconnectAll();
         writeLog("FINISH EXITTING");
+        $("#joinProvider").attr("disabled", "false");
     }else{
         writeLog("YOU ARE RECEIVER");
         initialize();        
         $(this).text("exit");
+        $("h4").css("background","DeepSkyBlue");
+        $("#joinProvider").attr("disabled", "true");
+
     }
 });
 $("#SendTextButton").click(function(){
