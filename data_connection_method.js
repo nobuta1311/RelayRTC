@@ -28,25 +28,10 @@ function connectedDo(conn){ //データのやりとり
                 commandByPeers(data);
         });
         conn.on('close',function(){
-            var tempid=id_exchange(conn.peer,2,false);
-            writeLog(tempid+"'s connection has closed.");
-            Object.keys(peerTable).forEach(function(key){
-                if(connectionTable[key][tempid]===true){
-                    connectionTable[key]["counter"]--;
-                    connectionTable[tempid]["connected"]--;
-                    connectionTable[key][tempid]=false;
-                }
-                if(connectionTable[tempid][key]===true){
-                    connectionTable[key]["connected"]--;
-                    connectionTable[tempid]["counter"]--;
-                    connectionTable[tempid][key]=false;
-                    if(myID==0){
-                        routing(key);
-                        recallFunc(key);
-                    }
-                }
-                delete connectionTable[key][tempid]
-            });
+            var tempid = id_exchange(conn.peer,2,false);
+            if(connectionTable[tempid]["counter"]!=0 || connectionTable[tempid]["connected"]!=0){
+                endedDo(tempid);
+            }
             if($('#joinProvider').text()=="exit" || $('#joinReceiver').text()=="exit"){
                 delete peerTable[tempid];
                 delete connectionTable[tempid];
@@ -61,6 +46,30 @@ function connectedDo(conn){ //データのやりとり
                 writeLog("RECONNECT : "+tempid);
             }
             */
+        });
+}
+function endedDo(pid){
+    writeLog(pid+"'s connection has closed.");
+    Object.keys(peerTable).forEach(function(key){
+        if(connectionTable[key][pid]===true){
+            connectionTable[key]["counter"]--;
+            connectionTable[pid]["connected"]--;
+            connectionTable[key][pid]=false;
+        }
+        if(connectionTable[pid][key]===true){
+            connectionTable[key]["connected"]--;
+            connectionTable[pid]["counter"]--;
+            connectionTable[pid][key]=false;
+            if(key==myID){
+                Object.keys(connectionTable[key]).forEach(function(key2){
+                    if(key2!="counter" && key2!="connected" && connectionTable[key][key2]==true){
+                        connectedCall[key2].close();
+                        alert(key2+"を切断");
+                    }
+                });
+            }
+                }
+        delete connectionTable[key][pid];
         });
 }
 function recallFunc(pid){
@@ -93,7 +102,7 @@ peer.on('connection',function(conn){    //接続されたとき
     });
     renewTable();
     if(myID==0){
-     //   peer.call(conn.peer,localAudio); //send_stream
+     // peer.call(conn.peer,localAudio); //send_stream
         routing(connectedid);
     }
 
@@ -126,8 +135,7 @@ function commandByPeers(data){
             writeLog("REQUEST VIDEO :"+commands[1]);
             routing(commands[1]);
         break;
-        case 3: //
-        //
+        case 3: //閉じていたらつなげる．
         break;
         case 4: //どこかで接続が起きたことを知らせる
         if(commands[1]!=myID&&commands[2]!=myID){

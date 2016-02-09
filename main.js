@@ -29,7 +29,7 @@ peer.on('call', function(call){ //かかってきたとき
    calledDo(pid);
    connectionTable[pid]["counter"]++;
    connectionTable[myID]["connected"]++;
-
+   
    connectionTable[pid][myID]=true;
    Object.keys(peerTable).forEach(function(key){    //connectionTableを埋める
        if(myID!=key){
@@ -145,7 +145,7 @@ function initialize(){
     renewTable();
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);
-    writeLog("YOUR ID : "+myID);    
+    writeLog("YOUR ID : "+myID);
 }
 
 
@@ -168,5 +168,14 @@ function calledDo(pid){ //コネクションした後のやりとり
         });
         connectedCall[pid].on('close',function(){
             writeLog(pid+"'s stream has closed.");
+            var ishavechild = false;
+            Object.keys(connectionTable[myID]).forEach(function(key){
+                if(key!="counter"&&key!="connected" && connectionTable[myID][key]==true)
+                    connectedCall[key].close();
+                    writeLog(key+"とコールを切断");
+                    ishavechild = true;
+            });       
+           // sendText(0,"3,"+pid);
+           // if(connectionTable[pid][myID]==true){sendText(0,"2,"+myID);}
         });
 }
