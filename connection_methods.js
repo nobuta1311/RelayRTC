@@ -66,20 +66,22 @@ function connect_func(fromID,toID,count,checked){
     return connect_func(new_from,toID,count,checked);
 }
 function connect(to_id,send_stream){  //コネクションボタン押した
-    var call = peer.call(id_exchange(to_id,1,false),send_stream); //send_stream
-    connectedCall[to_id]=call;
-    writeLog("CALL TO : "+to_id);
-    noticeConnect(myID,to_id,1);
-    Object.keys(peerTable).forEach(function(key){
-        if(key!=myID){
-            sendText(key,"4,"+myID+","+to_id);
+    
+    var handler = window.setInterval(function(){
+        if(connectionTable[myID]["connected"]!=0 || myID==0){
+           var call = peer.call(id_exchange(to_id,1,false),send_stream); //send_stream
+            connectedCall[to_id]=call;
+            writeLog("CALL TO : "+to_id);
+            noticeConnect(myID,to_id,1);
+            connectionTable[myID][to_id]=true;
+            connectionTable[myID]["counter"]++;
+            connectionTable[to_id]["connected"]++;
+            renewTable();
+            calledDo(to_id);
+            clearInterval(handler);
         }
-    });
-    connectionTable[myID][to_id]=true;
-    connectionTable[myID]["counter"]++;
-    connectionTable[to_id]["connected"]++;
-    renewTable();
-    calledDo(to_id);
+    },100);
+
 }
 function disconnect(to_id){
     writeLog(connectedCall[to_id].open);
@@ -88,5 +90,18 @@ function disconnect(to_id){
 }
 
 function letConnect(fromID,toID){
+         sendText(fromID,"0,"+toID+","+myID);
+   // showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
+   /*
+    if(connectionTable[fromID]["connected"]!=0){
+         sendText(fromID,"0,"+toID+","+myID);
+    }else{
+    var handler = window.setInterval(function(){
+        if(connectionTable[fromID]["connected"]!=0){
             sendText(fromID,"0,"+toID+","+myID);
+            clearInterval(handler);
+        }
+    },1000);
+    }
+    */
 }

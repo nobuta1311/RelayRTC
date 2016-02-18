@@ -9,7 +9,9 @@ var localStream;
 var streams = Array();  //自分の保持するstreamのURLをここに記録する。
 var connectedCall = Array();
 var connectedConn = Array();
+var stackTable = Array();
 var myID;
+var ready=false;
 var canvasElement,canvasElement2;
 var canvasContext,canvasContext2;
 var videoElement;
@@ -21,6 +23,7 @@ peer.on('open', function(){ //回線を開く
 });
 */
 peer.on('call', function(call){ //かかってきたとき
+   //inquiry_tables();
    var pid = id_exchange(call.peer,2,false);
    showNortify(myID+"からの通知",pid+"から動画が届きました");
    writeLog("CALLED BY: "+pid);
@@ -29,27 +32,32 @@ peer.on('call', function(call){ //かかってきたとき
    calledDo(pid);
    connectionTable[pid]["counter"]++;
    connectionTable[myID]["connected"]++;
-   
    connectionTable[pid][myID]=true;
    Object.keys(peerTable).forEach(function(key){    //connectionTableを埋める
        if(myID!=key){
            if(connectionTable[key][myID]==undefined){connectionTable[key][myID]=false;}
            if(connectionTable[myID][key]==undefined){connectionTable[myID][key]=false;}
+           if(connectionTable[myID][key]==true){
+               connectedCall[key].close();
+            //   sendText(0,"2,"+key);
+           }
        }
    });
-      renewTable();
+   //再接続の動作
+   renewTable();
 });
 /*総合関数*/
 $(function (){
     $("#joinReceiver").attr("disabled",false);
     $("#joinProvider").attr("disabled",false);
+
     $('#joinProvider').click(function(){//配信者参加処理
-    $("h4").css("background","#0089a1");
-        for(var i=0;i<12;i++)Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
-    isexam=$('#isexam').prop("checked");
-    $("#branch-selector").remove();//分岐数設定消去
-    if($(this).text()=="exit"){
-        uploadLog();
+        for(var i=0;i<12;i++)
+            Branch[i]=$("[name=br"+i+"]").val();//分岐数取得
+        isexam=$('#isexam').prop("checked");
+        $("#branch-selector").remove();//分岐数設定消去
+        if($(this).text()=="exit"){
+            uploadLog();
         //stopRecording(localRecorder);
         id_exchange(myID,3,false);//myIDを削除
         $(this).text("Join as a Provider");
@@ -62,6 +70,7 @@ $(function (){
         writeLog("COMPLETE EXITTING");
         $("#joinReceiver").attr("disabled", "false");
     }else{
+        $("h4").css("background","#0089a1");
         noticeConnect("","",4);
         id_exchange("all",5,false);
         navigator.getUserMedia({ video:true,audio:false}, function(stream){
@@ -72,14 +81,6 @@ $(function (){
             },function() { alert("Error to getUserMedia.");
 
         });
-        /*
-        navigator.getUserMedia({video:false,audio:true},function(stream){
-                localAudio = stream;
-                $("#audio").prop("src",URL.createObjectURL(localAudio));
-
-                },function(){alert("Error to get Audio.");
-        });
-        */
         writeLog("YOU ARE PROVIDER");
         initialize();
         $(this).text("exit");
@@ -145,14 +146,25 @@ function initialize(){
     renewTable();
     $("#my-id").text(peer.id);
     $('#my-number').text(myID);
-    writeLog("YOUR ID : "+myID);
+    writeLog("YOUR ID : "+myID);    
 }
 
 
 function calledDo(pid){ //コネクションした後のやりとり
-        connectedCall[pid].on('stream', function(stream){//callのリスナ
+            connectedCall[pid].on('stream', function(stream){//callのリスナ
+            Object.keys(peerTable).forEach(function(key){   //接続されたことを通知する
+                if(key!=myID)
+                    sendText(key,"4,"+pid+","+myID);
+            });
+            if(Object.keys(stackTable).length!==0){
+                Object.keys(stackTable).forEach(function(key){
+                    sendText(0,"2,"+key);
+                    writeLog("RECALL FOLLOWER");
+                    delete stackTable[key];
+                });
+            }    
+
             streams[target]=stream;
-            $("#peer-video").empty();
             /*
             if(stream.getAudioTracks()[0]!=undefined){
                 localAudio=stream;
@@ -167,15 +179,6 @@ function calledDo(pid){ //コネクションした後のやりとり
             $('#peer-video').prop('src', url);
         });
         connectedCall[pid].on('close',function(){
-            writeLog(pid+"'s stream has closed.");
-            var ishavechild = false;
-            Object.keys(connectionTable[myID]).forEach(function(key){
-                if(key!="counter"&&key!="connected" && connectionTable[myID][key]==true)
-                    connectedCall[key].close();
-                    writeLog(key+"とコールを切断");
-                    ishavechild = true;
-            });       
-           // sendText(0,"3,"+pid);
-           // if(connectionTable[pid][myID]==true){sendText(0,"2,"+myID);}
+         //   writeLog(pid+"'s stream has closed.");
         });
 }

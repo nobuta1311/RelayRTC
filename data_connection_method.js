@@ -23,67 +23,48 @@ function dataConnect(partnerID){
 }
 
 function connectedDo(conn){ //データのやりとり
+    var tempid=id_exchange(conn.peer,2,false);
         conn.on("data",function(data){//data受信リスナ
                 writeLog("RECEIVED: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
         });
         conn.on('close',function(){
-            var tempid = id_exchange(conn.peer,2,false);
-            if(connectionTable[tempid]["counter"]!=0 || connectionTable[tempid]["connected"]!=0){
+        if(connectionTable[tempid][myID]===true){
+            sendText(0,"2,"+myID);
+            writeLog("RECALL LEADER");
+        }
+
+            writeLog(tempid+"'s connection has closed.");
+                Object.keys(peerTable).forEach(function(key){
+                    if(connectionTable[key][tempid]===true){
+                        connectionTable[key]["counter"]--;
+                        connectionTable[tempid]["connected"]--;
+                        connectionTable[key][tempid]=false;
+                    }
+                    delete connectionTable[key][tempid];
+                });
                 endedDo(tempid);
-            }
-            if($('#joinProvider').text()=="exit" || $('#joinReceiver').text()=="exit"){
-                delete peerTable[tempid];
-                delete connectionTable[tempid];
-                renewTable();
-            }
-            /*
-            if(myID!=tempid && connectionTable[tempID][myID]==true){
-                //直接の被接続者であれば
-                //再接続を要求し，さらに下のピアと切断する．
-                //MediaConnectionだけを切りたい
-                sendText(0,"2,"+tempid);//接続要求
-                writeLog("RECONNECT : "+tempid);
-            }
-            */
+        delete peerTable[tempid];
+        delete connectionTable[tempid];
+        renewTable();
         });
 }
 function endedDo(pid){
-    writeLog(pid+"'s connection has closed.");
+    //再帰的に被切断者の子孫の情報を変更し，再接続をする(はやい)
     Object.keys(peerTable).forEach(function(key){
-        if(connectionTable[key][pid]===true){
-            connectionTable[key]["counter"]--;
-            connectionTable[pid]["connected"]--;
-            connectionTable[key][pid]=false;
-        }
         if(connectionTable[pid][key]===true){
-            connectionTable[key]["connected"]--;
+            //connectionTable[key]["connected"]--;
             connectionTable[pid]["counter"]--;
             connectionTable[pid][key]=false;
-            if(key==myID){
-                Object.keys(connectionTable[key]).forEach(function(key2){
-                    if(key2!="counter" && key2!="connected" && connectionTable[key][key2]==true){
-                        connectedCall[key2].close();
-                        alert(key2+"を切断");
-                    }
-                });
+            /*切断された本人が行う！*/
+            if(myID==pid){    //再接続
+                stackTable[key]=true;
             }
-                }
-        delete connectionTable[key][pid];
-        });
-}
-function recallFunc(pid){
-    console.log(pid);
-    Object.keys(connectionTable[pid]).forEach(function(key){
-        if(key!="counter"&& key!="connected" && connectionTable[pid][key]==true){
-            connectionTable[pid][key]=false;
-            connectionTable[pid]["counter"]=0;
-            connectionTable[key]["connected"]=0;
-            routing(key);
-            recallFunc(key);
+            endedDo(key);
         }
     });
 }
+
 
 peer.on('connection',function(conn){    //接続されたとき
     var connectedid = conn.label;
@@ -102,7 +83,7 @@ peer.on('connection',function(conn){    //接続されたとき
     });
     renewTable();
     if(myID==0){
-     // peer.call(conn.peer,localAudio); //send_stream
+     //   peer.call(conn.peer,localAudio); //send_stream
         routing(connectedid);
     }
 
@@ -135,16 +116,18 @@ function commandByPeers(data){
             writeLog("REQUEST VIDEO :"+commands[1]);
             routing(commands[1]);
         break;
-        case 3: //閉じていたらつなげる．
+        case 3: //
+        //
         break;
         case 4: //どこかで接続が起きたことを知らせる
         if(commands[1]!=myID&&commands[2]!=myID){
-        writeLog(commands[1]+" CALL TO "+commands[2]);
         connectionTable[commands[1]][commands[2]]=true;
         connectionTable[commands[1]]["counter"]++;
         connectionTable[commands[2]]["connected"]++;
         renewTable();
+        writeLog(commands[1]+" CALL TO "+commands[2]);
         }
+
         break;
         case 5:
             writeLog("JOINNING "+commands[2]+" AS "+commands[1]);
