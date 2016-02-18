@@ -2,7 +2,9 @@ var LoggingURL="./Logging.php";
 var logdump={};
 function writeLog(logstr){
     DD = new Date();
-    var time = ("0"+DD.getHours()).slice(-2)+":"+("0"+DD.getMinutes()).slice(-2)+":"+("0"+DD.getSeconds()).slice(-2)+":"+("00"+DD.getMilliseconds()).slice(-3);
+       var time = ("0"+DD.getHours()).slice(-2)+":"+("0"+DD.getMinutes()).slice(-2)+":"+("0"+DD.getSeconds()).slice(-2)+":"+("00"+DD.getMilliseconds()).slice(-3);
+     writeLog(time);
+
     $("#log-space").prepend(time+"\t||"+logstr+"<br>");
     logdump[time]=logstr;
 }
