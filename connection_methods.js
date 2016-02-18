@@ -91,6 +91,11 @@ function disconnect(to_id){
 
 function letConnect(fromID,toID){
          sendText(fromID,"0,"+toID+","+myID);
+         /*
+          * connectionTable[fromID][toID]=true;
+         connectionTable[fromID]["counter"]++;
+         connectionTable[toID]["connected"]++;
+         */
    // showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
    /*
     if(connectionTable[fromID]["connected"]!=0){

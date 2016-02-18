@@ -23,10 +23,13 @@ function dataConnect(partnerID){
 }
 
 function connectedDo(conn){ //データのやりとり
-    var tempid=id_exchange(conn.peer,2,false);
+    var tempid= id_exchange(conn.peer,2,false);
+        conn.on("open",function(){
         conn.on("data",function(data){//data受信リスナ
                 writeLog("RECEIVED: "+data); //テキストとして受信データを表示
                 commandByPeers(data);
+        });
+
         });
         conn.on('close',function(){
         if(connectionTable[tempid][myID]===true){
@@ -143,4 +146,5 @@ function sendText(peerid,data){
     if(peerid==myID)return;
     writeLog("SEND \""+data+"\" TO "+peerid);
     connectedConn[peerid].send(data);
+    console.log(connectedConn[peerid]);
 }
