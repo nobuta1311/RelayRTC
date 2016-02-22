@@ -29,7 +29,7 @@ function routing(partnerID){
    
 }
 function connect_func(fromID,toID,count,checked){
-    writeLog("from,B,toID,counter"+fromID+","+Branch[count]+","+toID+","+count);
+    writeLog("from,B,toID,counter"+fromID+","+Branch[count]+","+toID+","+connectionTable[fromID]["counter"]);
     //自分の余裕があれば直接接続する
     if(connectionTable[fromID]["counter"]<Branch[count++]){
         writeLog("LET CONNECT : "+fromID+" "+toID);
@@ -91,11 +91,10 @@ function disconnect(to_id){
 
 function letConnect(fromID,toID){
          sendText(fromID,"0,"+toID+","+myID);
-         /*
-          * connectionTable[fromID][toID]=true;
+         connectionTable[fromID][toID]=true;
          connectionTable[fromID]["counter"]++;
          connectionTable[toID]["connected"]++;
-         */
+         renewTable();
    // showNortify("配信者からの通知",fromID+"と"+toID+"を接続します");
    /*
     if(connectionTable[fromID]["connected"]!=0){

@@ -32,21 +32,21 @@ function connectedDo(conn){ //データのやりとり
 
         });
         conn.on('close',function(){
+        writeLog(tempid+"'s connection has closed.");
+        Object.keys(peerTable).forEach(function(key){
+            if(connectionTable[key][tempid]===true){
+                connectionTable[key]["counter"]--;
+                connectionTable[tempid]["connected"]--;
+                connectionTable[key][tempid]=false;
+            }
+            delete connectionTable[key][tempid];
+        });
         if(connectionTable[tempid][myID]===true){
             sendText(0,"2,"+myID);
             writeLog("RECALL LEADER");
-        }
+        } 
 
-            writeLog(tempid+"'s connection has closed.");
-                Object.keys(peerTable).forEach(function(key){
-                    if(connectionTable[key][tempid]===true){
-                        connectionTable[key]["counter"]--;
-                        connectionTable[tempid]["connected"]--;
-                        connectionTable[key][tempid]=false;
-                    }
-                    delete connectionTable[key][tempid];
-                });
-                endedDo(tempid);
+        endedDo(tempid);
         delete peerTable[tempid];
         delete connectionTable[tempid];
         renewTable();
@@ -56,8 +56,8 @@ function endedDo(pid){
     //再帰的に被切断者の子孫の情報を変更し，再接続をする(はやい)
     Object.keys(peerTable).forEach(function(key){
         if(connectionTable[pid][key]===true){
-            //connectionTable[key]["connected"]--;
-            connectionTable[pid]["counter"]--;
+            connectionTable[key]["connected"]=0;
+            connectionTable[pid]["counter"]=0;
             connectionTable[pid][key]=false;
             /*切断された本人が行う！*/
             if(myID==pid){    //再接続
